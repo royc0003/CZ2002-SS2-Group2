@@ -1,14 +1,16 @@
 import java.util.ArrayList;
 
-public class CineplexManager {
+public class Cineplex {
 
 	public String nameOfCineplex;
+	public int cineplexID;
 	private String location;
 	private int no_of_cinema;
 	private ArrayList<Cinema> cinemaList;
+	private ArrayList<MovieAndShowtimes> listOfMovieAndShowTimes; // would store the movie objects for the cinema
 
 	
-	public CineplexManager(String name, String location, int no_of_cinema) {
+	public Cineplex(String name, String location, int no_of_cinema) {
 		nameOfCineplex = name;
 		this.location = location;
 		this.no_of_cinema = no_of_cinema;
@@ -18,10 +20,17 @@ public class CineplexManager {
 			cinemaList.add(new Cinema(i+1));
 		}
 		
+		
+	}
+	public int getcineplexID() {
+		return cineplexID;
 	}
 	
-	//public void show_all_movies(MovieManager moviemanager){
-		//
+	public void addMovieToCineplex(MovieAndShowtimes object) {
+		//ADD MOVIE AND SHOWTIMES 
+
+		listOfMovieAndShowTimes.add(object);
+	}
 	
 	public String getlocationCineplex() {
 		return location;
@@ -45,6 +54,15 @@ public class CineplexManager {
 		
 	}
 	
-	// TIE in cinema, showtimes, movie to book seat!
+	public void assignShowtimeToCinema() {
+			
+	}
 	
+	public void selectShowtime() {
+		
+	}
+	
+	public void printMovieList() {
+		
+	}
 }
