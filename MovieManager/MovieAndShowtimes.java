@@ -23,10 +23,10 @@ public class MovieAndShowtimes {
 
     //--------------SHOWTIME RELATED FUNCTIONS-------------------------------------------------------------------------------------------------------
 
-    public void createShowTime(String showBegins, Movie m){
+    public void createShowTime(String showBegins, Movie m, int cinemaID){
         Scanner sc = new Scanner(System.in);
         System.out.println("Insert the number of showTimes to be created");
-            showList.add(new ShowTime(showBegins, m));
+            showList.add(new ShowTime(showBegins, m, cinemaID));
 
     }
 
