@@ -6,16 +6,17 @@ public class Cinema implements Serialization {
 	private SeatManager seatManager;
 	
 	
-	public Cinema(int cinema_no) {
+	public Cinema(int cinema_no, String type) {
 		seatManager = new SeatManager();
 		this.cinema_no = cinema_no;
 		this.seatingCapacity = 100;
+		this.type = type;
+		
 		
 	}
 	
-	public void setType(String type) {
-		this.type = type;
-
+	public String getType() {
+		return type;
 	}
 	
 	public void showseats(){
