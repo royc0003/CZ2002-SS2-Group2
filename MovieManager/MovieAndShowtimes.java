@@ -40,10 +40,9 @@ public class MovieAndShowtimes {
     }
 // print which show time to remove
 
-
-    public void removeShowTime(String showBegin){
+    public void removeShowTime(String showBegin, int cinemaID){ // removes showtime related to a cinemaID
         for(ShowTime n : showList){
-            if(n.getShowBegins().equals(showBegin)){
+            if(n.getShowBegins().equals(showBegin)&& n.getShowTimeCinemaID() == cinemaID){
                 showList.remove(n);
                 break;
             }
@@ -71,8 +70,17 @@ public class MovieAndShowtimes {
     public int getMovieDuration(){return movie.getMovieDuration();}
     public int getMovieAverageRating(){return movie.getAverageRating();};
 
+//return a list of showtimes for particular cinemaID
 
     //-------------------SHOWTIME RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
-
+    public ShowTime getShowTime(String showBegins, int cinemaID){
+        ShowTime x = null;
+        for(ShowTime n: showList){
+            if(n.getShowBegins().equals(showBegins)&& n.getShowTimeCinemaID() == cinemaID){
+                return x = n;
+            }
+        }
+        return x;
+    }
 
 }
