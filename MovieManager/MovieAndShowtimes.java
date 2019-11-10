@@ -26,10 +26,8 @@ public class MovieAndShowtimes {
     public void createShowTime(String showBegins, Movie m){
         Scanner sc = new Scanner(System.in);
         System.out.println("Insert the number of showTimes to be created");
-        int i = sc.nextInt();
-        for(int x = 0; x < i; x++){
             showList.add(new ShowTime(showBegins, m));
-        }
+
     }
 
     public void printListOfShowTimes(){
@@ -40,12 +38,17 @@ public class MovieAndShowtimes {
     public ArrayList<ShowTime> getArrayOfShowTimes(){
         return this.showList;
     }
+// print which show time to remove
 
-    public void removeShowTime(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Which showTime to be removed?");
-        int i = sc.nextInt();
-        showList.remove(i);
+
+    public void removeShowTime(String showBegin){
+        for(ShowTime n : showList){
+            if(n.getShowBegins().equals(showBegin)){
+                showList.remove(n);
+                break;
+            }
+        }
+
     }
 
     //-------------------MOVIE RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
