@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PriceManager{
-	private final double weekdayRate = 1.0;
-	private final double weekendRate = 1.5;
+	private final double WEEKDAY_RATE = 1.0;
+	private final double WEEKEND_RATE = 1.5;
 	private double priceRate = 1.0;
 	private Boolean discountApplied = false;
 	private int noOfTickets; 
@@ -49,10 +49,10 @@ public class PriceManager{
 		}
 		
 		if(day != Calendar.SATURDAY || day != Calendar.SUNDAY){
-			priceRate *= weekdayRate;
+			priceRate *= WEEKDAY_RATE;
 		}
 		else {
-			priceRate *= weekendRate; 
+			priceRate *= WEEKEND_RATE; 
 		}
 		
 		priceRate = priceRate*noOfTickets; 
