@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class MovieManager {
     private MovieDisplay displayMovie;
-    private ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes;
+    private static ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes;
 
     public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
         this.displayMovie = displayMovie;
-        this.listOfMovieAndShowtimes = listOfMovieAndShowtimes;
+        MovieManager.listOfMovieAndShowtimes = listOfMovieAndShowtimes;
     }
     public void printDetails(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
         for(MovieAndShowtimes x : listOfMovieAndShowtimes){
@@ -79,6 +79,15 @@ public Movie getMovie(int MovieID){
             break;
         }
     return x;
+}
+
+public MovieAndShowtimes getMovieAndShowtimes(int MovieID){
+        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
+            if(n.getMovieID() == MovieID){
+                return n; // returns the MovieAndShowtimes object
+            }
+        }
+    return null; // if cannot find return null
 }
 
 
