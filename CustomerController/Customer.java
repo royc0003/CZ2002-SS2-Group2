@@ -1,4 +1,4 @@
-public class Customer {
+public class Customer implements Serialization {
     private int age;
     private String userName;
     private String name;
@@ -41,6 +41,9 @@ public class Customer {
     public String getMobile(){
         return this.mobile;
     }
-
+    public String[] toCsv(){
+        String[] Csv = {Integer.toString(this.age),this.userName, this.name, this.mobile, this.email};
+        return Csv;
+    }
 
 }
