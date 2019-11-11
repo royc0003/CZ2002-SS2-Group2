@@ -85,12 +85,13 @@ public class CustomerUI {
         int userChoice;
         System.out.println("************************WELCOME TO CLARITA&KOKLIANG's CineVillage************************");
         System.out.println("OPTIONS:");
-        System.out.println("Option 1: Make a booking");
+        System.out.println("Option 1: Make A Booking");
         System.out.println("Option 2: View Movie Details");
         System.out.println("Option 3: Get Reviews");
         System.out.println("Option 4: Add Reviews");
-        System.out.println("Option 5: Check Booking History");
-        System.out.println("Option 6: Exit");
+        System.out.println("Option 5: Add Ratings");
+        System.out.println("Option 6: Check Booking History");
+        System.out.println("Option 7: Exit");
         userChoice = scan.nextInt();
         while(userChoice>= 1 && userChoice<=5){
 
@@ -101,13 +102,17 @@ public class CustomerUI {
                     break;
                 case 2:
                     //movie details
+                   // bookingManager.movieManager.printDetails(movieoManager.getListOfMovieANdShwtimes);
                     break;
                 case 3:
                     //get reviews
+                    //ratingsReviewsManager.
                     break;
                 case 4:
                     break;
                 case 5:
+                    break;
+                case 6:
                    // bookingManager.viewBookingHistory(customer_ID);
                     break;
 
