@@ -4,7 +4,7 @@ public class Customer implements Serialization {
     private String name;
     private String mobile;
     private String email;
-    private static int customerID; //note for customerID it'll be set as static
+    private static int customerID = 0; //note for customerID it'll be set as static
     public Customer(){
         customerID++;// ++ whenever new log-in
     }
