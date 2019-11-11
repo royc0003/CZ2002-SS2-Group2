@@ -35,12 +35,15 @@ public class MovieAndShowtimes {
 
     public void printListOfShowTimes(){  //PRINT SORTED SHOWTIMES
     	
-    	ShowTime[] s =  new ShowTime[showList.size()];
+    	String[] s =  new String[showList.size()];
     	s = sortShowTimes();
-    	System.out.println("Showtimes for" + Arrays.toString(s));
-        for(ShowTime num: showList){
-            System.out.println(num.getShowBegins());
-        }
+    	int i=0;
+    	for(String a: s) {
+    		System.out.println("(" + i + ")" + a);
+    		i++;
+    	}
+    
+    	
     }
     public ArrayList<ShowTime> getArrayOfShowTimes(){
         return this.showList;
@@ -77,12 +80,12 @@ public class MovieAndShowtimes {
     //-------------------SHOWTIME RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
     
     
-public ShowTime[] sortShowTimes(){
+public String[] sortShowTimes(){
 		
-	ShowTime[] SortCopy= new ShowTime[showList.size()];
+	String[] SortCopy= new String[showList.size()];
 		
 		for(int i=0; i<showList.size(); i++) {
-			SortCopy[i]= showList.get(i);
+			SortCopy[i]= showList.get(i).getShowBegins();
 		}
 		
 		Arrays.sort(SortCopy);

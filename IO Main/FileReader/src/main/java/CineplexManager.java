@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class CineplexManager 
 {
 	protected ArrayList<Cineplex> cineplexList = new ArrayList<Cineplex>();
-	private MovieManager movieManager;
+	protected MovieManager movieManager;
 	
 
 //-------------------------Get methods--------------------------------------------------------------------------------------------	
