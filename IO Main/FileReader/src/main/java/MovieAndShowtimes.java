@@ -8,8 +8,13 @@ public class MovieAndShowtimes {
     private Movie movie;
 
 
-    public MovieAndShowtimes() { // empty constructor
+    public MovieAndShowtimes() { //  constructor
+    	ArrayList<ShowTime> showList = new ArrayList<ShowTime>();
+    	this.showList = showList;
+    	
+    	createMovie();
     }
+    
     public void createMovie(){
         Scanner sc = new Scanner(System.in);
         System.out.println("You are now creating a new movie:");
@@ -24,12 +29,12 @@ public class MovieAndShowtimes {
 
     //--------------SHOWTIME RELATED FUNCTIONS-------------------------------------------------------------------------------------------------------
 
-    public void createShowTime(String showBegins, Movie m){
+    public void createShowTime(String showBegins, Movie m, int cinemaID){
         Scanner sc = new Scanner(System.in);
         System.out.println("Insert the number of showTimes to be created");
         int i = sc.nextInt();
         for(int x = 0; x < i; x++){
-            showList.add(new ShowTime(showBegins, m));
+            showList.add(new ShowTime(showBegins, m, cinemaID));
         }
     }
 
@@ -49,11 +54,19 @@ public class MovieAndShowtimes {
         return this.showList;
     }
 
-    public void removeShowTime(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Which showTime to be removed?");
-        int i = sc.nextInt();
-        showList.remove(i);
+    public void removeShowTime(String showBegin, int cinemaID){ // removes showtime related to a cinemaID
+
+        for(ShowTime n : showList){
+
+            if(n.getShowBegins().equals(showBegin)&& n.getShowTimeCinemaID() == cinemaID){
+
+                showList.remove(n);
+
+                break;
+
+            }
+
+        }
     }
 
     //-------------------MOVIE RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
@@ -94,4 +107,22 @@ public String[] sortShowTimes(){
 	}
 		
 
+
+
+public ShowTime getShowTime(String showBegins, int cinemaID){
+
+    ShowTime x = null;
+    for(ShowTime n: showList){
+
+        if(n.getShowBegins().equals(showBegins)&& n.getShowTimeCinemaID() == cinemaID){
+
+            return x = n;
+
+        }
+
+    }
+
+    return x;
+
+}
 }

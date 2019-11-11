@@ -66,9 +66,11 @@ public class Cineplex
 	{	
 		MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
 		SortMovieCopy2 = sortMovieID(); 
+		
+		System.out.println("Movie ID                  Movie Title ");
 		for(int i=0; i< SortMovieCopy2.length; i++)
 		{
-			System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")" + SortMovieCopy2[i].getMovieTitle());
+			System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                  " + SortMovieCopy2[i].getMovieTitle());
 		}
 	}
 	
@@ -134,7 +136,8 @@ public class Cineplex
 					{
 						if(n.getCinemaID() == cinemaID) 
 						{
-							n.addShowTimeToList(localListOfMovieAndShowTimes.get(i).getShowTime(showBegins));
+							n.addShowTimeToList(localListOfMovieAndShowTimes.get(i).getShowTime(showBegins, cinemaID));
+							System.out.println("Showtime added to array list in cinemaID: " + cinemaID);
 						}
 					}
 				}
@@ -167,7 +170,7 @@ public class Cineplex
 				Scanner sc3 = new Scanner(System.in);
 				int cinemaID= sc3.nextInt();
 				
-				localListOfMovieAndShowTimes.get(i).removeShowtime(showBegins, cinemaID);
+				localListOfMovieAndShowTimes.get(i).removeShowTime(showBegins, cinemaID);
 				System.out.println("Showtime removed.");
 				
 				for(Cinema n: cinemaList)
@@ -175,12 +178,33 @@ public class Cineplex
 					if(n.getCinemaID() == cinemaID)
 					{
 						n.removeShowTimeToList(localListOfMovieAndShowTimes.get(i).getShowTime(showBegins, cinemaID));
+						System.out.println("Showimte removed in arraylist");
 					}
 				}
 			}
 		}
 	}
 	
+	public ArrayList<ShowTime> getListOfShowTimesForCinema(int cinemaID) 
+	{
+		for(Cinema n: cinemaList) {
+			if(n.getCinemaID() == cinemaID) {
+				return n.getListOfShowTime();
+			}
+		}
+		return null;
+	}
+	
+	public void displayShowTimesForCinema(int cinemaID)
+	{
+		for(Cinema n: cinemaList) 
+		{
+			if(n.getCinemaID() == cinemaID) 
+			{
+				n.displayShowTimesForCinema();
+			}
+		}
+	}
 	
 	public int selectShowtime(String showtime, int movieID)  //RETURNS CINEMA ID of the showtime
 	{	
@@ -199,7 +223,6 @@ public class Cineplex
 				return n.getShowTimeCinemaID();
 			}
 		}
-		
 		
 		return -1;
 	}	
@@ -221,6 +244,18 @@ public class Cineplex
 			}
 			return SortMovieCopy;
 		}
+	
+	public int checkIfMovieExistInCineplex(int movieID)
+	{
+		for(MovieAndShowtimes m: localListOfMovieAndShowTimes)
+		{
+			if(m.getMovieID() == movieID)
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
 		
 	
 }

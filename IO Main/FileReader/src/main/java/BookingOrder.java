@@ -10,6 +10,7 @@ public class BookingOrder  { // purpose of BookingOrder is mainly to keep track
     private int movieID;
     private int customerID; //
     private double totalPrice;
+    private int cineplexID;
     //------------------------------------Constructors---------------------------------------------------------------------------------
     public BookingOrder(int customerID, int orderNo){
         this.customerID = customerID;
@@ -29,8 +30,15 @@ public class BookingOrder  { // purpose of BookingOrder is mainly to keep track
     public int getMovieID(){
         return this.movieID;
     }
+    
+    public int getCineplexID(){
+        return this.cineplexID;
+    }
     public void setMovieID(int movieID){
         this.movieID = movieID;
+    }
+    public void setCineplexID(int cineplexID){
+        this.cineplexID = cineplexID;
     }
     public int getCustomerID(){
         return this.customerID;

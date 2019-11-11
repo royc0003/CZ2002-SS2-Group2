@@ -5,10 +5,15 @@ public class MovieManager {
     private MovieDisplay displayMovie;
     private static ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes;
 
+    public MovieManager() {
+    	
+    }
+    
     public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
         this.displayMovie = displayMovie;
         MovieManager.listOfMovieAndShowtimes = listOfMovieAndShowtimes;
     }
+    
     public void printDetails(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
         for(MovieAndShowtimes x : listOfMovieAndShowtimes){
             displayMovie.printDetails(x.getMovieID(), x.getMovieTitle(), x.getMovieAgeRating(),x.getMovieAverageRating(), x.getMovieDuration(), x.getMovieShowingStatus()
@@ -51,12 +56,18 @@ public class MovieManager {
     // returns list of movieObjects
     // gets a single movie from the list of movieObjects --
 public void printGlobalListOfMovieIDs(){
-        System.out.println("******************************************************************");
-        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
-            System.out.println("Movie ID: "+ n.getMovieID() +", Movie Title: "+n.getMovieTitle());
-        }
-    System.out.println("******************************************************************");
+	
+	MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[listOfMovieAndShowtimes.size()];
+	SortMovieCopy2 = sortGlobalListMovieID(); 
+	
+	System.out.println("MovieID                            MovieTitle");
+	for(int i=0; i< SortMovieCopy2.length; i++)
+	{
+		System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                           " + SortMovieCopy2[i].getMovieTitle());
+	}
+	
 }
+
 public ArrayList<Integer> getGlobalListOfMovieIDs(){
         ArrayList<Integer> listOfMovieIDs = new ArrayList<Integer>();
         for(MovieAndShowtimes n: listOfMovieAndShowtimes){
@@ -90,6 +101,10 @@ public MovieAndShowtimes getMovieAndShowtimes(int MovieID){
     return null; // if cannot find return null
 }
 
+public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){
+	return this.listOfMovieAndShowtimes;
+}
+
 
     //--------------MANAGES WITH SHOWTIMES------------------------------------------------------------------------------------------------------
 
@@ -120,6 +135,28 @@ public MovieAndShowtimes getMovieAndShowtimes(int MovieID){
             }
         }
     }
+    
+    
+    public MovieAndShowtimes[] sortGlobalListMovieID(){
+		
+		MovieAndShowtimes[] SortMovieCopy= new MovieAndShowtimes[listOfMovieAndShowtimes.size()];
+			
+			for(int i=0; i<listOfMovieAndShowtimes.size(); i++) {
+				SortMovieCopy[i]= listOfMovieAndShowtimes.get(i);
+			}
+			
+			for(int i=0; i< SortMovieCopy.length; i++) {
+				if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
+					MovieAndShowtimes temp = SortMovieCopy[i+1];
+					SortMovieCopy[i] = SortMovieCopy[i+1];
+					SortMovieCopy[i+1] = temp;
+				}
+			}
+			return SortMovieCopy;
+		}
+		
+    
+    
 
 
 

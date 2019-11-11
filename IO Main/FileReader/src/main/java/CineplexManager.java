@@ -6,6 +6,10 @@ public class CineplexManager
 	protected ArrayList<Cineplex> cineplexList = new ArrayList<Cineplex>();
 	protected MovieManager movieManager;
 	
+	public CineplexManager() {
+		this.movieManager = new MovieManager();
+	}
+	
 
 //-------------------------Get methods--------------------------------------------------------------------------------------------	
 	public Cineplex selectCineplex(int cineplexID)
@@ -99,6 +103,21 @@ public class CineplexManager
 		}
 		return SortCopy;
 	}
+	
+	public ArrayList<Cineplex> listOfCineplexWithMovieID(int movieID)
+	{
+		ArrayList<Cineplex> cineplexListWithMovieID = new ArrayList<Cineplex>();
+
+		for(Cineplex m: cineplexList)
+		{
+			if(m.checkIfMovieExistInCineplex(movieID) == 1)
+			{
+				cineplexListWithMovieID.add(m);
+			}
+		}
+		return cineplexListWithMovieID;
+	}
+	
 		
 		
 	
