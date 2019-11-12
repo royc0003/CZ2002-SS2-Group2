@@ -28,6 +28,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
     private String cineplexDetails = "cineplexDetails.csv";
     private String customerDetails = "customerDetails.csv";
     private String bookingOrderDetails = "bookingOrderDetails.csv";
+    private String cinemaDetails = "cinemaDetails.csv";
 
     /*private String showTimeDetails = "showTimeDetails.csv";
     private String ticketDetails = "ticketDetails.csv";
@@ -134,6 +135,21 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }
+    public ArrayList<Cinema> readFromMoviesCSV() throws IOException{
+        if(!FileIOHelper.exists(this.cinemaDetails)) {
+            System.out.println("File does not exist!");
+            return new ArrayList<Cinema>();}
+        BufferedReader moviesCSV = FileIOHelper.getBufferedReader(this.cinemaDetails);
+        List<String[]> movieLists = readAll(moviesCSV,1);
+        ArrayList<Cinema> results = new ArrayList<Cinema>();
+        if(movieLists.size() == 0) return results;
+        for(String[] item: movieLists){
+            System.out.println(Arrays.toString(item));
+            Cinema mov = new Movies(item); //instantiates new objects that'll be kept in array
+            results.add(mov);
+        }
+        return results;
+    }
     /*public ArrayList<ShowTime> readFromShowTimeCSV() throws IOException{
         if(!FileIOHelper.exists(this.showTimeDetails)) return new ArrayList<ShowTime>();
         BufferedReader showTimeCSV = FileIOHelper.getBufferedReader(this.showTimeDetails);
@@ -206,6 +222,16 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         ArrayList<String[]> movieList = new ArrayList<>();
         movieList.add(header); // adds the current header
         for(BookingOrder x: movies){
+            movieList.add(x.toCsv()); // require a function that gives a String[] of items to be converted
+        }
+        writeToCSVFile(movieList, movieCSV);
+    }
+    public void writeToMovieCSV(ArrayList<Cinema> movies) throws IOException{
+        String[] header = {"Type", "Cinema_No"};
+        BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.cinemaDetails);
+        ArrayList<String[]> movieList = new ArrayList<>();
+        movieList.add(header); // adds the current header
+        for(Cinema x: movies){
             movieList.add(x.toCsv()); // require a function that gives a String[] of items to be converted
         }
         writeToCSVFile(movieList, movieCSV);
