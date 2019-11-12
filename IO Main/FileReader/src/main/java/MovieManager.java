@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java. util. Iterator;
@@ -35,6 +36,7 @@ public class MovieManager {
             n.createMovie();        // adds movie to every single MovieShhowTimes objects created
 
             listOfMovieAndShowtimes.add(n);
+            saveMovieAndShowtimesCSV(listOfMovieAndShowtimes);
             System.out.println("");
             System.out.println("You have created a movie!");
 
@@ -282,7 +284,28 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
     	
     	}
     	
-    }
+    public void saveMovieAndShowtimesCSV(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
+		MainCSVHelper csvHelper = new MainCSVHelper();
+		try{
+			System.out.println("*************Saving to CSV....");
+			csvHelper.writeToMovieAndShowtimeCSV(listOfMovieAndShowtimes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    public void initializeMovie(){
+		MainCSVHelper csvHelper = new MainCSVHelper();
+		try {
+			System.out.println("**********Initializing Objects....");
+			listOfMovieAndShowtimes = csvHelper.readFromMoviesCSV();
+		}
+		catch(IOException e){
+			e.getStackTrace();
+			System.out.println("Could not find the file");
+		}
+	}
+}
 		
     
     

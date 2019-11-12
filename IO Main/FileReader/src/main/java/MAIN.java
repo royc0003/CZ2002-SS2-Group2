@@ -13,6 +13,13 @@ public class MAIN {
         PriceManager priceManager = new PriceManager();
 		RatingsReviewsManager ratingReviewsManager = new RatingsReviewsManager();
 		CineplexManager cineplexManager = new CineplexManager() ; //this creates moviemanager too
+		BookingManager bookingManager = new BookingManager();
+		
+	
+		
+		
+		bookingManager.initializeBookingOrder();
+
 
         
         System.out.println("Are you a staff?");
@@ -41,11 +48,11 @@ public class MAIN {
 		case 1:
 		    StaffController staffController =new StaffController();
 		    staffController.printWelcomePage(ratingReviewsManager, priceManager);
+		    
 			break;
 		    
 		case 2:
 			CustomerUI customerUI = new CustomerUI();
-			BookingManager bookingManager = new BookingManager();
 			CustomerController custController = new CustomerController(bookingManager,customerUI,ratingReviewsManager, priceManager);
 			custController.startCustomer();
 			break;

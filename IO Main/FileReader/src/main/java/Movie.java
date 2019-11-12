@@ -18,6 +18,15 @@ public class Movie implements Serialization, Comparable<Movie>{
         this.showingStatus = showingStatus;
         this.duration = duration;
     }
+    public Movie(String[] item) {
+    	this.movieID = Integer.parseInt(item[0]);
+    	this.movieTitle = item[1];
+    	this.showingStatus = item[2];
+    	this.movieAgeRating = Integer.parseInt(item[3]);
+    	this.averageRating = Integer.parseInt(item[4]);
+    	this.duration = Integer.parseInt(item[5]);
+    }
+    
 
     public void addToAverageRating(int e)  //Reviews/Ratings Manager Class will use this function to add ratings to a particular movie
     {

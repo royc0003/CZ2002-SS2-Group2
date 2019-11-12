@@ -14,6 +14,7 @@ public class CustomerUI {
         int choice = sc.nextInt();
         switch(choice){
             case 1:
+
                 System.out.println("Enter username: ");
                 String userName = sc.next();
                 //if login fails bring customer to createCustomerPage
@@ -57,35 +58,39 @@ public class CustomerUI {
 
     //basic check to see if the username exist or not
 
-    private void createCustomerAccountPage(ArrayList<Customer> customerStorage){
+    private Customer createCustomerAccountPage(ArrayList<Customer> customerStorage){
+    	Customer newCustomer;
         Scanner sc = new Scanner(System.in);
         System.out.println("************************************************************");
         System.out.println("***************Customer Account Creation Page***************");
-        customerStorage.add(new Customer());
+        newCustomer = new Customer();
+        
         
         System.out.println("made new customer object");
         
-        Customer tempAccount = customerStorage.get(customerStorage.size()-1); // retrives the last object
+        //Customer tempAccount = customerStorage.get(customerStorage.size()-1); // retrives the last object
         System.out.println("Create username: ");
         String userName = sc.next();
         
         // if exist is true then need to prompt to recreate a new one
         while(checkExist(customerStorage, userName)){
-            System.out.println("Create username: ");
+           System.out.println("Create username: ");
             userName = sc.next(); // if not exist then can exit the loop meaning not exist in the db system
         }
         System.out.println("Username Successfully Created!");
-        tempAccount.setUserName(userName);
+        newCustomer.setUserName(userName);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Enter Name: ");
         String name = sc.next();
-        tempAccount.setName(name);
+        newCustomer.setName(name);
         System.out.println("Enter Mobile: ");
         String mobile = sc.next();
-        tempAccount.setMobile(mobile);
+        newCustomer.setMobile(mobile);
         System.out.println("Enter Email: ");
         String email = sc.next();
-        tempAccount.setEmail(email);
+        newCustomer.setEmail(email);
+        
+        return newCustomer;
 
     }
 

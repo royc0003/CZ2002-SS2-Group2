@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class BookingManager extends CineplexManager {
 
@@ -20,6 +22,7 @@ public int getTotalBookingOrders() {
 public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
 	orderList.add(new BookingOrder(customerID, totalBookingOrders));
+	saveBookingOrderCSV(this.orderList);
 	BookingOrder bookingOrder = orderList.get(totalBookingOrders-1);
 
 	System.out.println("Which method do you prefer? ");
@@ -111,12 +114,16 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 
 public Cineplex getCineplexChoice() {
 	System.out.println("Which cineplex would you prefer to watch at?");
+	
+	initializeCineplex();
+
 	printCineplexlist();
 	Scanner sc = new Scanner(System.in);
 	int cin = sc.nextInt();
-		
-	int cinID = cineplexList.get(cin-1).cineplexID;   		//selectCineplex from CineplexManager
-	Cineplex c = selectCineplex(cinID);
+ 
+	
+	Cineplex c = selectCineplex(cin);
+	System.out.println("WORK");
 	return c;
 }
 
@@ -198,7 +205,7 @@ public Cineplex showListofCineplex(int movieID) {
 	System.out.println("Please choose your preferred Cineplex ID: ");
 	int choice = sc.nextInt();
 	
-	return 	nlist.get(choice-1);
+	return 	nlist.get(choice);
 	
 }
 
@@ -265,6 +272,31 @@ public void printTickets(int orderNo) {  //PRINT THE NUMBER OF TICKETS in the or
 	}
 
 }
+
+
+
+//-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
+	public void initializeBookingOrder(){
+		MainCSVHelper csvHelper = new MainCSVHelper();
+		try {
+			System.out.println("**************************Initializing Objects....");
+			this.orderList = csvHelper.readFromBookingOrderCSV();
+
+		}
+		catch(IOException e){
+			e.getStackTrace();
+			System.out.println("Could not find the file");
+		}
+	}
+	public void saveBookingOrderCSV(ArrayList<BookingOrder> orderList){
+		MainCSVHelper csvHelper = new MainCSVHelper();
+		try{
+			System.out.println("***********************************Saving to CSV....");
+			csvHelper.writeToBookingOrderCSV(orderList);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
 

@@ -1,19 +1,55 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
+/**
+ * Represents a Cineplex that has many cinemas in it
+ * The cineplex has a local list of movies that it is currently showing
+
+ */
+
 public class Cineplex 
 {
 
+
+	/**
+	 *the unique ID that identifies the cineplex
+	 */
 	public int cineplexID;
+	/**
+	 *name of cineplex
+	 */
 	public String nameOfCineplex;
+	/**
+	 *location of cineplex
+	 */
 	private String location;
+	/**
+	 *the total number of cinemas in the cineplex
+	 */
 	private int no_of_cinema;
+	/**
+	 *the list of cinema objects in the cineplex
+	 */
 	private ArrayList<Cinema> cinemaList; //array list of cinemas
+	
+	/**
+	 *the local list of Movie and Showtimes objects in the cineplex 
+	 */
 	private ArrayList<MovieAndShowtimes> localListOfMovieAndShowTimes; // would store the movie objects for the cinema
 
 	
 //---------------------Constructor---------------------------------------------------------------------------------------	
 	
+	/**
+	 *Create Cineplex with the given cineplex id, name of the cineplex, location and number of cinemas the cineplex will have
+	 *It will also create the list of movie and showtime objects tag to the cineplex
+	 *With the number of cinemas, it create cinemas according to the number in the cineplex
+	 *@param cineplexID unique identity of the cineplex
+	 *@param name name of cineplex
+	 *@param location location of cineplex
+	 *@param no_of_cinema total number of cinemas in the cineplex
+	 */
 	public Cineplex(int cineplexID, String name, String location, int no_of_cinema) 
 	{
 		this.cineplexID = cineplexID;
@@ -22,6 +58,8 @@ public class Cineplex
 		this.no_of_cinema = no_of_cinema;
 		
 		this.cinemaList = new ArrayList<Cinema>();
+		
+
 		this.localListOfMovieAndShowTimes = new ArrayList<MovieAndShowtimes>();
 		
 		for(int i=0; i<no_of_cinema ;i++) //creates number of cinemas
@@ -33,31 +71,66 @@ public class Cineplex
 			String type = sc3.next();
 
 			cinemaList.add(new Cinema(i+1, type));
+			saveCinemaCSV(this.cinemaList);
 		}	
 	}
 	
+	public Cineplex(String[] item){
+		this.cineplexID = Integer.parseInt(item[0]);
+		this.nameOfCineplex = item[1];
+		this.location = item[2];
+		this.no_of_cinema = Integer.parseInt(item[3]);
+
+	}
+	
+	
 
 //-------------------------Get methods-----------------------------------------------------
+	public void Initialize() {
+		
+	}
 	
+	/**
+	 * Get cineplex ID of this cineplex
+	 *  @return this cineplex id
+	 */
 	public int getCineplexID() 
-	{
+	{   
 		return cineplexID;
 	}
 	
+	/**
+	 * Get cineplex name of this cineplex
+	 *  @return this cineplex name
+	 */
 	public String getCineplexName()
 	{
 		return nameOfCineplex;
 	}
 	
+	/**
+	 * Get number of cinemas in cineplex
+	 *  @return number of cinemas 
+	 */
 	public int getNumberOfCinemas() 
 	{
 		return no_of_cinema;
 	}
 	
+	/**
+	 * Get location of the cineplex
+	 *  @return location of cineplex
+	 */
+	
 	public String getLocationCineplex() 
 	{
 		return location;
 	}
+	
+	/**
+	 * Get seatmap of a specific cinema in this cineplex
+	 */
+	
 	
 	public void getSeatMapOfCinema(int cinema_no) 
 	{
@@ -67,10 +140,18 @@ public class Cineplex
 	
 //-------------------------Display methods--------------------------------------------------------------------------------------------------
 	
-	public void displayAvailableMovies() //display available movies in a cinema
+	/**
+	 * Display all the movies in the cineplex along with its movie id and title
+	 * the movies are sorted according to their movie id
+	 */
+	
+	public void displayAvailableMovies() 
 	{	
+		//INITIALIZE MOVIE AND SHOWTIMES
+
 		MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
 		SortMovieCopy2 = sortMovieID(); 
+				
 		System.out.println("");
 		System.out.println("======Movie List in Cineplex " + nameOfCineplex + "========" );
 		System.out.println("Movie ID                  Movie Title ");
@@ -80,6 +161,10 @@ public class Cineplex
 		}
 	}
 	
+	/**
+	 * Display all the showtimes of the specific movie
+	 * @param movieID
+	 */
 
 	public void displayAllShowtimes(int movieID) //display movie and its show times for a particular cineplex
 	{
@@ -239,7 +324,12 @@ public class Cineplex
 			
 		
 		ArrayList<ShowTime> stList = new ArrayList<ShowTime>();
+		try {
 		stList = m.getArrayOfShowTimes();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 	
 		for(ShowTime n: stList) {
 			if(n.getShowBegins().equals(showtime)) {
@@ -290,5 +380,35 @@ public class Cineplex
 			System.out.println(n.getCinemaID() + "                         " + n.getType());
 		}
 	}
+	
+	public String[] toCsv(){
+		String[] csv = {Integer.toString(this.cineplexID), this.nameOfCineplex, this.location, Integer.toString(this.no_of_cinema)};
+		return csv;
+
+	}
+	
+	public void initializeCinema(){
+		MainCSVHelper csvHelper = new MainCSVHelper();
+		try {
+			System.out.println("**********Initializing Objects....");
+			this.cinemaList = csvHelper.readFromCinemaCSV();
+
+		}
+		catch(IOException e){
+			e.getStackTrace();
+			System.out.println("Could not find the file");
+		}
+	}
+	public void saveCinemaCSV(ArrayList<Cinema> cinemaList){
+		MainCSVHelper csvHelper = new MainCSVHelper();
+		try{
+			System.out.println("*************Saving to CSV....");
+			csvHelper.writeToCinemaCSV(cinemaList);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
@@ -8,9 +10,11 @@ public class MovieAndShowtimes {
     private Movie movie;
 
 
-    public MovieAndShowtimes() { //  constructor
+    public MovieAndShowtimes(){ //  constructor
     	ArrayList<ShowTime> showList = new ArrayList<ShowTime>();
     	this.showList = showList;
+    
+
         }
     
     public void createMovie(){
@@ -27,6 +31,11 @@ public class MovieAndShowtimes {
         System.out.println("Insert duration (minutes)");
         int e =sc.nextInt(); 
         this.movie =  new Movie(a,b,c,d,e); // assigns a new movie object to the movie attribute
+      //  saveMovieToCSV(this.movie);
+    }
+    
+    public void setMovie(Movie m){
+        this.movie = m;
     }
 
     //--------------SHOWTIME RELATED FUNCTIONS-------------------------------------------------------------------------------------------------------
@@ -37,6 +46,7 @@ public class MovieAndShowtimes {
         int i = sc.nextInt();
         for(int x = 0; x < i; x++){*/
             showList.add(new ShowTime(showBegins, m, cinemaID));
+            saveShowTimeCSV(this.showList);
         
     }
 
@@ -52,7 +62,10 @@ public class MovieAndShowtimes {
     
     	
     }
-    public ArrayList<ShowTime> getArrayOfShowTimes(){
+    public ArrayList<ShowTime> getArrayOfShowTimes() throws IOException{
+    	
+    	//initializeMovie();
+    	initializeShowTime();
         return this.showList;
     }
 
@@ -127,4 +140,68 @@ public ShowTime getShowTime(String showBegins, int cinemaID){
     return x;
 
 }
+
+
+
+//-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
+/*public void initializeMovie() throws IOException {
+    MainCSVHelper csvHelper = new MainCSVHelper();
+    try {
+;            System.out.println("**************************Initializing Objects....");
+ArrayList<Movie> temp = new ArrayList<Movie>();
+        temp = csvHelper.readFromMoviesCSV();
+        this.movie = temp.get(0); // retrieves the very first item for initilaization
+        // test
+        System.out.println("Test...");
+        System.out.println(this.movie.getMovieTitle());
+    }
+    catch(IOException e){
+        e.getStackTrace();
+        System.out.println("Could not find the file");
+    }
+}*/
+
+/*public void saveMovieToCSV(Movie m){
+    MainCSVHelper csvHelper = new MainCSVHelper();
+ArrayList<Movie> temp = new ArrayList<Movie>();
+temp.add(m);
+    try{
+        System.out.println("***********************************Saving to CSV....");
+        csvHelper.writeToMovieCSV(temp);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}*/
+public void initializeShowTime(){
+    MainCSVHelper csvHelper = new MainCSVHelper();
+    try {
+        System.out.println("**************************Initializing Objects....");
+        this.showList = csvHelper.readFromShowTimeCSV();
+
+    }
+    catch(IOException e){
+        e.getStackTrace();
+        System.out.println("Could not find the file");
+    }
+}
+public void saveShowTimeCSV(ArrayList<ShowTime> showList){
+    MainCSVHelper csvHelper = new MainCSVHelper();
+    try{
+        System.out.println("***********************************Saving to CSV....");
+        csvHelper.writeToShowTimeCSV(showList);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+	/*
+	 * public String[] toCsv(){ String[] csv =
+	 * {Integer.toString(movie.getMovieID()), movie.getMovieTitle(),
+	 * movie.getMovieShowingStatus(), Integer.toString(movie.getMovieAgeRating()),
+	 * Integer.toString(movie.getMovieAgeRating()),
+	 * this.showList.get(0).getShowBegins(), this.showList.get(1).getShowBegins()..)
+	 * }; return csv; }
+	 */
 }

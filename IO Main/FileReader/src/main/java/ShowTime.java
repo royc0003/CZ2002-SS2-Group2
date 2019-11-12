@@ -23,6 +23,11 @@ public class ShowTime implements Serialization{ // remember to implement showTim
         this.cinemaID = cinemaID;
         this.movie = movie;
     }
+    public ShowTime(String[] item) {
+    	this.showBegins = item[0];
+    	this.showEnds = item[1];
+    	this.cinemaID = Integer.parseInt(item[2]);
+    }
     
     //*********************************************************************************************************************
     public void setShowBegins(String showBegins){
@@ -49,7 +54,7 @@ public class ShowTime implements Serialization{ // remember to implement showTim
     }
 
     public String[] toCsv() {
-        String[] csv = {this.showBegins, this.showEnds};
+        String[] csv = {this.showBegins, this.showEnds, Integer.toString(this.cinemaID)};
         return csv;
     }
 

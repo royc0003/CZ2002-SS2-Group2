@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class CineplexManager 
 {
@@ -18,6 +19,7 @@ public class CineplexManager
 		{
 			if(cineplexList.get(i).getCineplexID() == cineplexID)
 			{
+
 				return cineplexList.get(i);
 			}
 		}
@@ -75,6 +77,8 @@ public class CineplexManager
 		
 		Cineplex cineplex = new Cineplex(id, name, location, number);
 		cineplexList.add(cineplex);
+		
+		saveCineplexCSV(this.cineplexList);
 
 		
 		System.out.println("Created cineplex " + name + " at location " + location + " with " + number + " cinemas..");	
@@ -134,6 +138,34 @@ public class CineplexManager
 			}
 		}
 	}
+	
+	//-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
+
+
+		public void initializeCineplex(){
+			MainCSVHelper csvHelper = new MainCSVHelper();
+			try {
+				System.out.println("**************************Initializing Objects....");
+				this.cineplexList = csvHelper.readFromCineplexDetailsCSV();
+
+			}
+			catch(IOException e){
+				e.getStackTrace();
+				System.out.println("Could not find the file");
+			}
+		}
+		public void saveCineplexCSV(ArrayList<Cineplex> cineplexList){
+			MainCSVHelper csvHelper = new MainCSVHelper();
+			try{
+				System.out.println("***********************************Saving to CSV....");
+				csvHelper.writeToCineplexCSV(cineplexList);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+			
 	
 		
 		

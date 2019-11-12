@@ -4,10 +4,25 @@ public class Customer implements Serialization {
     private String name;
     private String mobile;
     private String email;
-    private static int customerID = 0; //note for customerID it'll be set as static
+    private int customerID; //note for customerID it'll be set as static
+    private static int count = 0;
     public Customer(){
-        customerID++;// ++ whenever new log-in
+        count++;// ++ whenever new log-in
+        this.customerID = count;
     }
+    
+    public Customer(String[] item){
+        this.age = Integer.parseInt(item[0]);
+        this.userName = item[1];
+
+        this.name = item[2];
+        this.mobile = item[3];
+        this.email = item[4];
+        this.customerID = Integer.parseInt(item[5]);
+
+
+    }
+    
     public void setAge(int age){
         this.age = age;
     }
@@ -42,7 +57,7 @@ public class Customer implements Serialization {
         return this.mobile;
     }
     public String[] toCsv(){
-        String[] Csv = {Integer.toString(this.age),this.userName, this.name, this.mobile, this.email};
+        String[] Csv = {Integer.toString(this.age),this.userName, this.name, this.mobile, this.email, Integer.toString(this.customerID)};
         return Csv;
     }
 

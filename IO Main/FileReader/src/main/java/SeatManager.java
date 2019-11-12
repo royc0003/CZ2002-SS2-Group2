@@ -1,9 +1,24 @@
+/**
+ Represents a manager in control of creating/managing the seats of the cinema.
+ There is only one seat manager per cinema.
+*/
+
+
 public class SeatManager {
 	
-	
+	 /**
+	 * The total number of empty seats in the cinema
+	 */
 	private int numEmptyseats;
-	private Seat[][] seats;
 	
+	/**
+	 * A double array of seats objects where the double array is [row][column]
+	 */
+	private Seat[][] seats;
+	/**
+	* Creates a new Seat Manager
+	* initializes 100 seats
+	  */
 	public SeatManager() {
 		numEmptyseats = 100;
 		seats = new Seat[10][10];
@@ -13,7 +28,9 @@ public class SeatManager {
 				seats[i][j] = new Seat(i, j);}}
 		
 	}
-	
+	/**
+	* Displays a seat map of the cinema by printing all the seat objects
+	  */
 
 	public void seatmap() {
 		int j =0;
@@ -41,6 +58,9 @@ public class SeatManager {
 		
 	}
 	
+	/**
+	* Show the IDs of the seats that are empty in the cinema
+	  */
 	public void showEmptyseats() {
 		System.out.println("The  following seats are empty: ");
 		for(int i=0; i<10 ; i++) {
@@ -53,6 +73,11 @@ public class SeatManager {
 		
 	}
 	
+	/**
+	* Assign the seat id to the customer id 
+	* @param seatID the seat id the customer id is booking
+	* @param cust_id the id of the customer that is booking
+	  */
 	
 	public void assignSeat(String seatId, int cust_id) {
 		
@@ -67,6 +92,12 @@ public class SeatManager {
 		}
 		
 	}
+	
+	/**
+	* Get the number of empty seats in the cinema
+	* @return the number of empty seats 
+	  */
+	
 
 	public int getNumEmptySeats() {
 		return numEmptyseats;

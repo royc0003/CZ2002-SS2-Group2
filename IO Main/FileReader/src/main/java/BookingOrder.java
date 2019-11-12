@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 // assuming that CineplexManager is present
-public class BookingOrder  { // purpose of BookingOrder is mainly to keep track
+public class BookingOrder implements Serialization  { // purpose of BookingOrder is mainly to keep track
 
     private int noOfTickets;
     private int orderNo;
@@ -16,7 +16,17 @@ public class BookingOrder  { // purpose of BookingOrder is mainly to keep track
         this.customerID = customerID;
         this.orderNo = orderNo;
     }
+    
+    public BookingOrder(String[] items){
+        this.noOfTickets = Integer.parseInt(items[0]);
+        this.orderNo = Integer.parseInt(items[1]);
+        this.showTime = items[2];
+        this.movieID = Integer.parseInt(items[3]);
+        this.customerID = Integer.parseInt(items[4]);
+        this.totalPrice = Double.parseDouble(items[5]);
+        this.cineplexID = Integer.parseInt(items[6]);
 
+    }
     public int getNoOfTickets(){
         return this.noOfTickets;
     }
@@ -66,66 +76,16 @@ public class BookingOrder  { // purpose of BookingOrder is mainly to keep track
     }
 
 
-    //------------------------------------Have proper getSetMethods---------------------------------------------------------------------------------
-
-
-    /*public BookingOrder(int customerID, int orderNo) {
-        this.customerID = customerID;
-        this.orderNo = orderNo;
+    public String converToString(int i){
+        return Integer.toString(i);
     }
-
-    public void calculateTotalPrice() {
-        //PriceManager p = new PriceManager;
-        //totalPrice = ;
-
+    @Override
+    public String[] toCsv() {
+       String[] csv = {converToString(this.noOfTickets),
+       converToString(this.orderNo), this.showTime, converToString(this.movieID),
+               converToString(this.customerID),Double.toString(this.totalPrice),
+       converToString(this.cineplexID)};
+       return csv;
     }
-
-
-    public void bookingThroughCineplex() {
-
-        System.out.println("Which cineplex would you prefer to watch at?");
-        printCineplexlist();
-        Scanner sc = new Scanner(System.in);
-        int cin = sc.nextInt();
-
-        int cinID = cineplexList.get(cin).cineplexID;   		//selectCineplex from CineplexManager
-        Cineplex c = selectCineplex(cinID);
-        displayMovieListOfCineplex(c); 							//print movielist of that cineplex
-
-
-        System.out.println("Which movie do you want to watch?");
-        int movieID = sc.nextInt();
-
-        c.displayAllShowtimes(movieID);
-        System.out.println("Which showtimes do you want to choose?");
-
-
-        c.selectShowtime(String showtime);
-
-
-
-        //select showtime which will return seatmap of the cinema that is assigned to that showtime
-        //bookseatmap - assign the seat
-        //noOfTickets ++;
-
-    }
-
-    public void bookingThroughMovieList(CineplexManager m) {
-
-    }
-
-    public void bookingOrder(int orderNo) {
-
-    }
-
-    public String getSeatID(int customerID) {
-        return seatID;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }*/
-
-
 
 }
