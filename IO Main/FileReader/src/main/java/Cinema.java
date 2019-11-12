@@ -22,13 +22,15 @@ public class Cinema implements Serialization {
 		this.cinema_no = cinema_no;
 		this.seatingCapacity = 100;
 		this.type = type;
+		this.listOfShowTimes = new ArrayList<ShowTime>();
 	}
 
 	public void displayShowTimesForCinema()
-	{
+	{	System.out.println("========= Cinema " + cinema_no + " Showtimes ============");
+		System.out.println("Showtimes                 Movie ");
 		for(int i = 0; i < listOfShowTimes.size(); i++)
 		{
-			System.out.println("Showtime: " + listOfShowTimes.get(i).getShowBegins());
+			System.out.println(listOfShowTimes.get(i).getShowBegins() + "                      " + listOfShowTimes.get(i).getMovieTitle());
 		}
 	}
 	
@@ -57,7 +59,7 @@ public class Cinema implements Serialization {
 	{
 		for(int i = 0; i<listOfShowTimes.size(); i++) 
 		{ 
-			if(s.getShowBegins() == listOfShowTimes.get(i).getShowBegins())
+			if(s.getShowBegins().equals(listOfShowTimes.get(i).getShowBegins()) )
 			{ 
 				listOfShowTimes.remove(i); 
 			} 

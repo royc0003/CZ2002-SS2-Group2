@@ -90,7 +90,7 @@ public class CustomerUI {
     }
 
 
-    public void printWelcomePage(int customer_ID, BookingManager bookingManager, RatingsReviewsManager ratingsReviewsManager) {
+    public void printWelcomePage(int customer_ID, BookingManager bookingManager, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager) {
         Scanner scan = new Scanner(System.in);
         int userChoice;
         System.out.println("************************WELCOME TO CLARITA&KOKLIANG's CineVillage************************");
@@ -109,11 +109,14 @@ public class CustomerUI {
             switch (userChoice){
                 case 1:
                     //Book
-                    bookingManager.makeNewOrder(customer_ID);
+           
+                    bookingManager.makeNewOrder(customer_ID, priceManager);
                     break;
                 case 2:
                     //movie details
-                   bookingManager.movieManager.printDetails(bookingManager.movieManager.getListOfMovieAndShowtimes());
+                   //bookingManager.movieManager.printDetails(bookingManager.movieManager.getListOfMovieAndShowtimes());
+                    bookingManager.movieManager.printDetails(bookingManager.movieManager.getListOfMovieAndShowtimes());
+
                     break;
                 case 3:
                     //get reviews

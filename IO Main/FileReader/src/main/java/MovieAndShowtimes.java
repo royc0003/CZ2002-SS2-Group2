@@ -11,19 +11,21 @@ public class MovieAndShowtimes {
     public MovieAndShowtimes() { //  constructor
     	ArrayList<ShowTime> showList = new ArrayList<ShowTime>();
     	this.showList = showList;
-    	
-    	createMovie();
-    }
+        }
     
     public void createMovie(){
         Scanner sc = new Scanner(System.in);
         System.out.println("You are now creating a new movie:");
-        System.out.println("Insert int ID, String title, int ageRating, String showingStatus, int duration:");
-        int a = sc.nextInt();
-        String b = sc.nextLine();
-        int c = sc.nextInt();
-        String d = sc.nextLine();
-        int e = sc.nextInt();
+        System.out.println("Insert Movie ID");
+        int a = sc.nextInt();   
+        System.out.println("Insert Title");
+        String b = sc.next();
+        System.out.println("Insert Age Rating (integer)");
+        int c = sc.nextInt(); 
+        System.out.println("Insert Showing Status (string)");
+        String d = sc.next();
+        System.out.println("Insert duration (minutes)");
+        int e =sc.nextInt(); 
         this.movie =  new Movie(a,b,c,d,e); // assigns a new movie object to the movie attribute
     }
 
@@ -31,11 +33,11 @@ public class MovieAndShowtimes {
 
     public void createShowTime(String showBegins, Movie m, int cinemaID){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Insert the number of showTimes to be created");
+       /* System.out.println("Insert the number of showTimes to be created");
         int i = sc.nextInt();
-        for(int x = 0; x < i; x++){
+        for(int x = 0; x < i; x++){*/
             showList.add(new ShowTime(showBegins, m, cinemaID));
-        }
+        
     }
 
     public void printListOfShowTimes(){  //PRINT SORTED SHOWTIMES

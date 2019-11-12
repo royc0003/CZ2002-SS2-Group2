@@ -8,7 +8,7 @@ public class Cineplex
 	public String nameOfCineplex;
 	private String location;
 	private int no_of_cinema;
-	private ArrayList<Cinema> cinemaList = new ArrayList<Cinema>(); //array list of cinemas
+	private ArrayList<Cinema> cinemaList; //array list of cinemas
 	private ArrayList<MovieAndShowtimes> localListOfMovieAndShowTimes; // would store the movie objects for the cinema
 
 	
@@ -20,13 +20,18 @@ public class Cineplex
 		this.nameOfCineplex = name;
 		this.location = location;
 		this.no_of_cinema = no_of_cinema;
-		 
+		
+		this.cinemaList = new ArrayList<Cinema>();
+		this.localListOfMovieAndShowTimes = new ArrayList<MovieAndShowtimes>();
+		
 		for(int i=0; i<no_of_cinema ;i++) //creates number of cinemas
 		{
 
 			Scanner sc3 = new Scanner(System.in);
-			String type = sc3.nextLine();
-			System.out.println("Enter the type for the cinema");
+			System.out.println("Now please choose the type of cinema you want to create:");
+			System.out.println("Enter the type for the Cinema (" + (i+1) +"):");
+			String type = sc3.next();
+
 			cinemaList.add(new Cinema(i+1, type));
 		}	
 	}
@@ -66,11 +71,12 @@ public class Cineplex
 	{	
 		MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
 		SortMovieCopy2 = sortMovieID(); 
-		
+		System.out.println("");
+		System.out.println("======Movie List in Cineplex " + nameOfCineplex + "========" );
 		System.out.println("Movie ID                  Movie Title ");
 		for(int i=0; i< SortMovieCopy2.length; i++)
 		{
-			System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                  " + SortMovieCopy2[i].getMovieTitle());
+			System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                       " + SortMovieCopy2[i].getMovieTitle());
 		}
 	}
 	
@@ -107,6 +113,8 @@ public class Cineplex
 	public void createShowtimesAndAssignToCinema() 
 	//check if movie exists in local movie list first before proceeding
 	{
+		displayAvailableMovies();
+		System.out.println("");
 		System.out.println("Enter the movie id that you want to add showtimes to");
 		Scanner sc = new Scanner(System.in);
 		int userInput = sc.nextInt(); 
@@ -126,6 +134,9 @@ public class Cineplex
 					Scanner sc1 = new Scanner(System.in);
 					String showBegins = sc1.nextLine();
 				
+					//print cinema 
+					printCinemaIdOfCineplex();
+					System.out.println("");
 					System.out.println("Enter the cinema ID");
 					Scanner sc2 = new Scanner(System.in);
 					int cinemaID = sc2.nextInt();
@@ -145,7 +156,7 @@ public class Cineplex
 		}
 	}
 	
-	public void updateShowtimeToMovie(int MovieID) //delete show time and adds a new showtime
+	public void updateShowtimeToMovie() //delete show time and adds a new showtime
 	{
 		
 		deleteShowTimeToMovie();
@@ -154,6 +165,9 @@ public class Cineplex
 	
 	public void deleteShowTimeToMovie()
 	{
+		displayAvailableMovies();
+		System.out.println("");
+		
 		System.out.println("Enter MovieID of movie you want to delete showtime for");
 		Scanner sc = new Scanner(System.in);
 		int movieID = sc.nextInt();
@@ -162,25 +176,33 @@ public class Cineplex
 		{
 			if(movieID == localListOfMovieAndShowTimes.get(i).getMovieID())
 			{
-				System.out.println("Which showtime to remove?");
-				Scanner sc2 = new Scanner(System.in);
-				String showBegins= sc2.nextLine();
-				
-				System.out.println("Which cinema to remove from?");
+				printCinemaIdOfCineplex();			//print cinema of cineplex
+				System.out.println("");
+
+				System.out.println("Choose a cinema to remove a showtime?");
 				Scanner sc3 = new Scanner(System.in);
 				int cinemaID= sc3.nextInt();
 				
-				localListOfMovieAndShowTimes.get(i).removeShowTime(showBegins, cinemaID);
-				System.out.println("Showtime removed.");
+				displayShowTimesForCinema(cinemaID);
+				System.out.println("");
+				System.out.println("Which showtime do you want to remove?");
+				Scanner sc2 = new Scanner(System.in);
+				String showBegins= sc2.nextLine();
 				
+				//removes showtime object from cinema showtime list
 				for(Cinema n: cinemaList)
 				{
 					if(n.getCinemaID() == cinemaID)
-					{
+					{  
 						n.removeShowTimeToList(localListOfMovieAndShowTimes.get(i).getShowTime(showBegins, cinemaID));
-						System.out.println("Showimte removed in arraylist");
+						System.out.println("Showtime removed in arraylist");
 					}
 				}
+				//removes the showtime of the movie in the cineplex local list 
+				localListOfMovieAndShowTimes.get(i).removeShowTime(showBegins, cinemaID);
+				System.out.println("Showtime removed.");
+				
+				
 			}
 		}
 	}
@@ -195,12 +217,13 @@ public class Cineplex
 		return null;
 	}
 	
+
 	public void displayShowTimesForCinema(int cinemaID)
 	{
 		for(Cinema n: cinemaList) 
 		{
 			if(n.getCinemaID() == cinemaID) 
-			{
+			{	
 				n.displayShowTimesForCinema();
 			}
 		}
@@ -235,13 +258,14 @@ public class Cineplex
 				SortMovieCopy[i]= localListOfMovieAndShowTimes.get(i);
 			}
 			
-			for(int i=0; i< SortMovieCopy.length; i++) {
-				if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
-					MovieAndShowtimes temp = SortMovieCopy[i+1];
-					SortMovieCopy[i] = SortMovieCopy[i+1];
-					SortMovieCopy[i+1] = temp;
-				}
-			}
+			if(SortMovieCopy.length > 1) {
+				for(int i=0; i< SortMovieCopy.length-1; i++) {
+					if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
+						MovieAndShowtimes temp = SortMovieCopy[i+1];
+						SortMovieCopy[i] = SortMovieCopy[i+1];
+						SortMovieCopy[i+1] = temp;
+					}
+				}}
 			return SortMovieCopy;
 		}
 	
@@ -256,6 +280,15 @@ public class Cineplex
 		}
 		return 0;
 	}
-		
+	
+	public void printCinemaIdOfCineplex()
+	{ System.out.println("");
+		System.out.println("==== List of available IDS in Cineplex " + nameOfCineplex + "====");
+		System.out.println("Cinema ID                 Type");
+		for(Cinema n: cinemaList)
+		{
+			System.out.println(n.getCinemaID() + "                         " + n.getType());
+		}
+	}
 	
 }

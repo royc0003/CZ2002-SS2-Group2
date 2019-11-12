@@ -6,6 +6,8 @@ public class ShowTime implements Serialization{ // remember to implement showTim
     private String showBegins;//  with the assumption that its in 24hrs format
     private String showEnds;
     private int cinemaID;
+    private Movie movie;
+    
     public ShowTime(String showBegins, Movie movie, int cinemaID) { // note that duration will be given in minutes
         this.showBegins = showBegins; // ill receive duration in integer
         String part1 = showBegins.substring(0,2); //11
@@ -19,10 +21,16 @@ public class ShowTime implements Serialization{ // remember to implement showTim
         int min = total %60; // remainder gives min
         this.showEnds = (Integer.toString(hour) + Integer.toString(min));
         this.cinemaID = cinemaID;
+        this.movie = movie;
     }
+    
     //*********************************************************************************************************************
     public void setShowBegins(String showBegins){
         this.showBegins = showBegins;
+    }
+    
+    public String getMovieTitle(){
+        return movie.getMovieTitle();
     }
     public String getShowBegins() {
         return this.showBegins;

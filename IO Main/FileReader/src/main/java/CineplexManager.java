@@ -42,8 +42,12 @@ public class CineplexManager
 		Cineplex[] SortCopy2= new Cineplex[cineplexList.size()];
 		SortCopy2 = sortCineplexID();
 		
+		System.out.println("");
+		System.out.println("==============Cineplex List====================");
+		System.out.println("Cineplex ID                       Cineplex Name");
+		
 		for(int i=0;i<SortCopy2.length; i++) {
-			System.out.println("("+ (i+1) +")" + "Cineplex : " + SortCopy2[i].nameOfCineplex);
+			System.out.println("("+ SortCopy2[i].getCineplexID() +")                               " + SortCopy2[i].nameOfCineplex);
 		}
 		}
 
@@ -61,16 +65,13 @@ public class CineplexManager
 		int id = sc.nextInt();
 		
 		System.out.println("Enter name of Cineplex");
-		Scanner sc1 = new Scanner(System.in);
-		String name = sc1.nextLine();
+		String name = sc.next();
 		
 		System.out.println("Enter location of Cineplex");
-		Scanner sc2 = new Scanner(System.in);
-		String location = sc2.nextLine();
+		String location = sc.next();
 		
 		System.out.println("Enter no of cinemas in Cineplex");
-		Scanner sc3 = new Scanner(System.in);
-		int number = sc3.nextInt();
+		int number = sc.nextInt();
 		
 		Cineplex cineplex = new Cineplex(id, name, location, number);
 		cineplexList.add(cineplex);
@@ -81,8 +82,11 @@ public class CineplexManager
 	
 	public void assignMoviesToCineplex(Cineplex c, int movieid)
 	{	
-		MovieAndShowtimes m = movieManager.getMovieAndShowtimes(movieid);
-		c.addMovieToCineplex(m);
+		//MovieAndShowtimes m = movieManager.getMovieAndShowtimes(movieid);
+		
+		c.addMovieToCineplex(movieManager.getMovieAndShowtimes(movieid));
+		System.out.println("You have assigned the movie to " + c.nameOfCineplex);
+		System.out.println("");
 	}
 	
 		
@@ -94,13 +98,15 @@ public class CineplexManager
 			SortCopy[i]= cineplexList.get(i);
 		}
 		
-		for(int i=0; i< SortCopy.length; i++) {
-			if(SortCopy[i].cineplexID > SortCopy[i+1].cineplexID  ) {
-				Cineplex temp = SortCopy[i+1];
-				SortCopy[i] = SortCopy[i+1];
-				SortCopy[i+1] = temp;
-			}
-		}
+		if(SortCopy.length > 1) {		
+			for(int i=0; i< SortCopy.length-1; i++) {
+				if(SortCopy[i].cineplexID > SortCopy[i+1].cineplexID  ) {
+					Cineplex temp = SortCopy[i+1];
+					SortCopy[i] = SortCopy[i+1];
+					SortCopy[i+1] = temp;
+				}
+			}}
+			
 		return SortCopy;
 	}
 	
@@ -116,6 +122,17 @@ public class CineplexManager
 			}
 		}
 		return cineplexListWithMovieID;
+	}
+	
+	public void printCinemaIdForCineplex(int cineplexID )
+	{
+		for(Cineplex c: cineplexList)
+		{
+			if(cineplexID == c.getCineplexID())
+			{
+				c.printCinemaIdOfCineplex();
+			}
+		}
 	}
 	
 		

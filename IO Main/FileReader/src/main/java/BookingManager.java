@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public class BookingManager extends CineplexManager {
 
+
 public BookingManager() {
-	
 }
+
 private static int totalBookingOrders = 1; 
 ArrayList<BookingOrder> orderList = new ArrayList<BookingOrder>(); 
 
@@ -16,10 +17,11 @@ public int getTotalBookingOrders() {
 
 //------------------ Main Methods -----------------------------------------------------------------------------------------------
 
-public void makeNewOrder(int customerID) {
+public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
 	orderList.add(new BookingOrder(customerID, totalBookingOrders));
 	BookingOrder bookingOrder = orderList.get(totalBookingOrders-1);
+
 	System.out.println("Which method do you prefer? ");
 	System.out.println("(1) Choose Cineplex first ");
 	System.out.println("(2) Choose Movie first");
@@ -53,8 +55,7 @@ public void makeNewOrder(int customerID) {
 		  bookingOrder.setSeatID(seatID);
 		  }
 		
-		PriceManager pm = new PriceManager();
-		double totalPrice = calculateTotalPrice(pm)*bookingOrder.getNoOfTickets();
+		double totalPrice = calculateTotalPrice(priceManager,bookingOrder.getOrderNo() );
 		bookingOrder.setTotalPrice(totalPrice);
 		
 		
@@ -85,9 +86,9 @@ public void makeNewOrder(int customerID) {
 		  bookingOrder.setSeatID(seatID2);
 		  }
 		
-		PriceManager pm = new PriceManager();
-		double totalPrice = calculateTotalPrice(pm)*bookingOrder.getNoOfTickets();
-		bookingOrder.setTotalPrice(totalPrice);
+		
+		double totalPrice1 = calculateTotalPrice(priceManager,bookingOrder.getOrderNo() );
+		bookingOrder.setTotalPrice(totalPrice1);
 	
 		break;}
 	}
@@ -202,9 +203,19 @@ public Cineplex showListofCineplex(int movieID) {
 }
 
 
-public double calculateTotalPrice(PriceManager m) {
+public double calculateTotalPrice(PriceManager m, int orderNo) {
+	int i=0;
+	for(BookingOrder n: orderList) {
+		if(n.getOrderNo() == orderNo) {
+				break;}
+		}
+		i++;
 	
-	return m.getPriceRate() ;
+	BookingOrder n = orderList.get(i);
+	
+	double totalPrice = m.getPriceRate()*n.getNoOfTickets();
+	return totalPrice;
+	
 	}
 
 

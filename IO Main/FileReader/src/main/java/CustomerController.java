@@ -6,12 +6,14 @@ public class CustomerController {
     private BookingManager bookingManager;
     private RatingsReviewsManager ratingsReviewsManager;
     private ArrayList<Customer> customerStorage; //customerStorage for login
+    private PriceManager priceManager;
     private CustomerUI customerUI;
 
-    public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingReviewsManager){
+    public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingReviewsManager, PriceManager priceManager){
         this.bookingManager = bookingManager;
         this.ratingsReviewsManager = ratingsReviewsManager;
         this.customerUI = customerUI;
+        this.priceManager = priceManager;
     }
 
     public ArrayList<Customer> getCustomerStorage(){
@@ -25,7 +27,7 @@ public class CustomerController {
         this.customerStorage = custStorage;
         
         Customer currentCustomerAccount = customerStorage.get(customerStorage.size()-1);
-        customerUI.printWelcomePage(currentCustomerAccount.getCustomerID(),bookingManager, ratingsReviewsManager);
+        customerUI.printWelcomePage(currentCustomerAccount.getCustomerID(),bookingManager, ratingsReviewsManager, priceManager);
         System.out.println("Thank you for using our THIS SUCKS J'DETESTE oodp");
     }
 

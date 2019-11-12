@@ -10,11 +10,15 @@ public class MAIN {
         String Staff;
         String staffPassword;
         
+        PriceManager priceManager = new PriceManager();
+		RatingsReviewsManager ratingReviewsManager = new RatingsReviewsManager();
+		CineplexManager cineplexManager = new CineplexManager() ; //this creates moviemanager too
+
         
-        System.out.print("Are you a staff?");
+        System.out.println("Are you a staff?");
         Staff = scan.next();
         if (Staff.equalsIgnoreCase("yes")) {
-            System.out.print("Please enter staff password");
+            System.out.println("Please enter staff password");
             staffPassword = scan.next();
             if (staffPassword.equals("000000")) {
                 isStaff= true;
@@ -36,14 +40,13 @@ public class MAIN {
 		switch(choice) {
 		case 1:
 		    StaffController staffController =new StaffController();
-		        
+		    staffController.printWelcomePage(ratingReviewsManager, priceManager);
 			break;
 		    
 		case 2:
 			CustomerUI customerUI = new CustomerUI();
-			RatingsReviewsManager ratingReviewsManager = new RatingsReviewsManager();
 			BookingManager bookingManager = new BookingManager();
-			CustomerController custController = new CustomerController(bookingManager,customerUI,ratingReviewsManager);
+			CustomerController custController = new CustomerController(bookingManager,customerUI,ratingReviewsManager, priceManager);
 			custController.startCustomer();
 			break;
 		

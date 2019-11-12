@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 
 public class PriceManager{
-	private final double WEEKDAY_RATE = 1.0;
-	private final double WEEKEND_RATE = 1.5;
+	private double WEEKDAY_RATE = 1.0;
+	private double WEEKEND_RATE = 1.5;
 	private double priceRate = 1.0;
 	private Boolean discountApplied = false;
 	private int noOfTickets; 
@@ -57,5 +57,26 @@ public class PriceManager{
 	public double getPriceRate() {
 		return priceRate;
 	}
+	
+	public void changeRates() {
+		System.out.println("(1) Weekend Rate: Current price rate is "+ WEEKEND_RATE);
+		System.out.println("(2) Weekday Rate: Current price rate is "+ WEEKDAY_RATE);
+
+		System.out.println("What rate will you want to change?");
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
+		
+		if(choice == 1) {
+			System.out.println("What is the new Weekend Rate?");
+			double pr1 = sc.nextDouble();
+			this.WEEKEND_RATE = pr1;
+		}
+		else {
+			System.out.println("What is the new Weekday Rate?");
+			double pr2 = sc.nextDouble();
+			this.WEEKDAY_RATE = pr2;
+		}	
+	}
+	
     
 }
