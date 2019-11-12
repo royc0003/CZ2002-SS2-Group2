@@ -51,13 +51,20 @@ public class MovieManager {
     }*/
     //--------------MANAGES WITH REMOVAL OF MOVIES-------------------------------------------------------------------------------------------------------
     public void removeMovie(int MovieID) { // removes an object from a list of created Movies
-    	ArrayList<MovieAndShowtimes> toRemove = new ArrayList<MovieAndShowtimes>();
+    	/*ArrayList<MovieAndShowtimes> toRemove = new ArrayList<MovieAndShowtimes>();
     	for (MovieAndShowtimes m :listOfMovieAndShowtimes ) {
     	    if (m.getMovieID() == MovieID) {
     	        toRemove.add(m);
     	    }
     	}
-    	listOfMovieAndShowtimes.removeAll(toRemove);
+    	listOfMovieAndShowtimes.removeAll(toRemove);*/
+    	for(int i = 0; i < listOfMovieAndShowtimes.size(); i++) {
+    		MovieAndShowtimes temp = listOfMovieAndShowtimes.get(i);
+    		if(listOfMovieAndShowtimes.get(i).getMovieID() == MovieID) {
+    			listOfMovieAndShowtimes.remove(temp);
+    			break;
+    		}
+    	}
         
 
         
@@ -248,24 +255,33 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
     	
     	System.out.println("Enter the movie ID you want to change showing status from");
     	int ID = scan.nextInt();
-
-    	for(MovieAndShowtimes x: listOfMovieAndShowtimes)
+    	int i;
+    	for( i = 0; i < listOfMovieAndShowtimes.size(); i ++)
     	{
-    		if(ID == x.getMovieID())
+    		if(ID == listOfMovieAndShowtimes.get(i).getMovieID())
     		{
     			System.out.println("Enter the new showing status (Coming Soon, Now Showing, End of Showing");
-    			String showingStatus = scan.nextLine();
-        		x.getMovie().setMovieShowingStatus(showingStatus);
+    			String showingStatus = scan.next();
+    			listOfMovieAndShowtimes.get(i).getMovie().setMovieShowingStatus(showingStatus);
         		
-            	if(showingStatus.equalsIgnoreCase("End of Showing"));
+            	if(showingStatus.equals("EndOfShowing"))
             	{
             		removeMovie(ID);
             		System.out.println("Movie removed due to showing status being changed to End Of Showing");
+            		break;
             	}
+            	
+    		
     		}
-    		else
-    			System.out.println("No such movie found!");
+    	
     	}
+    	
+    	if(i== listOfMovieAndShowtimes.size()-1) {
+			System.out.println("No such movie found!");
+    			}
+    	
+    	}
+    	
     }
 		
     
@@ -274,4 +290,3 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
 
 
 
-}
