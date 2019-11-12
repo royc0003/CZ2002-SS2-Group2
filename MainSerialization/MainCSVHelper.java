@@ -135,7 +135,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }
-    public ArrayList<Cinema> readFromMoviesCSV() throws IOException{
+    public ArrayList<Cinema> readFromCinemaCSV() throws IOException{
         if(!FileIOHelper.exists(this.cinemaDetails)) {
             System.out.println("File does not exist!");
             return new ArrayList<Cinema>();}
@@ -226,7 +226,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         writeToCSVFile(movieList, movieCSV);
     }
-    public void writeToMovieCSV(ArrayList<Cinema> movies) throws IOException{
+    public void writeToCinemaCSV(ArrayList<Cinema> movies) throws IOException{
         String[] header = {"Type", "Cinema_No"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.cinemaDetails);
         ArrayList<String[]> movieList = new ArrayList<>();
