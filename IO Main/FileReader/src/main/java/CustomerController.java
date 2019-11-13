@@ -10,7 +10,7 @@ public class CustomerController {
     private PriceManager priceManager;
     private CustomerUI customerUI;
 
-    public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingReviewsManager, PriceManager priceManager){
+    public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager){
         this.bookingManager = bookingManager;
         this.ratingsReviewsManager = ratingsReviewsManager;
         this.customerUI = customerUI;
@@ -27,21 +27,30 @@ public class CustomerController {
     	
     
     	initializeCustomer();
+    	
         System.out.println("Customer size after initialization: " + customerStorage.size());
 
-    	
-    	
+        
     	this.customerStorage = customerUI.loginPage(customerStorage); // calls login
         System.out.println("Customer size after loginpage: " + customerStorage.size());
-
-
+        
         saveCustomerCSV(customerStorage);
-
+        int i =0;
         
+        System.out.println("Customer ID" + customerUI.custID());
         
-        Customer currentCustomerAccount = customerStorage.get(customerStorage.size()-1);
+        for(Customer n: customerStorage) {
+        	System.out.println("Customer in Storage " + n.getCustomerID());
+        	if(n.getCustomerID() == customerUI.custID()) {
+        		break;
+        	}
+        	i++;
+        }
+        
+        Customer currentCustomerAccount = customerStorage.get(i);
+      
         customerUI.printWelcomePage(currentCustomerAccount.getCustomerID(),bookingManager, ratingsReviewsManager, priceManager);
-        System.out.println("Thank you for using our THIS SUCKS J'DETESTE oodp");
+        System.out.println("Thank you for using our program!!!");
     }
 
     //-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
@@ -67,6 +76,19 @@ public class CustomerController {
             e.printStackTrace();
         }
     }
+    
+
+	 /* public void initializeBookingOrder(){ 
+		  MainCSVHelper csvHelper = new MainCSVHelper(); 
+		  try {
+	  System.out.println("**************************Initializing Objects....");
+	  bookingManager.orderList = csvHelper.readFromBookingOrderCSV();
+	  
+	  } catch(IOException e){ e.getStackTrace();
+	  System.out.println("Could not find the file"); 
+	  }
+		  }*/
+	 
 
 
 }

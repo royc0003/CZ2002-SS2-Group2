@@ -5,7 +5,7 @@ public class MovieDisplay {
         System.out.println("Movie ID: " + movieID);
         System.out.println("Movie Title: " + movieTitle);
         System.out.println("Movie Rating: " + movieAverageRating);
-        System.out.println("Minimum age to enter: " + movieAgeRating);
+        System.out.println("Minimum Age to Enter: " + movieAgeRating);
         System.out.println("Movie Duration: " + movieDuration);
         System.out.println("Showing Status: " + showingStatus);
         System.out.println("*********************************************");

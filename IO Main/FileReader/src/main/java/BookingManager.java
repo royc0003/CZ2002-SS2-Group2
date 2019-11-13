@@ -9,6 +9,7 @@ public class BookingManager extends CineplexManager {
 
 	public BookingManager() {
 		this.orderList = new ArrayList<BookingOrder>(); 
+
 	}
 
 public int getTotalBookingOrders() {
@@ -19,9 +20,12 @@ public int getTotalBookingOrders() {
 
 public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
+	//initializeBookingOrder();
+
 	orderList.add(new BookingOrder(customerID, totalBookingOrders));
-	saveBookingOrderCSV(this.orderList);
-	BookingOrder bookingOrder = orderList.get(totalBookingOrders-1);
+	
+	System.out.println("Orderlist size: " + orderList.size());
+	BookingOrder bookingOrder = orderList.get(orderList.size()-1);
 
 	System.out.println("Which method do you prefer? ");
 	System.out.println("(1) Choose Cineplex first ");
@@ -72,7 +76,9 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		int movieID2 = getMovieIDfromGlobalMovieList();
 		bookingOrder.setMovieID(movieID2);
 		Cineplex c2 = showListofCineplex(movieID2); //CineplexIDcustomerchoose
-				
+		if(c2 == null) {
+			break;
+		}
 		int cineplexID2 = c2.getCineplexID();
 		bookingOrder.setCineplexID(cineplexID2);
 				
@@ -103,7 +109,7 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 
 	totalBookingOrders++;
 	
-	saveBookingOrderCSV(orderList);
+	saveBookingOrderCSV(this.orderList);
 	
 	System.out.println("Would you want to print your tickets?");
 	System.out.println("(1) Yes");
@@ -111,7 +117,7 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
 	int ch = sc.nextInt();
 	if(ch == 1) {
-		printTickets(bookingOrder.getOrderNo());
+		printTickets(bookingOrder);
 	}
 
 	
@@ -130,7 +136,6 @@ public Cineplex getCineplexChoice() {
 	
 	Cineplex c = selectCineplex(cin);
 	System.out.println(c.getCineplexID() + c.nameOfCineplex);
-	System.out.println("WORK");
 	return c;
 }
 
@@ -139,8 +144,8 @@ public int getMovieIDChoice(Cineplex c) {
 	Scanner sc = new Scanner(System.in);
    
 	// Make movies
-	System.out.println("______Creating movies_______");
-	movieManager.createMovieCreator();
+	//System.out.println("______Creating movies_______");
+	//movieManager.createMovieCreator();
 	movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
 	
 	// see the cineplex
@@ -149,21 +154,28 @@ public int getMovieIDChoice(Cineplex c) {
 	 int ID = sc.nextInt();
 	 
 	 //create cinema for existing cineplex
-	System.out.println("______Creating cinemas for Cineplex" + c.cineplexID +"_______");
-	 System.out.println("Choose the number of cinemas to create");
-	 int no_of_cinema = sc.nextInt();
-	 c.createCinema(no_of_cinema);
+	
+	 c.printCinemaIdOfCineplex();
+	 
+		/*
+		 * System.out.println("______Creating cinemas for Cineplex" + c.cineplexID
+		 * +"_______"); System.out.println("Choose the number of cinemas to create");
+		 * int no_of_cinema = sc.nextInt(); c.createCinema(no_of_cinema);
+		 */
 	 
 	 
 	// assign movie to cineplex
-	System.out.println("______Assign Movie to Cineplex_______");
-	 movieManager.printGlobalListOfMovieIDs();
-	 System.out.println("Choose the movie ID");
-
-	 int movieID = sc.nextInt();
-	 
-	assignMoviesToCineplex(selectCineplex(ID), movieID);
-	 
+		/*
+		 * System.out.println("______Assign Movie to Cineplex_______");
+		 * movieManager.printGlobalListOfMovieIDs();
+		 * System.out.println("Choose the movie ID");
+		 * 
+		 * int movieID = sc.nextInt();
+		 * 
+		 * assignMoviesToCineplex(selectCineplex(ID), movieID);
+		 */
+	c.setLocalList(movieManager.getListOfMovieAndShowtimes()) ;  //assigning global list to local list of the cineplex
+	
 	// make showtimes 
 	
 	System.out.println("______Add Showtimes to Movie_______");
@@ -237,21 +249,28 @@ public Cineplex showListofCineplex(int movieID) {
 
 	ArrayList<Cineplex> nlist = listOfCineplexWithMovieID(movieID);
 	
-	System.out.println("===== Cineplexes Showing the Movie ======");
-	System.out.println("");
-	System.out.println("CineplexID			Name");
-
-	int i=0;
-	for(Cineplex n: nlist) {
-		System.out.println("(" + i + ")" + "       			" + n.getCineplexName());
-		i++;
+	if(nlist.size() > 0) {
+		System.out.println("===== Cineplexes Showing the Movie ======");
+		System.out.println("");
+		System.out.println("CineplexID			Name");
+	
+		int i=0;
+		for(Cineplex n: nlist) {
+			System.out.println("(" + n.getCineplexID() + ")" + "       			" + n.getCineplexName());
+			i++;
+		}
+		
+		System.out.println("Please choose your preferred Cineplex ID: ");
+		int choice = sc.nextInt();
+		
+		
+		Cineplex c = selectCineplex(choice);
+		
+		return 	c;}
+	else {
+		return null;
 	}
-	
-	System.out.println("Please choose your preferred Cineplex ID: ");
-	int choice = sc.nextInt();
-	
-	return 	nlist.get(choice);
-	
+		
 }
 
 
@@ -262,58 +281,49 @@ public double calculateTotalPrice(PriceManager m, int orderNo) {
 				break;}
 		
 		i++;}
-	
+
 	BookingOrder n = orderList.get(i);
+	m.setPriceRate();
 	
 	double totalPrice = m.getPriceRate()*n.getNoOfTickets();
+	
+
 	return totalPrice;
 	
 	}
 
 
 public void viewBookingHistory(int customerID) {
-	
-	initializeBookingOrder();
-	
+		
 	System.out.println("===========================================Booking History===================================================");
-	System.out.println("  Customer ID  |  OrderNo  |  Cineplex  |  Movie Title  |  Showtime  |  No of Tickets  |  Total Price (SGD)  ");
+	System.out.println("  Customer ID  |  OrderNo  |  Cineplex       |  Movie Title  |  Showtime  |  No of Tickets  |  Total Price (SGD)  ");
 	
 	for(BookingOrder n: orderList) {
 		if(n.getCustomerID() == customerID) {
-			System.out.print(n.getCustomerID() + " | " + n.getOrderNo() + " | " + selectCineplex(n.getCineplexID()).nameOfCineplex+ " | ");
-			System.out.print(movieManager.getMovie(n.getMovieID()).getMovieTitle()  + " | " + n.getShowTime() + " | " + n.getNoOfTickets() + " | " + "$"+n.getTotalPrice() );
+			//System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + selectCineplex(n.getCineplexID()).nameOfCineplex+ " | " + movieManager.getMovie(n.getMovieID()).getMovieTitle()  + " | " + n.getShowTime() + " | " + n.getNoOfTickets() + " | " + "$"+n.getTotalPrice() );
+			System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + n.getCineplexID()+ "          | " + n.getMovieID() + "      | " + n.getShowTime() + "       | " + n.getNoOfTickets() + "      | " + "$"+n.getTotalPrice() );
+			
 		}
 		
 		
 	}}
 
 
-public void printTickets(int orderNo) {  //PRINT THE NUMBER OF TICKETS in the order... will have different seatID 
-	int count = 1;
-	
+public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the order... will have different seatID 
+	int count = n.getNoOfTickets();
 	int i=0;
-	for(BookingOrder n: orderList) {
-		if(n.getOrderNo() == orderNo) {
-			if(n.getNoOfTickets()>1) {
-				count = n.getNoOfTickets();
-				break;}
-		}
-		i++;
-	}
-	BookingOrder n = orderList.get(i);
 
 	
 	for(i=0; i<count ;i++) {
 		System.out.println("");
-		System.out.println(" ======= Ticket " + i+1 + "===== ");
+		System.out.println(" ======= Ticket " + (i+1)+ "===== ");
 		System.out.println("CustomerID: " + n.getCustomerID() );
 		System.out.println("Order No: " + n.getOrderNo() );
-		System.out.println("Total Price of Order: " + n.getTotalPrice());
+		System.out.println("Total Price of Order: SGD" + n.getTotalPrice());
 		System.out.println("Watching at " + selectCineplex(n.getCineplexID()).nameOfCineplex);
 		System.out.println(" ");
-		
-		movieManager.getMovie(n.getMovieID());
-		System.out.println("Movie: " + movieManager.getMovie(n.getMovieID()).getMovieTitle() );
+		Movie movie = movieManager.getMovie(n.getMovieID());
+		System.out.println("Movie: " + movie.getMovieTitle() );
 		System.out.println("Starting Time: " + n.getShowTime() ); 
 		System.out.println("Seat ID: " + n.getListOfSeatID().get(i) ); 
 
@@ -325,18 +335,15 @@ public void printTickets(int orderNo) {  //PRINT THE NUMBER OF TICKETS in the or
 
 
 //-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
-	public void initializeBookingOrder(){
-		MainCSVHelper csvHelper = new MainCSVHelper();
-		try {
-			System.out.println("**************************Initializing Objects....");
-			this.orderList = csvHelper.readFromBookingOrderCSV();
-
-		}
-		catch(IOException e){
-			e.getStackTrace();
-			System.out.println("Could not find the file");
-		}
-	}
+	
+	  public void initializeBookingOrder(){ MainCSVHelper csvHelper = new
+	  MainCSVHelper(); try {
+	  System.out.println("**************************Initializing Objects....");
+	  this.orderList = csvHelper.readFromBookingOrderCSV();
+	  
+	  } catch(IOException e){ e.getStackTrace();
+	  System.out.println("Could not find the file"); } }
+	 
 	public void saveBookingOrderCSV(ArrayList<BookingOrder> orderList){
 		MainCSVHelper csvHelper = new MainCSVHelper();
 		try{

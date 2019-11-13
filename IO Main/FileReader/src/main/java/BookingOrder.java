@@ -15,10 +15,16 @@ public class BookingOrder implements Serialization  { // purpose of BookingOrder
     public BookingOrder(int customerID, int orderNo){
         this.customerID = customerID;
         this.orderNo = orderNo;
+        System.out.println("IN CONSTRUCTOR 1");
+
         this.listOfSeatID = new ArrayList<String>();
+        
+        
     }
     
     public BookingOrder(String[] items){
+        this.listOfSeatID = new ArrayList<String>();
+        
         this.noOfTickets = Integer.parseInt(items[0]);
         this.orderNo = Integer.parseInt(items[1]);
         this.showTime = items[2];
@@ -27,6 +33,9 @@ public class BookingOrder implements Serialization  { // purpose of BookingOrder
         this.totalPrice = Double.parseDouble(items[5]);
         this.cineplexID = Integer.parseInt(items[6]);
 
+    }
+    public void initializeListOfSeatID(){
+    	this.listOfSeatID = new ArrayList<String>();
     }
     public int getNoOfTickets(){
         return this.noOfTickets;

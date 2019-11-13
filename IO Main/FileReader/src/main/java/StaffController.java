@@ -10,6 +10,11 @@ public class StaffController extends CineplexManager
 	 {
 	     int userChoice;
 	     int option; 
+	     
+     	 initializeCineplex();
+     	 
+
+
 	     do {
 	     Scanner sc = new Scanner(System.in);
 
@@ -43,11 +48,14 @@ public class StaffController extends CineplexManager
 	
 	             case 1:
 	            	 //create a movie
+
 	            	 movieManager.createMovieCreator();
 	                 break;
 	             case 2:
 	            	 //display all movies
 	            	 //displayAllMovies(movieManager);
+	             	 movieManager.initializeMovie();
+
 	            	 movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
 
 	                 break;
@@ -88,6 +96,8 @@ public class StaffController extends CineplexManager
 	            	 int cineplexID1 = sc.nextInt();
 	            	 
 	            	 Cineplex c1 = selectCineplex(cineplexID1);	
+	            	 
+	            	 
 	            	 c1.createShowtimesAndAssignToCinema();
 	                 break;
 	                

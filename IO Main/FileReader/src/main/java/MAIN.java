@@ -15,13 +15,6 @@ public class MAIN {
 		CineplexManager cineplexManager = new CineplexManager() ; //this creates moviemanager too
 		BookingManager bookingManager = new BookingManager();
 		
-	
-		
-		
-		
-
-
-        
         System.out.println("Are you a staff?");
         Staff = scan.next();
         if (Staff.equalsIgnoreCase("yes")) {
@@ -52,6 +45,9 @@ public class MAIN {
 			break;
 		    
 		case 2:
+	
+			bookingManager.initializeBookingOrder();
+			
 			CustomerUI customerUI = new CustomerUI();
 			CustomerController custController = new CustomerController(bookingManager,customerUI,ratingReviewsManager, priceManager);
 			custController.startCustomer();

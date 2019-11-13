@@ -30,8 +30,7 @@ public class CineplexManager
 	
 	public void displayMovieListOfCineplex(Cineplex c)
 	{
-		System.out.println("went into cineplex manager");
-
+		
 		c.displayAvailableMovies();
 	}
 		
@@ -42,6 +41,7 @@ public class CineplexManager
 	
 	
 	public void printCineplexlist() {
+
 		
 		Cineplex[] SortCopy2= new Cineplex[cineplexList.size()];
 		SortCopy2 = sortCineplexID();
@@ -64,6 +64,8 @@ public class CineplexManager
 	
 	public void createCineplex()
 	{
+		//initializeCineplex();
+		
 		System.out.println("Enter ID of Cineplex");
 		Scanner sc = new Scanner(System.in);
 		int id = sc.nextInt();
@@ -82,6 +84,8 @@ public class CineplexManager
 		
 		saveCineplexCSV(this.cineplexList);
 
+		
+		
 		
 		System.out.println("Created cineplex " + name + " at location " + location + " with " + number + " cinemas..");	
 	}
@@ -123,10 +127,11 @@ public class CineplexManager
 		for(Cineplex m: cineplexList)
 		{
 			if(m.checkIfMovieExistInCineplex(movieID) == 1)
-			{
+			{   
 				cineplexListWithMovieID.add(m);
 			}
 		}
+		
 		return cineplexListWithMovieID;
 	}
 	

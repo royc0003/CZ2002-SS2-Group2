@@ -33,10 +33,27 @@ public class MovieManager {
         int i = sc.nextInt();
         for(int x= 0; x< i; x++){
         	MovieAndShowtimes n = new MovieAndShowtimes();
+        	
+        	//initializeMovie();
+        	
+        	System.out.println("AFTER INITIALIZE");
+        	
+        	printGlobalListOfMovieIDs();
+        	
             n.createMovie();        // adds movie to every single MovieShhowTimes objects created
 
             listOfMovieAndShowtimes.add(n);
+            
+            
+            System.out.println("AFTER ADDING");
+        	printGlobalListOfMovieIDs();
+            
+            //save list
             saveMovieAndShowtimesCSV(listOfMovieAndShowtimes);
+         
+        	
+            
+         
             System.out.println("");
             System.out.println("You have created a movie!");
 
@@ -123,12 +140,9 @@ public ArrayList<Movie> getGlobalListOfMovieObjects(){
         return arrayListOfMovieOBjects;
 }
 
-public void initializeList() {
-	this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); 
-}
+
 
 public Movie getMovie(int MovieID){
-	initializeList();  // INITIALIZE LIST OF MOVIE AND SHOWTIMES BC we didnt create movie manager
 	
     Movie x = null;
         for(MovieAndShowtimes n: listOfMovieAndShowtimes){
@@ -285,7 +299,7 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
     	
     	}
     	
-    	if(i== listOfMovieAndShowtimes.size()-1) {
+    	if(i== listOfMovieAndShowtimes.size()) {
 			System.out.println("No such movie found!");
     			}
     	

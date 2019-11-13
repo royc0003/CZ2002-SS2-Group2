@@ -30,8 +30,8 @@ public class Cinema implements Serialization {
 	/**
 	 * A list of showtimes for the cinema to show that at that show time, the cinema is in use. 
 	 */
-	private ArrayList<ShowTime> listOfShowTimes = new ArrayList<ShowTime>(); //array list of cinemas
-
+	private ArrayList<ShowTime> listOfShowTimes = new ArrayList<ShowTime>(); //array list of cinemas	
+	private int cineplexID;
 
 	 /**
 	 * Creates a new Cinema with the given cinema number and type of the cinema.
@@ -40,13 +40,14 @@ public class Cinema implements Serialization {
 	 * @param type The type of the cinema ex. Gold, Beanieplex
 	 */
 
-	public Cinema(int cinema_no, String type) 
+	public Cinema(int cinema_no, String type, int cineplexID) 
 	{
 		seatManager = new SeatManager();
 		this.cinema_no = cinema_no;
 		this.seatingCapacity = 100;
 		this.type = type;
 		this.listOfShowTimes = new ArrayList<ShowTime>();
+		this.cineplexID = cineplexID;
 		
 	}
 
@@ -55,6 +56,8 @@ public class Cinema implements Serialization {
 		this.type = items[0];
 		this.seatingCapacity = Integer.parseInt(items[1]);
 		this.cinema_no = Integer.parseInt(items[2]);
+		this.cineplexID =  Integer.parseInt(items[3]);
+
 	}
 	
 
@@ -64,7 +67,9 @@ public class Cinema implements Serialization {
 	
 		 */
 	public void displayShowTimesForCinema()
-	{	System.out.println("========= Cinema " + cinema_no + " Showtimes ============");
+	{	
+		
+		System.out.println("========= Cinema " + cinema_no + " Showtimes ============");
 		System.out.println("Showtimes                 Movie ");
 		for(int i = 0; i < listOfShowTimes.size(); i++)
 		{
@@ -174,7 +179,7 @@ public class Cinema implements Serialization {
 	@Override
 
 	public String[] toCsv() {
-		String[] csv = {Integer.toString(this.cinema_no), this.type, Integer.toString(this.seatingCapacity)};
+		String[] csv = { this.type, Integer.toString(this.seatingCapacity), Integer.toString(this.cinema_no),Integer.toString(this.cineplexID)};
 		return csv;
 	}
 

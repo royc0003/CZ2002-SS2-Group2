@@ -7,10 +7,11 @@ public class PriceManager{
 	private double WEEKEND_RATE = 1.5;
 	private double priceRate = 1.0;
 	private Boolean discountApplied = false;
-	private int noOfTickets; 
+	//private int noOfTickets; 
 	private double discountRate=1.0;
+	private int standardPrice = 10;
 	
-	private void setPriceRate(){
+	public void setPriceRate(){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Do you qualify for any discount? \n");
 		System.out.println("1. Yes! \n");
@@ -51,7 +52,7 @@ public class PriceManager{
 			priceRate *= WEEKEND_RATE; 
 		}
 		
-		priceRate = priceRate*noOfTickets; 
+		priceRate = standardPrice*priceRate; 
 	}
 	
 	public double getPriceRate() {

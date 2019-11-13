@@ -5,10 +5,9 @@ public class Customer implements Serialization {
     private String mobile;
     private String email;
     private int customerID; //note for customerID it'll be set as static
-    private static int count = 0;
-    public Customer(){
-        count++;// ++ whenever new log-in
-        this.customerID = count;
+   // private static int count = 0;
+    public Customer(int customerID){
+        this.customerID = customerID;
     }
     
     public Customer(String[] item){

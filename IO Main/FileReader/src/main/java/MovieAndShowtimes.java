@@ -41,11 +41,16 @@ public class MovieAndShowtimes {
     //--------------SHOWTIME RELATED FUNCTIONS-------------------------------------------------------------------------------------------------------
 
     public void createShowTime(String showBegins, Movie m, int cinemaID){
+    	
+    	initializeShowTime();
+    	
         Scanner sc = new Scanner(System.in);
        /* System.out.println("Insert the number of showTimes to be created");
         int i = sc.nextInt();
         for(int x = 0; x < i; x++){*/
             showList.add(new ShowTime(showBegins, m, cinemaID));
+            
+            
             saveShowTimeCSV(this.showList);
         
     }
@@ -65,7 +70,6 @@ public class MovieAndShowtimes {
     public ArrayList<ShowTime> getArrayOfShowTimes() throws IOException{
     	
     	//initializeMovie();
-    	initializeShowTime();
         return this.showList;
     }
 

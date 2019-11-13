@@ -63,7 +63,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         BufferedReader moviesCSV = FileIOHelper.getBufferedReader(this.movieDetails);
         List<String[]> movieLists = readAll(moviesCSV,1);
         ArrayList<Movie> results = new ArrayList<Movie>();
-        if(movieLists.size() == 0) return new ArrayList<MovieAndShowtimes>();
+        if(movieLists.size() == 0) { return new ArrayList<MovieAndShowtimes>();}
         for(String[] item: movieLists){
             System.out.println(Arrays.toString(item));
             Movie mov = new Movie(item); //instantiates new objects that'll be kept in array
@@ -193,7 +193,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
     }*/
 
     public void writeToMovieAndShowtimeCSV(ArrayList<MovieAndShowtimes> movies) throws IOException{
-        String[] header = {"movieID", "movieTitle", "showingStatus", "movieAgeRating", "averageRating","duration"};
+        String[] header = {"movieID", "movieTitle", "totalRating", "totalRaters", "showingStatus", "movieAgeRating", "averageRating","duration"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.movieDetails);
         ArrayList<String[]> movieList = new ArrayList<>();
         movieList.add(header); // adds the current header
@@ -248,7 +248,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         writeToCSVFile(movieList, movieCSV);
     }
     public void writeToCinemaCSV(ArrayList<Cinema> movies) throws IOException{
-        String[] header = {"Type", "seatingCapacity", "cinema_no"};
+        String[] header = {"Type", "seatingCapacity", "cinema_no" , "cineplexID"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.cinemaDetails);
         ArrayList<String[]> movieList = new ArrayList<>();
         movieList.add(header); // adds the current header

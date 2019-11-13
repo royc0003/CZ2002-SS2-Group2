@@ -36,7 +36,7 @@ public class Cineplex
 	/**
 	 *the local list of Movie and Showtimes objects in the cineplex 
 	 */
-	private ArrayList<MovieAndShowtimes> localListOfMovieAndShowTimes; // would store the movie objects for the cinema
+	private static ArrayList<MovieAndShowtimes> localListOfMovieAndShowTimes; // would store the movie objects for the cinema
 
 	
 //---------------------Constructor---------------------------------------------------------------------------------------	
@@ -70,12 +70,19 @@ public class Cineplex
 			System.out.println("Enter the type for the Cinema (" + (i+1) +"):");
 			String type = sc3.next();
 
-			cinemaList.add(new Cinema(i+1, type));
-			saveCinemaCSV(this.cinemaList);
+			cinemaList.add(new Cinema(i+1, type, cineplexID));
+			
+			
 		}	
+		
+		saveCinemaCSV(this.cinemaList);
+
 	}
 	
 	public Cineplex(String[] item){
+		
+		this.localListOfMovieAndShowTimes = new ArrayList<MovieAndShowtimes>();
+		
 		this.cineplexID = Integer.parseInt(item[0]);
 		this.nameOfCineplex = item[1];
 		this.location = item[2];
@@ -110,10 +117,14 @@ public class Cineplex
 			System.out.println("Enter the type for the Cinema (" + (i+1) +"):");
 			String type = sc3.next();
 
-			cinemaList.add(new Cinema(i+1, type));
+			cinemaList.add(new Cinema(i+1, type, cineplexID));
 			saveCinemaCSV(this.cinemaList);
 		}	
 	}
+	public void setLocalList(ArrayList<MovieAndShowtimes> m) {
+		this.localListOfMovieAndShowTimes = m;
+	}
+	
 	
 	/**
 	 * Get cineplex name of this cineplex
@@ -175,8 +186,6 @@ public class Cineplex
 	{	
 		//INITIALIZE MOVIE AND SHOWTIMES
 		
-		System.out.println("went into cineplex");
-		System.out.println("list size" + localListOfMovieAndShowTimes.size() );
 		if(localListOfMovieAndShowTimes.size() > 0) {
 			MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
 			SortMovieCopy2 = sortMovieID(); 
@@ -220,7 +229,7 @@ public class Cineplex
 	public void addMovieToCineplex(MovieAndShowtimes object) //ADD MOVIE AND SHOWTIMES 
 	{   
 		
-		InitializeList();  //initialize LIST when we are in customer controller..... not in staff controller bc we didnt create a cineplex. we used the old data of cineplex
+		//InitializeList();  //initialize LIST when we are in customer controller..... not in staff controller bc we didnt create a cineplex. we used the old data of cineplex
 		localListOfMovieAndShowTimes.add(object);
 	}
 	
@@ -241,6 +250,7 @@ public class Cineplex
 	public void createShowtimesAndAssignToCinema() 
 	//check if movie exists in local movie list first before proceeding
 	{
+		
 		displayAvailableMovies();
 		System.out.println("");
 		System.out.println("Enter the movie id that you want to add showtimes to");
@@ -404,7 +414,7 @@ public class Cineplex
 	
 	public int checkIfMovieExistInCineplex(int movieID)
 	{
-		InitializeList();   //initializelocallist bc now we didnt create cineplex so have to initialize locallist here
+		//InitializeList();   //initializelocallist bc now we didnt create cineplex so have to initialize locallist here
 		
 		for(MovieAndShowtimes m: localListOfMovieAndShowTimes)
 		{
@@ -420,6 +430,9 @@ public class Cineplex
 	{ System.out.println("");
 		System.out.println("==== List of available IDS in Cineplex " + nameOfCineplex + "====");
 		System.out.println("Cinema ID                 Type");
+		
+		initializeCinema();
+		
 		for(Cinema n: cinemaList)
 		{
 			System.out.println(n.getCinemaID() + "                         " + n.getType());

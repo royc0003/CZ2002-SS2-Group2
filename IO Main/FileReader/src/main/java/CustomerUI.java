@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerUI {
-
+	private int custID;
 
     public ArrayList<Customer> loginPage(ArrayList<Customer> customerStorage) {
         Scanner sc = new Scanner(System.in);
@@ -25,6 +25,12 @@ public class CustomerUI {
                         System.out.println("ERROR: USERNAME DOES NOT EXIST ");
                     }
                     else{
+                    	int tempID;
+                    	for(Customer n : customerStorage) {
+                    		if(n.getUserName().equalsIgnoreCase(userName)) {
+                    			this.custID = n.getCustomerID();
+                    		}
+                    	}
                         break;
                     }
                     System.out.println("Enter username: ");
@@ -38,26 +44,23 @@ public class CustomerUI {
             case 2:
             	System.out.println("IT IS CREATING");
             	customerStorage = createCustomerAccountPage(customerStorage);
+            	this.custID = customerStorage.size()+1;
         }
         
         return customerStorage;
     }
+    public int custID() {
+    	return this.custID;
+    }
 
     private boolean checkExist(ArrayList<Customer> customerStorage, String userName){
 
-    	System.out.println("CUSTOMER STORAGE SIZE " + customerStorage.size());
-    	
-    	for(Customer n2: customerStorage){
-    	System.out.println("CUSTOMER" + n2.getCustomerID());}
+
     	
     	if(customerStorage.size() > 0) {
     		
 	        for(Customer n: customerStorage){
-	        System.out.println("GO IN LOOP");
 	        	if(n.getUserName().equalsIgnoreCase(userName)){  
-	        		System.out.println("equal username");
-	            	System.out.println("CUSTOMER STORAGE SIZE in loop " + customerStorage.size());
-
 	                return true;
 	            }
 	        }
@@ -74,7 +77,7 @@ public class CustomerUI {
         Scanner sc = new Scanner(System.in);
         System.out.println("************************************************************");
         System.out.println("***************Customer Account Creation Page***************");
-        newCustomer = new Customer();
+        newCustomer = new Customer(customerStorage.size()+1);
         
         
         System.out.println("Created a new customer object");
@@ -117,23 +120,27 @@ public class CustomerUI {
     public void printWelcomePage(int customer_ID, BookingManager bookingManager, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager) {
         Scanner scan = new Scanner(System.in);
         int userChoice;
-        System.out.println("************************WELCOME TO CLARITA&KOKLIANG's CineVillage************************");
-        System.out.println("OPTIONS:");
-        System.out.println("Option 1: Make A Booking");
-        System.out.println("Option 2: View Movie Details");
-        System.out.println("Option 3: Get Reviews for a Movie");
-        System.out.println("Option 4: Add Reviews");
-        System.out.println("Option 5: Add Ratings");
-        System.out.println("Option 6: Check Booking History");
-        System.out.println("Option 7: Display Top 5 Movies by Rating");
-        System.out.println("Option 8: Exit");
-        userChoice = scan.nextInt();
-        while(userChoice>= 1 && userChoice<=7){
+        int option;
+    	bookingManager.movieManager.initializeMovie();
+
+        do{
+        	System.out.println("************************WELCOME TO CineVillage************************");
+	        System.out.println("OPTIONS:");
+	        System.out.println("Option 1: Make A Booking");
+	        System.out.println("Option 2: View Movie Details");
+	        System.out.println("Option 3: Get Reviews for a Movie");
+	        System.out.println("Option 4: Add Ratings");
+	        System.out.println("Option 5: Add Reviews");
+	        System.out.println("Option 6: Check Booking History");
+	        System.out.println("Option 7: Display Top 5 Movies by Rating");
+	        System.out.println("Option 8: Exit");
+	        
+	        System.out.println("Please choose an option: ");
+	        userChoice = scan.nextInt();
 
             switch (userChoice){
                 case 1:
                     //Book
-           
                     bookingManager.makeNewOrder(customer_ID, priceManager);
                     break;
                 case 2:
@@ -150,21 +157,34 @@ public class CustomerUI {
                     break;
                 case 4:
                 	ratingsReviewsManager.addRating(bookingManager.movieManager);
+                	bookingManager.movieManager.saveMovieAndShowtimesCSV(bookingManager.movieManager.listOfMovieAndShowtimes);
+
                     break; 
                 case 5:
                 	ratingsReviewsManager.addReview(bookingManager.movieManager);
 
                     break;
                 case 6:
+                	System.out.println("CUSTOMER ID ---- "+ customer_ID);
                    bookingManager.viewBookingHistory(customer_ID);
                     break;
                 case 7:
                 	ratingsReviewsManager.displayByRank(bookingManager.movieManager);
                 	break;
             }
-        }
+            
+            System.out.println("");
+            System.out.println("Get back to Customer Option Page");
+	         System.out.println("(1) Yes");
+	         System.out.println("(2) No");
+	         
+	         option = scan.nextInt();
+	         
+        }while(option==1);
+        	
         
     }
+    
     }
 
 
