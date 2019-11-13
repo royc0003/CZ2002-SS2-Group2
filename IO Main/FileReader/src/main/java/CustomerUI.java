@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class CustomerUI {
 
 
-    public void loginPage(ArrayList<Customer> customerStorage) {
+    public ArrayList<Customer> loginPage(ArrayList<Customer> customerStorage) {
         Scanner sc = new Scanner(System.in);
         System.out.println("************************************************************");
         System.out.println("***************Welcome To Customer Login Page***************");
@@ -32,33 +32,44 @@ public class CustomerUI {
                     count--;
                 }
                 if(count == 0){
-                    createCustomerAccountPage(customerStorage);
+                	customerStorage = createCustomerAccountPage(customerStorage);
                 }
                 break;
             case 2:
-                createCustomerAccountPage(customerStorage);
+            	System.out.println("IT IS CREATING");
+            	customerStorage = createCustomerAccountPage(customerStorage);
         }
+        
+        return customerStorage;
     }
 
     private boolean checkExist(ArrayList<Customer> customerStorage, String userName){
 
-        for(Customer n: customerStorage){
-        	if(customerStorage.size() == 1) {
+    	System.out.println("CUSTOMER STORAGE SIZE " + customerStorage.size());
+    	
+    	for(Customer n2: customerStorage){
+    	System.out.println("CUSTOMER" + n2.getCustomerID());}
+    	
+    	if(customerStorage.size() > 0) {
+    		
+	        for(Customer n: customerStorage){
+	        System.out.println("GO IN LOOP");
+	        	if(n.getUserName().equalsIgnoreCase(userName)){  
+	        		System.out.println("equal username");
+	            	System.out.println("CUSTOMER STORAGE SIZE in loop " + customerStorage.size());
 
-        		return false;
-        	}
-            if(n.getUserName().equals(userName)){
-
-                return true;
-            }
-        }
+	                return true;
+	            }
+	        }
+    	}
+    	
 
         return false;
     }
 
     //basic check to see if the username exist or not
 
-    private Customer createCustomerAccountPage(ArrayList<Customer> customerStorage){
+    private ArrayList<Customer> createCustomerAccountPage(ArrayList<Customer> customerStorage){
     	Customer newCustomer;
         Scanner sc = new Scanner(System.in);
         System.out.println("************************************************************");
@@ -66,9 +77,11 @@ public class CustomerUI {
         newCustomer = new Customer();
         
         
-        System.out.println("made new customer object");
+        System.out.println("Created a new customer object");
         
-        //Customer tempAccount = customerStorage.get(customerStorage.size()-1); // retrives the last object
+   
+
+       // Customer tempAccount = customerStorage.get(customerStorage.size()-1); // retrives the last object
         System.out.println("Create username: ");
         String userName = sc.next();
         
@@ -90,7 +103,13 @@ public class CustomerUI {
         String email = sc.next();
         newCustomer.setEmail(email);
         
-        return newCustomer;
+        System.out.println("Enter age: ");
+        int age = sc.nextInt();
+        newCustomer.setAge(age);
+        
+        
+        customerStorage.add(newCustomer);
+        return customerStorage;
 
     }
 

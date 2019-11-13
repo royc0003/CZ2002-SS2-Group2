@@ -18,7 +18,7 @@ public class MAIN {
 	
 		
 		
-		bookingManager.initializeBookingOrder();
+		
 
 
         

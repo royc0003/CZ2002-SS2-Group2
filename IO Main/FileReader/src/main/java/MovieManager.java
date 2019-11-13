@@ -122,7 +122,14 @@ public ArrayList<Movie> getGlobalListOfMovieObjects(){
         }
         return arrayListOfMovieOBjects;
 }
+
+public void initializeList() {
+	this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); 
+}
+
 public Movie getMovie(int MovieID){
+	initializeList();  // INITIALIZE LIST OF MOVIE AND SHOWTIMES BC we didnt create movie manager
+	
     Movie x = null;
         for(MovieAndShowtimes n: listOfMovieAndShowtimes){
             if(n.getMovieID() == MovieID)

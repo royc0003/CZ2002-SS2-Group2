@@ -15,6 +15,8 @@ public class CustomerController {
         this.ratingsReviewsManager = ratingsReviewsManager;
         this.customerUI = customerUI;
         this.priceManager = priceManager;
+    	this.customerStorage = new ArrayList<Customer>();
+
     }
 
     public ArrayList<Customer> getCustomerStorage(){
@@ -23,13 +25,16 @@ public class CustomerController {
     public void startCustomer(){
         // begin storage program to ask user
     	
-    	System.out.println("INSIDE START CUS");
-    	ArrayList<Customer> custStorage = new ArrayList<Customer>();
+    
     	initializeCustomer();
+        System.out.println("Customer size after initialization: " + customerStorage.size());
 
-        customerUI.loginPage(custStorage); // calls login
+    	
+    	
+    	this.customerStorage = customerUI.loginPage(customerStorage); // calls login
+        System.out.println("Customer size after loginpage: " + customerStorage.size());
 
-        this.customerStorage = custStorage;
+
         saveCustomerCSV(customerStorage);
 
         
@@ -45,6 +50,7 @@ public class CustomerController {
         try {
             System.out.println("**************************Initializing Objects....");
             this.customerStorage = csvHelper.readFromCustomerCSV();
+            System.out.println("Customer size in initialization: " + customerStorage.size());
 
         }
         catch(IOException e){

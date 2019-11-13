@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class BookingManager extends CineplexManager {
+	private static int totalBookingOrders = 1; 
+	ArrayList<BookingOrder> orderList;
 
-
-public BookingManager() {
-}
-
-private static int totalBookingOrders = 1; 
-ArrayList<BookingOrder> orderList = new ArrayList<BookingOrder>(); 
-
+	public BookingManager() {
+		this.orderList = new ArrayList<BookingOrder>(); 
+	}
 
 public int getTotalBookingOrders() {
 	return this.totalBookingOrders;
@@ -37,9 +35,14 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		Cineplex c = getCineplexChoice();
 		
 		int cineplexID = c.getCineplexID();
+		System.out.println("Get CINEPLEX ID");
 		bookingOrder.setCineplexID(cineplexID);
 		
+		System.out.println("going to movie id");
 		int movieID = getMovieIDChoice(c);
+		
+		System.out.println("after movie id");
+
 		bookingOrder.setMovieID(movieID);
 		
 		String showTime = getShowtimeChoice(movieID, c);
@@ -54,6 +57,7 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		bookingOrder.setNoOfTickets(count);
 		
 		for(int i=0 ;i< count ; i++) {
+		  System.out.println("Reserve the seat "+ (i+1) + ": ");
 		  String seatID = bookSeats(cinemaID, customerID, c);
 		  bookingOrder.setSeatID(seatID);
 		  }
@@ -99,6 +103,8 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 
 	totalBookingOrders++;
 	
+	saveBookingOrderCSV(orderList);
+	
 	System.out.println("Would you want to print your tickets?");
 	System.out.println("(1) Yes");
 	System.out.println("(2) No");
@@ -123,6 +129,7 @@ public Cineplex getCineplexChoice() {
  
 	
 	Cineplex c = selectCineplex(cin);
+	System.out.println(c.getCineplexID() + c.nameOfCineplex);
 	System.out.println("WORK");
 	return c;
 }
@@ -130,12 +137,49 @@ public Cineplex getCineplexChoice() {
 
 public int getMovieIDChoice(Cineplex c) {
 	Scanner sc = new Scanner(System.in);
+   
+	// Make movies
+	System.out.println("______Creating movies_______");
+	movieManager.createMovieCreator();
+	movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
+	
+	// see the cineplex
+	printCineplexlist();
+	 System.out.println("Choose the cineplex ID");
+	 int ID = sc.nextInt();
+	 
+	 //create cinema for existing cineplex
+	System.out.println("______Creating cinemas for Cineplex" + c.cineplexID +"_______");
+	 System.out.println("Choose the number of cinemas to create");
+	 int no_of_cinema = sc.nextInt();
+	 c.createCinema(no_of_cinema);
+	 
+	 
+	// assign movie to cineplex
+	System.out.println("______Assign Movie to Cineplex_______");
+	 movieManager.printGlobalListOfMovieIDs();
+	 System.out.println("Choose the movie ID");
 
+	 int movieID = sc.nextInt();
+	 
+	assignMoviesToCineplex(selectCineplex(ID), movieID);
+	 
+	// make showtimes 
+	
+	System.out.println("______Add Showtimes to Movie_______");
+	printCineplexlist();
+	 System.out.println("Choose the cineplex ID you want to add showtimes to");
+	 int cineplexID1 = sc.nextInt();
+	 Cineplex c1 = selectCineplex(cineplexID1);	
+	 c1.createShowtimesAndAssignToCinema();
+	
+	
+	// Choose movie ID to watch 
+    System.out.println("______Start Booking!_______");
 	displayMovieListOfCineplex(c); 							//print movielist of that cineplex
-
 	System.out.println("Which movie do you want to watch?");
-	int movieID = sc.nextInt();
-	return movieID;
+	int movieID2 = sc.nextInt();
+	return movieID2;
 }
 
 
@@ -143,7 +187,7 @@ public String getShowtimeChoice(int movieID, Cineplex c) {
 	Scanner sc = new Scanner(System.in);
 
 	c.displayAllShowtimes(movieID);
-	System.out.println("Which showtimes do you want to choose?");
+	System.out.println("Choose the showtime - Write it in string");
 	String showtime = sc.next();  //ERROR HANDLING 
 	
 	return showtime;
@@ -156,6 +200,8 @@ public void getSeatMap(int cinemaID, Cineplex c) {
 
 public int getCinemaID(String showTime, int movieID, Cineplex c) {
 	int cinemaID= c.selectShowtime(showTime, movieID);
+	
+	System.out.println("CINEMA ID : " + cinemaID);
 	return cinemaID;
 }
 
@@ -163,8 +209,9 @@ public String bookSeats(int cinemaID, int customerID, Cineplex c) {
 
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Please choose an empty seat (row and column): ");
+		System.out.println("Please choose the ROW for an empty seat: ");
 		int row = sc.nextInt(); 
+		System.out.println("Please choose the COlUMN for an empty seat: ");
 		int col = sc.nextInt();
 		String SeatID = Integer.toString(row) + "." + Integer.toString(col);
 		
@@ -188,9 +235,7 @@ public int getMovieIDfromGlobalMovieList() {
 public Cineplex showListofCineplex(int movieID) {
 	Scanner sc = new Scanner(System.in);
 
-	ArrayList<Cineplex> nlist = new ArrayList<Cineplex>();
-	
-	nlist = listOfCineplexWithMovieID(movieID);
+	ArrayList<Cineplex> nlist = listOfCineplexWithMovieID(movieID);
 	
 	System.out.println("===== Cineplexes Showing the Movie ======");
 	System.out.println("");
@@ -215,8 +260,8 @@ public double calculateTotalPrice(PriceManager m, int orderNo) {
 	for(BookingOrder n: orderList) {
 		if(n.getOrderNo() == orderNo) {
 				break;}
-		}
-		i++;
+		
+		i++;}
 	
 	BookingOrder n = orderList.get(i);
 	
@@ -227,6 +272,8 @@ public double calculateTotalPrice(PriceManager m, int orderNo) {
 
 
 public void viewBookingHistory(int customerID) {
+	
+	initializeBookingOrder();
 	
 	System.out.println("===========================================Booking History===================================================");
 	System.out.println("  Customer ID  |  OrderNo  |  Cineplex  |  Movie Title  |  Showtime  |  No of Tickets  |  Total Price (SGD)  ");
@@ -261,12 +308,14 @@ public void printTickets(int orderNo) {  //PRINT THE NUMBER OF TICKETS in the or
 		System.out.println(" ======= Ticket " + i+1 + "===== ");
 		System.out.println("CustomerID: " + n.getCustomerID() );
 		System.out.println("Order No: " + n.getOrderNo() );
+		System.out.println("Total Price of Order: " + n.getTotalPrice());
 		System.out.println("Watching at " + selectCineplex(n.getCineplexID()).nameOfCineplex);
 		System.out.println(" ");
 		
+		movieManager.getMovie(n.getMovieID());
 		System.out.println("Movie: " + movieManager.getMovie(n.getMovieID()).getMovieTitle() );
 		System.out.println("Starting Time: " + n.getShowTime() ); 
-		System.out.println("Seat ID: " + n.getListOfSeatID().get(i) );   
+		System.out.println("Seat ID: " + n.getListOfSeatID().get(i) ); 
 
 		System.out.println("__________________________________");
 	}

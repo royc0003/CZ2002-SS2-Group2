@@ -56,7 +56,7 @@ public class MovieAndShowtimes {
     	s = sortShowTimes();
     	int i=0;
     	for(String a: s) {
-    		System.out.println("(" + i + ")" + a);
+    		System.out.println(a);
     		i++;
     	}
     

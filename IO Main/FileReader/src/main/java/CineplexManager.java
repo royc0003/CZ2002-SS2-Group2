@@ -30,6 +30,8 @@ public class CineplexManager
 	
 	public void displayMovieListOfCineplex(Cineplex c)
 	{
+		System.out.println("went into cineplex manager");
+
 		c.displayAvailableMovies();
 	}
 		
