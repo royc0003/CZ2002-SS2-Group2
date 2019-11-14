@@ -7,6 +7,8 @@ public class ShowTime implements Serialization{ // remember to implement showTim
     private String showEnds;
     private int cinemaID;
     private Movie movie;
+    private int movieID;
+    private int CineplexID;
     
     public ShowTime(String showBegins, Movie movie, int cinemaID) { // note that duration will be given in minutes
         this.showBegins = showBegins; // ill receive duration in integer
@@ -27,6 +29,8 @@ public class ShowTime implements Serialization{ // remember to implement showTim
     	this.showBegins = item[0];
     	this.showEnds = item[1];
     	this.cinemaID = Integer.parseInt(item[2]);
+    	this.movieID = Integer.parseInt(item[3]);
+    	this.CineplexID = Integer.parseInt(item[4]);
     }
     
     //*********************************************************************************************************************
@@ -35,7 +39,7 @@ public class ShowTime implements Serialization{ // remember to implement showTim
     }
     
     public String getMovieTitle(){
-        return movie.getMovieTitle();
+        return movie.getMovieTitle();  //MOVE IS NULL THATS WHY NULL POINTER EXCEPTION
     }
     public String getShowBegins() {
         return this.showBegins;
@@ -54,7 +58,7 @@ public class ShowTime implements Serialization{ // remember to implement showTim
     }
 
     public String[] toCsv() {
-        String[] csv = {this.showBegins, this.showEnds, Integer.toString(this.cinemaID)};
+        String[] csv = {this.showBegins, this.showEnds, Integer.toString(this.cinemaID), Integer.toString(this.movieID),  Integer.toString(this.CineplexID) };
         return csv;
     }
 

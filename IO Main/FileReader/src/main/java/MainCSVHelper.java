@@ -208,7 +208,7 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
     }
   
     public void writeToShowTimeCSV(ArrayList<ShowTime> movies) throws IOException{
-        String[] header = {"showBegins", "showEnds", "cinemaID"};
+        String[] header = {"showBegins", "showEnds", "cinemaID", "movieID", "CineplexID"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.showTimeDetails);
         ArrayList<String[]> movieList = new ArrayList<>();
         movieList.add(header); // adds the current header

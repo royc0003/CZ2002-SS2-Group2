@@ -1,26 +1,30 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.*;
 
 public class CineplexManager 
 {
 	protected ArrayList<Cineplex> cineplexList = new ArrayList<Cineplex>();
+	protected ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+	
 	protected MovieManager movieManager;
 	
 	public CineplexManager() {
-		this.movieManager = new MovieManager();
+		movieManager = new MovieManager();
 	}
 	
 
 //-------------------------Get methods--------------------------------------------------------------------------------------------	
 	public Cineplex selectCineplex(int cineplexID)
 	{
-		for(int i = 0; i< cineplexList.size(); i++)
+		for(int i = 0; i< MAIN.cineplexList.size(); i++)
 		{
-			if(cineplexList.get(i).getCineplexID() == cineplexID)
+			if(MAIN.cineplexList.get(i).getCineplexID() == cineplexID)
 			{
 
-				return cineplexList.get(i);
+				return MAIN.cineplexList.get(i);
 			}
 		}
 		return null;
@@ -43,7 +47,7 @@ public class CineplexManager
 	public void printCineplexlist() {
 
 		
-		Cineplex[] SortCopy2= new Cineplex[cineplexList.size()];
+		Cineplex[] SortCopy2= new Cineplex[MAIN.cineplexList.size()];
 		SortCopy2 = sortCineplexID();
 		
 		System.out.println("");
@@ -80,9 +84,9 @@ public class CineplexManager
 		int number = sc.nextInt();
 		
 		Cineplex cineplex = new Cineplex(id, name, location, number);
-		cineplexList.add(cineplex);
+		MAIN.cineplexList.add(cineplex);
 		
-		saveCineplexCSV(this.cineplexList);
+		saveCineplexCSV(MAIN.cineplexList);
 
 		
 		
@@ -102,21 +106,21 @@ public class CineplexManager
 		
 	public Cineplex[] sortCineplexID(){
 		
-		Cineplex[] SortCopy= new Cineplex[cineplexList.size()];
+		Cineplex[] SortCopy= new Cineplex[MAIN.cineplexList.size()];
 		
-		for(int i=0; i<cineplexList.size(); i++) {
-			SortCopy[i]= cineplexList.get(i);
-		}
-		
-		if(SortCopy.length > 1) {		
-			for(int i=0; i< SortCopy.length-1; i++) {
-				if(SortCopy[i].cineplexID > SortCopy[i+1].cineplexID  ) {
-					Cineplex temp = SortCopy[i+1];
-					SortCopy[i] = SortCopy[i+1];
-					SortCopy[i+1] = temp;
-				}
-			}}
-			
+		 for(int i=0; i<MAIN.cineplexList.size(); i++) { SortCopy[i]=
+		 MAIN.cineplexList.get(i); }
+		 /* 
+		 * if(SortCopy.length > 1) { for(int i=0; i< SortCopy.length-1; i++) {
+		 * if(SortCopy[i].cineplexID > SortCopy[i+1].cineplexID ) { Cineplex temp =
+		 * SortCopy[i+1]; SortCopy[i] = SortCopy[i+1]; SortCopy[i+1] = temp; } }}
+		 */
+		Arrays.sort(SortCopy, new Comparator<Cineplex>() {
+			@Override
+			public int compare(Cineplex c1, Cineplex c2) {
+				return c1.cineplexID - c2.cineplexID;
+			}
+		});
 		return SortCopy;
 	}
 	
@@ -124,7 +128,7 @@ public class CineplexManager
 	{
 		ArrayList<Cineplex> cineplexListWithMovieID = new ArrayList<Cineplex>();
 
-		for(Cineplex m: cineplexList)
+		for(Cineplex m: MAIN.cineplexList)
 		{
 			if(m.checkIfMovieExistInCineplex(movieID) == 1)
 			{   
@@ -137,7 +141,7 @@ public class CineplexManager
 	
 	public void printCinemaIdForCineplex(int cineplexID )
 	{
-		for(Cineplex c: cineplexList)
+		for(Cineplex c: MAIN.cineplexList)
 		{
 			if(cineplexID == c.getCineplexID())
 			{
@@ -153,7 +157,7 @@ public class CineplexManager
 			MainCSVHelper csvHelper = new MainCSVHelper();
 			try {
 				System.out.println("**************************Initializing Objects....");
-				this.cineplexList = csvHelper.readFromCineplexDetailsCSV();
+				MAIN.cineplexList = csvHelper.readFromCineplexDetailsCSV();
 
 			}
 			catch(IOException e){
@@ -165,9 +169,30 @@ public class CineplexManager
 			MainCSVHelper csvHelper = new MainCSVHelper();
 			try{
 				System.out.println("***********************************Saving to CSV....");
-				csvHelper.writeToCineplexCSV(cineplexList);
+				csvHelper.writeToCineplexCSV(MAIN.cineplexList);
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+		}
+		
+		public void initializeCinema(){
+			MainCSVHelper csvHelper = new MainCSVHelper();
+			try {
+				System.out.println("**********Initializing Objects....");
+				MAIN.cinemaList = csvHelper.readFromCinemaCSV();
+				
+				for (int i = 0; i < MAIN.cineplexList.size(); i++) {
+					Cineplex cine = MAIN.cineplexList.get(i);
+					for (Cinema c: MAIN.cinemaList) {
+						if (cine.cineplexID == c.getCineplexID()) {
+							cine.getCinemaList().add(c);
+						}
+					}
+				}
+			}
+			catch(IOException e){
+				e.getStackTrace();
+				System.out.println("Could not find the file");
 			}
 		}
 		

@@ -73,7 +73,7 @@ public class Cinema implements Serialization {
 		System.out.println("Showtimes                 Movie ");
 		for(int i = 0; i < listOfShowTimes.size(); i++)
 		{
-			System.out.println(listOfShowTimes.get(i).getShowBegins() + "                      " + listOfShowTimes.get(i).getMovieTitle());
+			System.out.println(listOfShowTimes.get(i).getShowBegins() + "                      " + listOfShowTimes.get(i).getMovieTitle()());
 		}
 	}
 	
@@ -110,6 +110,15 @@ public class Cinema implements Serialization {
 		return cinema_no;
 	}
 	
+	/**
+	 * Get the cinema ID
+	 * @return the cinema id
+	 */
+	
+	public int getCineplexID()
+	{
+		return cineplexID;
+	}
 	
 	 /**
 		 * Add another showtime to the list of showtimes of this cinema

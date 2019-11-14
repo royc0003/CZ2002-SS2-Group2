@@ -12,7 +12,9 @@ public class StaffController extends CineplexManager
 	     int option; 
 	     
      	 initializeCineplex();
-     	 
+ 		 initializeCinema();
+ 		 //initializeShowTime();
+
 
 
 	     do {
@@ -54,7 +56,7 @@ public class StaffController extends CineplexManager
 	             case 2:
 	            	 //display all movies
 	            	 //displayAllMovies(movieManager);
-	             	 movieManager.initializeMovie();
+	             	// movieManager.initializeMovie();
 
 	            	 movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
 

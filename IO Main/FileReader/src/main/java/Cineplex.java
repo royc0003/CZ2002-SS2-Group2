@@ -69,13 +69,15 @@ public class Cineplex
 			System.out.println("Now please choose the type of cinema you want to create:");
 			System.out.println("Enter the type for the Cinema (" + (i+1) +"):");
 			String type = sc3.next();
-
-			cinemaList.add(new Cinema(i+1, type, cineplexID));
+			Cinema newCine = new Cinema(i+1, type, cineplexID);	
+			this.cinemaList.add(newCine); 
+			MAIN.cinemaList.add(newCine);
+		 //
 			
 			
 		}	
 		
-		saveCinemaCSV(this.cinemaList);
+		saveCinemaCSV(MAIN.cinemaList);
 
 	}
 	
@@ -87,6 +89,7 @@ public class Cineplex
 		this.nameOfCineplex = item[1];
 		this.location = item[2];
 		this.no_of_cinema = Integer.parseInt(item[3]);
+		this.cinemaList = new ArrayList<Cinema>();
 
 	}
 	
@@ -363,6 +366,7 @@ public class Cineplex
 			if(n.getCinemaID() == cinemaID) 
 			{	
 				n.displayShowTimesForCinema();
+				break;
 			}
 		}
 	}
@@ -427,12 +431,16 @@ public class Cineplex
 	}
 	
 	public void printCinemaIdOfCineplex()
-	{ System.out.println("");
+	{ 
+		System.out.println("");
 		System.out.println("==== List of available IDS in Cineplex " + nameOfCineplex + "====");
 		System.out.println("Cinema ID                 Type");
+	
 		
-		initializeCinema();
-		
+		if (this.cinemaList.isEmpty()) {
+			System.out.println("This cineplex has no cinemas!");
+			return;
+		}
 		for(Cinema n: cinemaList)
 		{
 			System.out.println(n.getCinemaID() + "                         " + n.getType());
@@ -445,28 +453,17 @@ public class Cineplex
 
 	}
 	
-	public void initializeCinema(){
-		MainCSVHelper csvHelper = new MainCSVHelper();
-		try {
-			System.out.println("**********Initializing Objects....");
-			this.cinemaList = csvHelper.readFromCinemaCSV();
-
-		}
-		catch(IOException e){
-			e.getStackTrace();
-			System.out.println("Could not find the file");
-		}
-	}
 	public void saveCinemaCSV(ArrayList<Cinema> cinemaList){
 		MainCSVHelper csvHelper = new MainCSVHelper();
 		try{
 			System.out.println("*************Saving to CSV....");
-			csvHelper.writeToCinemaCSV(cinemaList);
+			csvHelper.writeToCinemaCSV(MAIN.cinemaList);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	public ArrayList<Cinema> getCinemaList() {return this.cinemaList;}
 	
 	
 }

@@ -1,7 +1,11 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 public class MAIN {
 
+	static ArrayList<Cineplex> cineplexList = new ArrayList<Cineplex>();
+	static ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+	
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
@@ -14,6 +18,12 @@ public class MAIN {
 		RatingsReviewsManager ratingReviewsManager = new RatingsReviewsManager();
 		CineplexManager cineplexManager = new CineplexManager() ; //this creates moviemanager too
 		BookingManager bookingManager = new BookingManager();
+	    StaffController staffController =new StaffController();
+
+		cineplexManager.movieManager.initializeMovie();
+		bookingManager.movieManager.initializeMovie();
+		staffController.movieManager.initializeMovie();
+
 		
         System.out.println("Are you a staff?");
         Staff = scan.next();
@@ -39,7 +49,6 @@ public class MAIN {
 		
 		switch(choice) {
 		case 1:
-		    StaffController staffController =new StaffController();
 		    staffController.printWelcomePage(ratingReviewsManager, priceManager);
 		    
 			break;
