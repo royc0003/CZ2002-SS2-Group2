@@ -181,15 +181,19 @@ public class CustomerUI {
                     MainCSVHelper.writeSerializedObject("BookingOrder.dat", bookingManager.getOrderList());
                     System.out.println("Saving BookingOrder.dat after------");
                 case 9:
+                    System.out.println("**************************************************************************");
                     System.out.println("Saving BookingOrder before");
-                    MainCSVHelper.writeSerializedObject("BookingOrder.dat", getMovieManager().getListOfMovieAndShowtimes());
+                    MainCSVHelper.writeSerializedObject("BookingOrder.dat", bookingManager.getOrderList());
+                    System.out.println("Saving BookingOrder after");
 
-                    System.out.println("Saving PriceManager before");
-                    MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
+                    System.out.println("Saving Cineplex before");
+                    MainCSVHelper.writeSerializedObject("Cineplex.dat", bookingManager.getCineplexList());
+                    System.out.println("Saving Cineplex after");
 
                     System.out.println("Saving MovieAndShowtimes before");
-                    MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
+                    MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", bookingManager.movieManager.getListOfMovieAndShowtimes());
                     System.out.println("Saving MovieANdShowtimes After");
+                    System.out.println("**************************************************************************");
 
 
             }

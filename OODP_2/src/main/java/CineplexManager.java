@@ -25,8 +25,9 @@ public class CineplexManager implements Serializable
 //			this.cineplexList = new ArrayList<Cineplex>(); // temporarily creates a file first will now create Cineplex files		}
 	}
 
-
-
+	public ArrayList<Cineplex> getCineplexList(){
+		return this.cineplexList;
+	}
 
 	
 
