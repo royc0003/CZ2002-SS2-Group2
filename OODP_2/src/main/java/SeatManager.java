@@ -48,12 +48,19 @@ public class SeatManager implements Serializable {
 			for(j=0; j<10 ; j++) {
 				
 				if(!seats[i][j].isOccupied()) {
+					if(j==0){
+						System.out.println("");
+					}
 					System.out.print("[ ]");
 				}
 				else {
 					System.out.print("[x]");
 				}
 				
+			}
+
+			if(i==0){
+				System.out.print("    ");
 			}
 			System.out.println("");
 		}

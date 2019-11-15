@@ -70,7 +70,7 @@ public class MAIN {
 		    
 		case 2:
 	
-			bookingManager.initializeBookingOrder();
+			//bookingManager.initializeBookingOrder();
 
 			custController.startCustomer();
 			break;

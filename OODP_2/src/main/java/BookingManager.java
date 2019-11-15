@@ -1,28 +1,26 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BookingManager extends CineplexManager {
-	private static int totalBookingOrders = 1; 
+public class BookingManager extends CineplexManager implements Serializable {
 	ArrayList<BookingOrder> orderList;
 
 	public BookingManager() {
-	//	this.orderList = new ArrayList<BookingOrder>();
-		ArrayList<BookingOrder> trialList = null;
-		try {
-			System.out.println("Reading from BookingOrder.dat -----------");
-			trialList = (ArrayList) MainCSVHelper.readSerializedObject("BookingOrder.dat"); // reads from movie and showtime
-			this.orderList = trialList; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
-		} catch (Exception e) {
-			System.out.println("Exception >> " + e.getMessage());
-		}
+		this.orderList = new ArrayList<BookingOrder>();
+//		ArrayList<BookingOrder> trialList = null;
+//		try {
+//			System.out.println("Reading from BookingOrder.dat -----------");
+//			trialList = (ArrayList) MainCSVHelper.readSerializedObject("BookingOrder.dat"); // reads from movie and showtime
+//			this.orderList = trialList; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
+//		} catch (Exception e) {
+//			System.out.println("Exception >> " + e.getMessage());
+//		}
 
 	}
 
-public int getTotalBookingOrders() {
-	return this.totalBookingOrders;
-}
+
 
 //------------------ Main Methods -----------------------------------------------------------------------------------------------
 public ArrayList<BookingOrder> getOrderList(){
@@ -31,13 +29,12 @@ public ArrayList<BookingOrder> getOrderList(){
 public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
 	//initializeBookingOrder();
+	int day = getDate();
 
-	orderList.add(new BookingOrder(customerID, totalBookingOrders));
-	MainCSVHelper.writeSerializedObject("BookingOrder.dat", this.orderList);
+	BookingOrder bookingOrder = new BookingOrder(customerID, this.orderList.size()+1);
+	orderList.add(bookingOrder);
 
-
-
-	BookingOrder bookingOrder = orderList.get(totalBookingOrders-1);
+	bookingOrder = orderList.get(this.orderList.size()-1);
 
 	System.out.println("Which method do you prefer? ");
 	System.out.println("(1) Choose Cineplex first ");
@@ -71,17 +68,29 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		System.out.println("How many seats will you book?");
 		int count = sc.nextInt();
 		bookingOrder.setNoOfTickets(count);
+		for(int ict = 0; ict < movieManager.listOfMovieAndShowtimes.size(); ict++)
+		{
+			if(movieManager.listOfMovieAndShowtimes.get(ict).getMovieID() == movieID)
+			{
+				for(int xy = 0; xy < count; xy++)
+				{
+					movieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
+					System.out.println("Ticket count increased by one");
+				}
+			}
+		}
 		
 		for(int i=0 ;i< count ; i++) {
 		  System.out.println("Reserve the seat "+ (i+1) + ": ");
 		  String seatID = bookSeats(cinemaID, customerID, c);
 		  bookingOrder.setSeatID(seatID);
 		  }
-		
-		double totalPrice = calculateTotalPrice(priceManager,bookingOrder.getOrderNo() );
+
+		double totalPrice = calculateTotalPrice(priceManager,bookingOrder.getOrderNo(), day );
 		bookingOrder.setTotalPrice(totalPrice);
-		
-		
+		payment(bookingOrder,priceManager, cinemaID);
+
+
 		break;}
 	
 	case 2:{
@@ -105,22 +114,36 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		System.out.println("How many seats will you book?");
 		int count2 = sc.nextInt();
 		bookingOrder.setNoOfTickets(count2);
+
+		for(int ict = 0; ict < movieManager.listOfMovieAndShowtimes.size(); ict++)
+		{
+			if(movieManager.listOfMovieAndShowtimes.get(ict).getMovieID() == movieID2)
+			{
+				for(int xy = 0; xy < count2; xy++)
+				{
+					movieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
+					System.out.println("Ticket count increased by one");
+				}
+			}
+		}
 		
 		for(int i=0 ;i< count2 ; i++) {
 		  String seatID2 = bookSeats(cinemaID2, customerID, c2);
 		  bookingOrder.setSeatID(seatID2);
 		  }
-		
-		
-		double totalPrice1 = calculateTotalPrice(priceManager,bookingOrder.getOrderNo() );
+
+
+		double totalPrice1 = calculateTotalPrice(priceManager,bookingOrder.getOrderNo() , day);
 		bookingOrder.setTotalPrice(totalPrice1);
-	
+		payment(bookingOrder,priceManager, cinemaID2);
+
 		break;}
 	}
-	
 
-	totalBookingOrders++;
-	
+
+	System.out.println("Saving newOrder into  BookingOrder.dat************");
+	MainCSVHelper.writeSerializedObject("BookingOrder.dat", this.orderList); // for saving
+
 	//saveBookingOrderCSV(this.orderList);
 	
 	System.out.println("Would you want to print your tickets?");
@@ -154,45 +177,9 @@ public Cineplex getCineplexChoice() {
 
 public int getMovieIDChoice(Cineplex c) {
 	Scanner sc = new Scanner(System.in);
-//
-//	// Make movies
-//	System.out.println("______Creating movies_______");
-//	movieManager.createMovieCreator();
-//	movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
-//
-//	// see the cineplex
-//	printCineplexlist();
-//	 System.out.println("Choose the cineplex ID");
-//	 int ID = sc.nextInt();
-//
-//	 //create cinema for existing cineplex
-//	System.out.println("______Creating cinemas for Cineplex" + c.cineplexID +"_______");
-//	 System.out.println("Choose the number of cinemas to create");
-//	 int no_of_cinema = sc.nextInt();
-//	 c.createCinema(no_of_cinema);
-//
-//
-//	// assign movie to cineplex
-//	System.out.println("______Assign Movie to Cineplex_______");
-//	 movieManager.printGlobalListOfMovieIDs();
-//	 System.out.println("Choose the movie ID");
-//
-//	 int movieID = sc.nextInt();
-//
-//	assignMoviesToCineplex(selectCineplex(ID), movieID);
-//
-//	// make showtimes
-//
-//	System.out.println("______Add Showtimes to Movie_______");
-//	printCineplexlist();
-//	 System.out.println("Choose the cineplex ID you want to add showtimes to");
-//	 int cineplexID1 = sc.nextInt();
-//	 Cineplex c1 = selectCineplex(cineplexID1);
-//	 c1.createShowtimesAndAssignToCinema();
-//
-//
+
 //	// Choose movie ID to watch
-    System.out.println("______Start Booking!_______");
+
 	displayMovieListOfCineplex(c); 							//print movielist of that cineplex
 	System.out.println("Which movie do you want to watch?");
 	int movieID2 = sc.nextInt();
@@ -279,39 +266,71 @@ public Cineplex showListofCineplex(int movieID) {
 }
 
 
-public double calculateTotalPrice(PriceManager m, int orderNo) {
-	int i=0;
-	for(BookingOrder n: orderList) {
-		if(n.getOrderNo() == orderNo) {
-				break;}
-		
-		i++;}
-
-	BookingOrder n = orderList.get(i);
-	m.setPriceRate();
-	
-	double totalPrice = m.getPriceRate()*n.getNoOfTickets();
-	
-
-	return totalPrice;
-	
-	}
 
 
 public void viewBookingHistory(int customerID) {
-		
+	System.out.println("Size of ORderList: "+this.orderList.size());
 	System.out.println("===========================================Booking History===================================================");
 	System.out.println("  Customer ID  |  OrderNo  |  Cineplex       |  Movie Title  |  Showtime  |  No of Tickets  |  Total Price (SGD)  ");
 	
-	for(BookingOrder n: orderList) {
+	for(BookingOrder n: this.orderList) {
 		if(n.getCustomerID() == customerID) {
 			//System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + selectCineplex(n.getCineplexID()).nameOfCineplex+ " | " + movieManager.getMovie(n.getMovieID()).getMovieTitle()  + " | " + n.getShowTime() + " | " + n.getNoOfTickets() + " | " + "$"+n.getTotalPrice() );
-			System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + n.getCineplexID()+ " | " + n.getMovieID() + " | " + n.getShowTime() + " | " + n.getNoOfTickets() + " | " + "$"+n.getTotalPrice() );
+			System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + n.getCineplexID()+ "               |     " + n.getMovieID() + "          | " + n.getShowTime() + "      | " + n.getNoOfTickets() + "              | " + "$"+n.getTotalPrice() );
 		}
 		
 		
 	}}
+	public double calculateTotalPrice(PriceManager m, int orderNo, int day) {
+		int i=0;
+		for(BookingOrder n: orderList) {
+			if(n.getOrderNo() == orderNo) {
+				break;}
 
+			i++;}
+
+		BookingOrder n = orderList.get(i);
+		m.setPriceRate(day);
+
+		double totalPrice = m.getPricePerSeat()*n.getNoOfTickets();
+
+		return totalPrice + (totalPrice*0.06);
+
+	}
+
+	public void payment(BookingOrder n, PriceManager priceManager, int CinemaID) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("  ");
+		System.out.println("======Last step of the booking process: Payment=======");
+
+		if(priceManager.getDiscountRate() == 0.6) {
+			System.out.println("Student discount applied");
+		}
+		else if(priceManager.getDiscountRate() == 0.8) {
+			System.out.println("Elderly Discount applied");
+		}
+		else if(priceManager.getDiscountRate() == 0.9) {
+			System.out.println("CZ2002 Bank Card applied");
+		}
+		System.out.println("Total Price: SGD " + n.getTotalPrice());
+		Date now = new Date();  // dow mon dd hh:mm:ss zzz yyyy
+
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddhhmm");
+		String dates = dateFormatter.format(now);
+
+
+		System.out.println("(1) Pay");
+		int choice = sc.nextInt();
+		while(choice != 1) {
+			System.out.println("Transaction unsuccessful");
+			System.out.println("(1) Pay");
+			choice = sc.nextInt();
+		}
+
+
+		System.out.println("Payment successful!");
+		System.out.println("Transaction ID: " + CinemaID + dates);
+	}
 
 public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the order... will have different seatID 
 	int count = n.getNoOfTickets();
@@ -319,7 +338,7 @@ public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the
 
 	for(i=0; i<count ;i++) {
 		System.out.println(" ");
-		System.out.println(" ======= Ticket " + i+1 + "===== ");
+		System.out.println(" ======= Ticket " + (i+1) + "===== ");
 		System.out.println("CustomerID: " + n.getCustomerID() );
 		System.out.println("Order No: " + n.getOrderNo() );
 		System.out.println("Total Price of Order: SGD" + n.getTotalPrice());
@@ -335,7 +354,49 @@ public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the
 
 }
 
+	public int getDate() {
+		int day = 0;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Would you like to book for \n(1) Today \n(2) Later Day");
+		int bookchoice = sc.nextInt();
+		int date,month,year;
+		SimpleDateFormat simpleDateformat;
 
+		switch(bookchoice) {
+			case 1:
+				Calendar c = Calendar.getInstance();
+				day = c.get(Calendar.DAY_OF_WEEK);
+				if(day != Calendar.SATURDAY || day != Calendar.SUNDAY){
+
+					day = 1;
+				}
+				else {
+					day = 0;
+				}
+				break;
+			case 2:
+				// dow mon dd hh:mm:ss zzz yyyy
+				System.out.println("Enter date (dd)");
+				date = sc.nextInt();
+				System.out.println("Enter month (mm)");
+				month = sc.nextInt();
+				System.out.println("Enter year (yy)");
+				year = sc.nextInt();
+
+				Date bookdate = new Date(date,month,year);
+				simpleDateformat = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
+				String dayname = simpleDateformat.format(bookdate);
+				if(dayname != "Saturday" && dayname != "Sunday") {
+					day = 1;
+				}
+				else {
+					day = 0;
+				}
+		}
+
+		return day;
+
+	}
 
 //-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
 	

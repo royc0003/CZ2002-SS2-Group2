@@ -138,7 +138,7 @@ public class CustomerUI {
 	        System.out.println("Option 4: Add Ratings");
 	        System.out.println("Option 5: Add Reviews");
 	        System.out.println("Option 6: Check Booking History");
-	        System.out.println("Option 7: Display Top 5 Movies by Rating");
+	        System.out.println("Option 7: Display Top 5 Movies by Rating/ Ticket Sales");
             System.out.println("Option 8: Save All");
 	        System.out.println("Option 9: Exit");
 	        
@@ -158,6 +158,11 @@ public class CustomerUI {
                     break;
                 case 3:
                     //get reviews
+                    System.out.println("Printing out orderList");
+                    ArrayList<BookingOrder> list = bookingManager.getOrderList();
+                    for(BookingOrder n : list){
+                        System.out.println("Printing the list of orderList:"+ n.getCustomerID());
+                    }
                 	ratingsReviewsManager.displayMovieAndReviews(bookingManager.movieManager);
                     //ratingsReviewsManager.
                 	

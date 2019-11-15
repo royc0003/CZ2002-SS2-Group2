@@ -81,7 +81,7 @@
       <workItem from="1573709685325" duration="1939000" />
       <workItem from="1573747977409" duration="4700000" />
       <workItem from="1573752824057" duration="4174000" />
-      <workItem from="1573803501082" duration="22087000" />
+      <workItem from="1573803501082" duration="41510000" />
     </task>
     <servers />
   </component>
@@ -105,6 +105,19 @@
           <url>file://$PROJECT_DIR$/src/main/java/MovieManager.java</url>
           <line>138</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Movie.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/BookingManager.java</url>
+          <line>9</line>
+          <properties class="BookingManager" method="&lt;init&gt;">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -12,9 +12,9 @@ public class MovieManager implements Serializable {
 
     public MovieManager() {
 		this.displayMovie = new MovieDisplay();
-		this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
+//		this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
 
-			ArrayList<MovieAndShowtimes> trialList = null;
+		ArrayList<MovieAndShowtimes> trialList = null;
 		try{
 			System.out.println("Reading from MovieAndShowtimes.dat -----------");
 			trialList = (ArrayList)MainCSVHelper.readSerializedObject("MovieAndShowtimes.dat"); // reads from movie and showtime
@@ -116,12 +116,12 @@ public void printGlobalListOfMovieIDs(){
 	MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[listOfMovieAndShowtimes.size()];
 	SortMovieCopy2 = sortGlobalListMovieID(); 
 	System.out.println("");
-	System.out.println("==========Global List of Movies========");
+	System.out.println("==========Global List of Movies==============");
 
-	System.out.println("MovieID                      MovieTitle");
+	System.out.println("MovieID            MovieTitle         ShowingStatus  ");
 	for(int i=0; i< SortMovieCopy2.length; i++)
 	{
-		System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                           " + SortMovieCopy2[i].getMovieTitle());
+		System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                           " + SortMovieCopy2[i].getMovieTitle() + "   " + SortMovieCopy2[i].getMovieShowingStatus());
 	}
 	System.out.println("________________________________________________");
 	

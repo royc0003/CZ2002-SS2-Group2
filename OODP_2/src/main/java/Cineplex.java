@@ -185,7 +185,6 @@ public class Cineplex implements Serializable
 	{	
 		//INITIALIZE MOVIE AND SHOWTIMES
 
-		System.out.println("NUMBER OF MOVIES "+ localListOfMovieAndShowTimes.size());
 		if(localListOfMovieAndShowTimes.size() > 0) {
 			MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
 			SortMovieCopy2 = sortMovieID(); 
@@ -412,20 +411,14 @@ public class Cineplex implements Serializable
 	
 	public int selectShowtime(String showtime, int movieID)  //RETURNS CINEMA ID of the showtime
 	{	
-		MovieAndShowtimes m = new MovieAndShowtimes();
-		int cinemaID = -1; 
+		MovieAndShowtimes m = null;
+		int cinemaID = -1;
 		for(int i=0; i < localListOfMovieAndShowTimes.size(); i++) {
 			if(movieID == localListOfMovieAndShowTimes.get(i).getMovieID()) {
 				m= localListOfMovieAndShowTimes.get(i);}}
-			
-		
-		ArrayList<ShowTime> stList = new ArrayList<ShowTime>();
-		try {
-		stList = m.getArrayOfShowTimes();
-		}
-		catch(IOException e){
-			e.printStackTrace();
-		}
+
+
+		ArrayList<ShowTime> stList = m.getArrayOfShowTimes(); // array of showtimes of that movie id
 	
 		for(ShowTime n: stList) {
 			if(n.getShowBegins().equals(showtime)) {

@@ -23,8 +23,7 @@ public class StaffController extends CineplexManager
 		}
 
 	}
-	//private ArrayList<Cineplex> cineplexList = new ArrayList<Cineplex>();
-	//private MovieManager movieManager;
+
 	public PriceManager getPriceManager(){
 		return this.priceManager;
 	}
@@ -53,8 +52,9 @@ public class StaffController extends CineplexManager
 	     System.out.println("Option 12: Update showing status of movie for cineplex");
 	     System.out.println("Option 13: Display showtimes in a Cinema");
 	     System.out.println("Option 14: Display reviews for a movie");
-	     System.out.println("Option 15: Save Data");
-	     System.out.println("Option 16: Exit");
+	     System.out.println("Option 15: Get number of tickets sold for a movie");
+	     System.out.println("Option 16: Save Data");
+	     System.out.println("Option 17: Exit");
 
 
 	     System.out.println("");
@@ -151,20 +151,7 @@ public class StaffController extends CineplexManager
 	             
 	             case 10:
 	            	 //list top 5 by ratings/ticket sales
-	            	 System.out.println("Choose an option: ");
-	            	 System.out.println("1. Rank by ratings");
-	            	 System.out.println("2. Rank by ticket sales");
-	            	 
-	            	 int choice = sc.nextInt();
-	            	 
-	            	 if(choice == 1)
-	            	 {
-	            		 ratingReviewsManager.displayByRank(movieManager);
-	            	 }
-	            	 else
-	            	 {
-	            		 System.out.println("test");
-	            	 }
+					 ratingReviewsManager.displayByRank(movieManager);
 	            	 break;
 	             case 11:
 	            	 //change ticket price
@@ -204,7 +191,14 @@ public class StaffController extends CineplexManager
 				 case 14:
 				 	ratingReviewsManager.displayMovieAndReviews(movieManager);
 				 	break;
-				 case 15: // might be useless for this one; most likely is // steps is to find
+				 case 15:
+					 movieManager.printGlobalListOfMovieIDs();
+					 System.out.println("Choose the movie ID");
+					 Scanner sc6 = new Scanner(System.in);
+					 int ID3 = sc6.nextInt();
+					 System.out.println("No Of tickets sold for movie " + movieManager.getMovie(ID3).getMovieTitle() + ": " + movieManager.getMovie(ID3).getNoOfTicketSold());
+					 break;
+				 case 16: // might be useless for this one; most likely is // steps is to find
 					 // the class or possibly the constructor that initiates the use of moviemanager once
 					 // note to save the data as .dat instead of ser
 					 // initializes once

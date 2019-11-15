@@ -18,15 +18,27 @@ public class MovieAndShowtimes implements Serializable {
 
         }
 
-    public void printDetails(int movieID, String movieTitle, int movieAgeRating, int movieAverageRating, int movieDuration, String showingStatus)
+    public void printDetails(int movieID, String movieTitle, int movieAgeRating, double movieAverageRating, int movieDuration, String showingStatus)
     {
         System.out.println("***************");
         System.out.println("Movie ID: " + movieID);
         System.out.println("Movie Title: " + movieTitle);
-        System.out.println("Movie Rating: " + movieAverageRating);
+        System.out.println("Director of Movie: " + movie.getdirector());
+
+        for(String x : movie.getListOfCast()){
+            System.out.println("Cast: " + x);}
+
+        if(movieAgeRating == 0){
+            System.out.println("Movie Rating: NA ");
+        }
+        else{
+            System.out.println("Movie Rating: " + movieAverageRating);
+        }
         System.out.println("Minimum age to enter: " + movieAgeRating);
         System.out.println("Movie Duration: " + movieDuration);
         System.out.println("Showing Status: " + showingStatus);
+        System.out.println("Synopsis: " + movie.getSynopsis());
+
         System.out.println("***************");
     }
     
@@ -37,13 +49,34 @@ public class MovieAndShowtimes implements Serializable {
         int a = sc.nextInt();   
         System.out.println("Insert Title");
         String b = sc.next();
+        sc.nextLine();
         System.out.println("Insert Age Rating (integer)");
-        int c = sc.nextInt(); 
+        int c = sc.nextInt();
         System.out.println("Insert Showing Status (string)");
         String d = sc.next();
+        sc.nextLine();
         System.out.println("Insert duration (minutes)");
-        int e =sc.nextInt(); 
-        this.movie =  new Movie(a,b,c,d,e); // assigns a new movie object to the movie attribute
+        int e =sc.nextInt();
+        System.out.println("Insert director of movie:");
+        String f = sc.next();
+        sc.nextLine();
+        System.out.println("Insert synopsis of movie:");
+        String g =sc.nextLine();
+        sc.nextLine();
+        System.out.println("Insert the number of cast");
+        int count = sc.nextInt();
+        ArrayList<String> listOfCast = new ArrayList<String>();
+
+        for(int i=0 ; i<count ; i++){
+            System.out.println("Insert name of cast " + (i+1));
+            String cast = sc.next();
+            sc.nextLine();
+            listOfCast.add(cast);
+        }
+
+
+
+        this.movie =  new Movie(a,b,c,d,e, f,g, listOfCast); // assigns a new movie object to the movie attribute
       //  saveMovieToCSV(this.movie);
     }
     
@@ -59,7 +92,7 @@ public class MovieAndShowtimes implements Serializable {
         int i = sc.nextInt();
         for(int x = 0; x < i; x++){*/
             showList.add(new ShowTime(showBegins, m, cinemaID));
-            saveShowTimeCSV(this.showList);
+           // saveShowTimeCSV(this.showList);
         
     }
 
@@ -75,10 +108,9 @@ public class MovieAndShowtimes implements Serializable {
     
     	
     }
-    public ArrayList<ShowTime> getArrayOfShowTimes() throws IOException{
+    public ArrayList<ShowTime> getArrayOfShowTimes(){
     	
-    	//initializeMovie();
-    	initializeShowTime();
+
         return this.showList;
     }
 
@@ -115,7 +147,7 @@ public class MovieAndShowtimes implements Serializable {
         return movie.getMovieShowingStatus();
     }
     public int getMovieDuration(){return movie.getMovieDuration();}
-    public int getMovieAverageRating(){return movie.getAverageRating();};
+    public double getMovieAverageRating(){return movie.getAverageRating();};
 
 
     //-------------------SHOWTIME RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
@@ -152,6 +184,11 @@ public ShowTime getShowTime(String showBegins, int cinemaID){
 
     return x;
 
+}
+
+public int getNoOfTicketSold()
+{
+    return movie.getNoOfTicketSold();
 }
 
 

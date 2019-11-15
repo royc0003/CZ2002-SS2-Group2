@@ -22,7 +22,7 @@ public class CineplexManager implements Serializable
 			System.out.println("Exception >> " + e.getMessage());
 		}
 //		if(this.cineplexList == null){
-//			this.cineplexList = new ArrayList<Cineplex>(); // temporarily creates a file first will now create Cineplex files		}
+//			this.cineplexList = new ArrayList<Cineplex>();} // temporarily creates a file first will now create Cineplex files		}
 	}
 
 	public ArrayList<Cineplex> getCineplexList(){
