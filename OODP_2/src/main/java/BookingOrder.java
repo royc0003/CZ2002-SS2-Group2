@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 // assuming that CineplexManager is present
-public class BookingOrder implements Serialization  { // purpose of BookingOrder is mainly to keep track
+public class BookingOrder implements Serialization, Serializable { // purpose of BookingOrder is mainly to keep track
 
     private int noOfTickets;
     private int orderNo;

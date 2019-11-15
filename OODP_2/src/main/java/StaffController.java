@@ -1,14 +1,34 @@
 
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StaffController extends CineplexManager
 {
+	PriceManager priceManager;
+	StaffController(){
+//		this.priceManager = new PriceManager();
+		PriceManager trial = null;
+		try {
+			System.out.println("Reading from PriceManager.dat -----------");
+			ObjectInputStream in = FileIOHelper.getSerialReader("PriceManager.dat");
+			trial = (PriceManager)in.readObject() ; // reads from movie and showtime
+			this.priceManager = trial; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
+			in.close();
+		} catch (Exception e) {
+			System.out.println("Exception >> " + e.getMessage());
+		}
+
+	}
 	//private ArrayList<Cineplex> cineplexList = new ArrayList<Cineplex>();
 	//private MovieManager movieManager;
-
-	 public void printWelcomePage(RatingsReviewsManager ratingReviewsManager, PriceManager priceManager) 
+	public PriceManager getPriceManager(){
+		return this.priceManager;
+	}
+	 public void printWelcomePage(RatingsReviewsManager ratingReviewsManager)
 	 {
 	     int userChoice;
 	     int option; 
@@ -32,8 +52,9 @@ public class StaffController extends CineplexManager
 	     System.out.println("Option 11: change ticket price");
 	     System.out.println("Option 12: Update showing status of movie for cineplex");
 	     System.out.println("Option 13: Display showtimes in a Cinema");
-	     System.out.println("Option 14: Save Data");
-	     System.out.println("Option 15: Exit");
+	     System.out.println("Option 14: Display reviews for a movie");
+	     System.out.println("Option 15: Save Data");
+	     System.out.println("Option 16: Exit");
 
 
 	     System.out.println("");
@@ -148,13 +169,23 @@ public class StaffController extends CineplexManager
 	             case 11:
 	            	 //change ticket price
 	            	 priceManager.changeRates();
+					 try {
+						 System.out.println("Saving PriceManager.dat-----");
+						 ObjectOutputStream out = FileIOHelper.getSerialWriter("PriceManager.dat");
+						 out.writeObject(priceManager);
+						 out.close();
+					 } catch (IOException e) {
+						 e.printStackTrace();
+					 }
+					 // saves here
+
 	            	 break;
 	             case 12:
 	            	 //update showing status of a movie
-	            	 movieManager.printGlobalListOfMovieIDs();
+
 	            	 System.out.println("");
-	     
-	            	 movieManager.changeShowingStatusAndRemoveMovie();
+					 changeShowingStatusAndRemoveMovieInCineplex();
+
 	            	 break;
 	             case 13:
 	            	 //show the showtimes of a certain cinema in a Cineplex
@@ -169,13 +200,15 @@ public class StaffController extends CineplexManager
 	            	 System.out.println("Choose a cinema to display the showtimes");
 	            	 int cinemaID= sc.nextInt();
 	            	 c5.displayShowTimesForCinema(cinemaID);
-				 case 14: // might be useless for this one; most likely is // steps is to find
+	            	 break;
+				 case 14:
+				 	ratingReviewsManager.displayMovieAndReviews(movieManager);
+				 	break;
+				 case 15: // might be useless for this one; most likely is // steps is to find
 					 // the class or possibly the constructor that initiates the use of moviemanager once
 					 // note to save the data as .dat instead of ser
 					 // initializes once
 				 	System.out.println("Saving MovieAndShowtimes before");
-				 	//MainCSVHelper csvHelper = new MainCSVHelper();
-				 	//csvHelper.writeSerilizable(getMovieManager());
 					 MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
 				 	System.out.println("Saving MovieANdShowtimes After");
 

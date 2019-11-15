@@ -8,7 +8,15 @@ public class BookingManager extends CineplexManager {
 	ArrayList<BookingOrder> orderList;
 
 	public BookingManager() {
-		this.orderList = new ArrayList<BookingOrder>(); 
+	//	this.orderList = new ArrayList<BookingOrder>();
+		ArrayList<BookingOrder> trialList = null;
+		try {
+			System.out.println("Reading from BookingOrder.dat -----------");
+			trialList = (ArrayList) MainCSVHelper.readSerializedObject("BookingOrder.dat"); // reads from movie and showtime
+			this.orderList = trialList; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
+		} catch (Exception e) {
+			System.out.println("Exception >> " + e.getMessage());
+		}
 
 	}
 
@@ -17,14 +25,18 @@ public int getTotalBookingOrders() {
 }
 
 //------------------ Main Methods -----------------------------------------------------------------------------------------------
-
+public ArrayList<BookingOrder> getOrderList(){
+		return this.orderList;
+}
 public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
 	//initializeBookingOrder();
 
 	orderList.add(new BookingOrder(customerID, totalBookingOrders));
+	MainCSVHelper.writeSerializedObject("BookingOrder.dat", this.orderList);
 
-	
+
+
 	BookingOrder bookingOrder = orderList.get(totalBookingOrders-1);
 
 	System.out.println("Which method do you prefer? ");
@@ -109,7 +121,7 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 
 	totalBookingOrders++;
 	
-	saveBookingOrderCSV(this.orderList);
+	//saveBookingOrderCSV(this.orderList);
 	
 	System.out.println("Would you want to print your tickets?");
 	System.out.println("(1) Yes");
@@ -127,7 +139,7 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 public Cineplex getCineplexChoice() {
 	System.out.println("Which cineplex would you prefer to watch at?");
 	
-	initializeCineplex();
+	//initializeCineplex();
 
 	printCineplexlist();
 	Scanner sc = new Scanner(System.in);
@@ -142,44 +154,44 @@ public Cineplex getCineplexChoice() {
 
 public int getMovieIDChoice(Cineplex c) {
 	Scanner sc = new Scanner(System.in);
-   
-	// Make movies
-	System.out.println("______Creating movies_______");
-	movieManager.createMovieCreator();
-	movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
-	
-	// see the cineplex
-	printCineplexlist();
-	 System.out.println("Choose the cineplex ID");
-	 int ID = sc.nextInt();
-	 
-	 //create cinema for existing cineplex
-	System.out.println("______Creating cinemas for Cineplex" + c.cineplexID +"_______");
-	 System.out.println("Choose the number of cinemas to create");
-	 int no_of_cinema = sc.nextInt();
-	 c.createCinema(no_of_cinema);
-	 
-	 
-	// assign movie to cineplex
-	System.out.println("______Assign Movie to Cineplex_______");
-	 movieManager.printGlobalListOfMovieIDs();
-	 System.out.println("Choose the movie ID");
-
-	 int movieID = sc.nextInt();
-	 
-	assignMoviesToCineplex(selectCineplex(ID), movieID);
-	 
-	// make showtimes 
-	
-	System.out.println("______Add Showtimes to Movie_______");
-	printCineplexlist();
-	 System.out.println("Choose the cineplex ID you want to add showtimes to");
-	 int cineplexID1 = sc.nextInt();
-	 Cineplex c1 = selectCineplex(cineplexID1);	
-	 c1.createShowtimesAndAssignToCinema();
-	
-	
-	// Choose movie ID to watch 
+//
+//	// Make movies
+//	System.out.println("______Creating movies_______");
+//	movieManager.createMovieCreator();
+//	movieManager.printDetails(movieManager.getListOfMovieAndShowtimes());
+//
+//	// see the cineplex
+//	printCineplexlist();
+//	 System.out.println("Choose the cineplex ID");
+//	 int ID = sc.nextInt();
+//
+//	 //create cinema for existing cineplex
+//	System.out.println("______Creating cinemas for Cineplex" + c.cineplexID +"_______");
+//	 System.out.println("Choose the number of cinemas to create");
+//	 int no_of_cinema = sc.nextInt();
+//	 c.createCinema(no_of_cinema);
+//
+//
+//	// assign movie to cineplex
+//	System.out.println("______Assign Movie to Cineplex_______");
+//	 movieManager.printGlobalListOfMovieIDs();
+//	 System.out.println("Choose the movie ID");
+//
+//	 int movieID = sc.nextInt();
+//
+//	assignMoviesToCineplex(selectCineplex(ID), movieID);
+//
+//	// make showtimes
+//
+//	System.out.println("______Add Showtimes to Movie_______");
+//	printCineplexlist();
+//	 System.out.println("Choose the cineplex ID you want to add showtimes to");
+//	 int cineplexID1 = sc.nextInt();
+//	 Cineplex c1 = selectCineplex(cineplexID1);
+//	 c1.createShowtimesAndAssignToCinema();
+//
+//
+//	// Choose movie ID to watch
     System.out.println("______Start Booking!_______");
 	displayMovieListOfCineplex(c); 							//print movielist of that cineplex
 	System.out.println("Which movie do you want to watch?");
@@ -295,7 +307,6 @@ public void viewBookingHistory(int customerID) {
 		if(n.getCustomerID() == customerID) {
 			//System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + selectCineplex(n.getCineplexID()).nameOfCineplex+ " | " + movieManager.getMovie(n.getMovieID()).getMovieTitle()  + " | " + n.getShowTime() + " | " + n.getNoOfTickets() + " | " + "$"+n.getTotalPrice() );
 			System.out.println(n.getCustomerID() + "              | " + n.getOrderNo() + "          | " + n.getCineplexID()+ " | " + n.getMovieID() + " | " + n.getShowTime() + " | " + n.getNoOfTickets() + " | " + "$"+n.getTotalPrice() );
-			break;
 		}
 		
 		
@@ -303,12 +314,11 @@ public void viewBookingHistory(int customerID) {
 
 
 public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the order... will have different seatID 
-	int count = 1;
+	int count = n.getNoOfTickets();
 	int i=0;
 
-	
 	for(i=0; i<count ;i++) {
-		System.out.println("");
+		System.out.println(" ");
 		System.out.println(" ======= Ticket " + i+1 + "===== ");
 		System.out.println("CustomerID: " + n.getCustomerID() );
 		System.out.println("Order No: " + n.getOrderNo() );

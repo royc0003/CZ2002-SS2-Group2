@@ -1,6 +1,8 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.io.IOException;
 /**
@@ -182,7 +184,8 @@ public class Cineplex implements Serializable
 	public void displayAvailableMovies() 
 	{	
 		//INITIALIZE MOVIE AND SHOWTIMES
-		
+
+		System.out.println("NUMBER OF MOVIES "+ localListOfMovieAndShowTimes.size());
 		if(localListOfMovieAndShowTimes.size() > 0) {
 			MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
 			SortMovieCopy2 = sortMovieID(); 
@@ -226,7 +229,7 @@ public class Cineplex implements Serializable
 	public void addMovieToCineplex(MovieAndShowtimes object) //ADD MOVIE AND SHOWTIMES 
 	{   
 		
-		InitializeList();  //initialize LIST when we are in customer controller..... not in staff controller bc we didnt create a cineplex. we used the old data of cineplex
+
 		localListOfMovieAndShowTimes.add(object);
 	}
 	
@@ -242,7 +245,51 @@ public class Cineplex implements Serializable
 		}
 		
 	}
-	
+
+	public void updateStatusAndRemoveMovieFromCineplex()
+	{
+
+		displayAvailableMovies();
+
+		System.out.println("Enter the movie ID of the movie you want to update status for");
+		Scanner sc = new Scanner(System.in);
+		int ID = sc.nextInt();
+
+		for(int i = 0; i< localListOfMovieAndShowTimes.size(); i++)
+		{
+			if(localListOfMovieAndShowTimes.get(i).getMovieID() == ID)
+			{
+				System.out.println("Enter the new showing status of the movie");
+				String newShowingStatus = sc.next();
+				localListOfMovieAndShowTimes.get(i).getMovie().setMovieShowingStatus(newShowingStatus);
+
+				if(newShowingStatus.equals("EndOfShowing"))
+				{
+					removeMovieFromCineplex(ID);
+					System.out.println("Movie removed from cineplex: " + ID + " due to showing status being changed to End Of Showing");
+					return;
+				}
+				else
+				{
+					System.out.println("Movie showing status updated to: " + newShowingStatus);
+					return;
+				}
+			}
+		}
+		System.out.println("MOVIE ID NOT FOUND IN CINEPLEX");
+	}
+
+	public void removeMovieFromCineplex(int movieID)
+	{
+		for(int i = 0; i< localListOfMovieAndShowTimes.size(); i++)
+		{
+			if(localListOfMovieAndShowTimes.get(i).getMovieID() == movieID)
+			{
+				int index = localListOfMovieAndShowTimes.indexOf(localListOfMovieAndShowTimes.get(i));
+				localListOfMovieAndShowTimes.remove(index);
+			}
+		}
+	}
 
 	public void createShowtimesAndAssignToCinema() 
 	//check if movie exists in local movie list first before proceeding
@@ -397,15 +444,24 @@ public class Cineplex implements Serializable
 				SortMovieCopy[i]= localListOfMovieAndShowTimes.get(i);
 			}
 			
-			if(SortMovieCopy.length > 1) {
-				for(int i=0; i< SortMovieCopy.length-1; i++) {
-					if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
-						MovieAndShowtimes temp = SortMovieCopy[i+1];
-						SortMovieCopy[i] = SortMovieCopy[i+1];
-						SortMovieCopy[i+1] = temp;
-					}
-				}}
-			return SortMovieCopy;
+//			if(SortMovieCopy.length > 1) {
+//				for(int i=0; i< SortMovieCopy.length-1; i++) {
+//					if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
+//						MovieAndShowtimes temp = SortMovieCopy[i+1];
+//						SortMovieCopy[i] = SortMovieCopy[i+1];
+//						SortMovieCopy[i+1] = temp;
+//					}
+//				}}
+		Arrays.sort(SortMovieCopy, new Comparator<MovieAndShowtimes>() {
+			@Override
+			public int compare(MovieAndShowtimes m1, MovieAndShowtimes m2) {
+				return m1.getMovieID() - m2.getMovieID();
+			}
+		});
+
+
+
+		return SortMovieCopy;
 		}
 	
 	public int checkIfMovieExistInCineplex(int movieID)

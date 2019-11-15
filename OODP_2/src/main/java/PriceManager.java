@@ -1,8 +1,11 @@
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Scanner;
 
 
-public class PriceManager{
+public class PriceManager implements Serializable {
 	private double WEEKDAY_RATE = 1.0;
 	private double WEEKEND_RATE = 1.5;
 	private double priceRate = 1.0;
@@ -10,7 +13,7 @@ public class PriceManager{
 	//private int noOfTickets; 
 	private double discountRate=1.0;
 	private int standardPrice = 10;
-	
+
 	public void setPriceRate(){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Do you qualify for any discount? \n");
@@ -76,7 +79,9 @@ public class PriceManager{
 			System.out.println("What is the new Weekday Rate?");
 			double pr2 = sc.nextDouble();
 			this.WEEKDAY_RATE = pr2;
-		}	
+		}
+
+
 	}
 	
     

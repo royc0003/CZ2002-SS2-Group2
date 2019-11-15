@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class MAIN {
 
@@ -11,12 +12,17 @@ public class MAIN {
 		int choice;
         String Staff;
         String staffPassword;
-        
-        PriceManager priceManager = new PriceManager();
+
+
+
 		RatingsReviewsManager ratingReviewsManager = new RatingsReviewsManager();
 		BookingManager bookingManager = new BookingManager();
 		CineplexManager cineplexManager = new CineplexManager() ; //this creates moviemanager too
-		/*try {
+        StaffController staffController =new StaffController();
+        CustomerUI customerUI = new CustomerUI();
+        CustomerController custController = new CustomerController(bookingManager,customerUI,ratingReviewsManager, staffController.getPriceManager());
+
+        /*try {
 			System.out.println("This is working");
 			ObjectInputStream os = FileIOHelper.getSerialReader("cineplexManagerDetails.ser");
 			cineplexManager = (CineplexManager) os.readObject();
@@ -56,8 +62,8 @@ public class MAIN {
 		
 		switch(choice) {
 		case 1:
-		    StaffController staffController =new StaffController();
-		    staffController.printWelcomePage(ratingReviewsManager, priceManager);
+
+		    staffController.printWelcomePage(ratingReviewsManager);
 		   // MainCSVHelper csvHelper = new MainCSVHelper();
 		   // csvHelper.writeSerilizable(cineplexManager);
 			break;
@@ -65,8 +71,7 @@ public class MAIN {
 		case 2:
 	
 			bookingManager.initializeBookingOrder();
-			CustomerUI customerUI = new CustomerUI();
-			CustomerController custController = new CustomerController(bookingManager,customerUI,ratingReviewsManager, priceManager);
+
 			custController.startCustomer();
 			break;
 		
@@ -74,7 +79,10 @@ public class MAIN {
 
 		
 	}
-		
+        System.out.println(" ");
+        System.out.println("Thank you for using our program!");
+        System.out.println("Merci Beaucoup!");
+        System.out.println("By Group 2: Royce, Clarita, KokLiang, Rishab and Bisakha");
 	}
 	
 }

@@ -44,7 +44,7 @@ public class CustomerUI {
             case 2:
             	System.out.println("IT IS CREATING");
             	customerStorage = createCustomerAccountPage(customerStorage);
-            	this.custID = customerStorage.size()+1;
+            	this.custID = customerStorage.size();
         }
         
         return customerStorage;
@@ -135,11 +135,12 @@ public class CustomerUI {
 	        System.out.println("Option 1: Make A Booking");
 	        System.out.println("Option 2: View Movie Details");
 	        System.out.println("Option 3: Get Reviews for a Movie");
-	        System.out.println("Option 4: Add Reviews");
-	        System.out.println("Option 5: Add Ratings");
+	        System.out.println("Option 4: Add Ratings");
+	        System.out.println("Option 5: Add Reviews");
 	        System.out.println("Option 6: Check Booking History");
 	        System.out.println("Option 7: Display Top 5 Movies by Rating");
-	        System.out.println("Option 8: Exit");
+            System.out.println("Option 8: Save All");
+	        System.out.println("Option 9: Exit");
 	        
 	        System.out.println("Please choose an option: ");
 	        userChoice = scan.nextInt();
@@ -163,7 +164,7 @@ public class CustomerUI {
                     break;
                 case 4:
                 	ratingsReviewsManager.addRating(bookingManager.movieManager);
-                    break; 
+                    break;
                 case 5:
                 	ratingsReviewsManager.addReview(bookingManager.movieManager);
 
@@ -175,6 +176,22 @@ public class CustomerUI {
                 case 7:
                 	ratingsReviewsManager.displayByRank(bookingManager.movieManager);
                 	break;
+                case 8:
+                    System.out.println("Saving BookingOrder.dat before-----");
+                    MainCSVHelper.writeSerializedObject("BookingOrder.dat", bookingManager.getOrderList());
+                    System.out.println("Saving BookingOrder.dat after------");
+                case 9:
+                    System.out.println("Saving BookingOrder before");
+                    MainCSVHelper.writeSerializedObject("BookingOrder.dat", getMovieManager().getListOfMovieAndShowtimes());
+
+                    System.out.println("Saving PriceManager before");
+                    MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
+
+                    System.out.println("Saving MovieAndShowtimes before");
+                    MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
+                    System.out.println("Saving MovieANdShowtimes After");
+
+
             }
             
             System.out.println("");

@@ -13,6 +13,13 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectId" id="1TZB9EWJI3ZNmM84OePaxSt1KgY" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -74,7 +81,7 @@
       <workItem from="1573709685325" duration="1939000" />
       <workItem from="1573747977409" duration="4700000" />
       <workItem from="1573752824057" duration="4174000" />
-      <workItem from="1573803501082" duration="5424000" />
+      <workItem from="1573803501082" duration="21577000" />
     </task>
     <servers />
   </component>
@@ -86,8 +93,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/MovieManager.java</url>
-          <line>16</line>
+          <line>17</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/CustomerUI.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/MovieManager.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -10,7 +10,7 @@ public class CustomerController {
     private PriceManager priceManager;
     private CustomerUI customerUI;
 
-    public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingReviewsManager, PriceManager priceManager){
+    public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager){
         this.bookingManager = bookingManager;
         this.ratingsReviewsManager = ratingsReviewsManager;
         this.customerUI = customerUI;
@@ -38,19 +38,17 @@ public class CustomerController {
         int i =0;
         
         System.out.println("Customer ID" + customerUI.custID());
-        
+        Customer currentCustomerAccount = null;
         for(Customer n: customerStorage) {
         	System.out.println("Customer in Storage " + n.getCustomerID());
         	if(n.getCustomerID() == customerUI.custID()) {
+                currentCustomerAccount = customerStorage.get(i);
+                customerUI.printWelcomePage(currentCustomerAccount.getCustomerID(), bookingManager, ratingsReviewsManager, priceManager);
         		break;
         	}
         	i++;
         }
-        
-        Customer currentCustomerAccount = customerStorage.get(i);
-      
-        customerUI.printWelcomePage(currentCustomerAccount.getCustomerID(),bookingManager, ratingsReviewsManager, priceManager);
-        System.out.println("Thank you for using our THIS SUCKS J'DETESTE oodp");
+
     }
 
     //-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------

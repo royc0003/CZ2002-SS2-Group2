@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.*;
 import java. util. Iterator;
 
 public class MovieManager implements Serializable {
@@ -10,10 +11,10 @@ public class MovieManager implements Serializable {
     protected static ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes;
 
     public MovieManager() {
-    	this.displayMovie = new MovieDisplay();
-		//this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
+		this.displayMovie = new MovieDisplay();
+		this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
 
-		ArrayList<MovieAndShowtimes> trialList = null;
+			ArrayList<MovieAndShowtimes> trialList = null;
 		try{
 			System.out.println("Reading from MovieAndShowtimes.dat -----------");
 			trialList = (ArrayList)MainCSVHelper.readSerializedObject("MovieAndShowtimes.dat"); // reads from movie and showtime
@@ -22,23 +23,25 @@ public class MovieManager implements Serializable {
 			System.out.println( "Exception >> " + e.getMessage());
 		}
 
-//		if(this.listOfMovieAndShowtimes == null){
+//
+//		if (this.listOfMovieAndShowtimes == null) {
 //			this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
 //		}
 	}
     
-   /* public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
+    public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
         this.displayMovie = displayMovie;
         MovieManager.listOfMovieAndShowtimes = listOfMovieAndShowtimes;
-    }*/
-    
-    public void printDetails(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
-    	
-        for(MovieAndShowtimes x : listOfMovieAndShowtimes){
-            displayMovie.printDetails(x.getMovieID(), x.getMovieTitle(), x.getMovieAgeRating(),x.getMovieAverageRating(), x.getMovieDuration(), x.getMovieShowingStatus()
-            );
-        };
     }
+
+
+	public void printDetails(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
+
+		for(MovieAndShowtimes x : listOfMovieAndShowtimes){
+			x.printDetails(x.getMovieID(), x.getMovieTitle(), x.getMovieAgeRating(),x.getMovieAverageRating(), x.getMovieDuration(), x.getMovieShowingStatus()
+			);
+		};
+	}
 
     //--------------MANAGES WITH CREATION OF MOVIES-------------------------------------------------------------------------------------------------------
 
@@ -145,9 +148,9 @@ public Movie getMovie(int MovieID){
 	
     Movie x = null;
         for(MovieAndShowtimes n: listOfMovieAndShowtimes){
-            if(n.getMovieID() == MovieID)
-                x= n.getMovie();
-            break;
+            if(n.getMovieID() == MovieID){
+                return n.getMovie();
+        	}
         }
     return x;
 }
@@ -206,14 +209,22 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
 			}
 			
 			
-			if(SortMovieCopy.length > 1) {			
-				for(int i=0; i< SortMovieCopy.length - 1; i++) {
-					if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
-						MovieAndShowtimes temp = SortMovieCopy[i];
-						SortMovieCopy[i] = SortMovieCopy[i+1];
-						SortMovieCopy[i+1] = temp;
-					}
-				}}
+//			if(SortMovieCopy.length > 1) {
+//				for(int i=0; i< SortMovieCopy.length - 1; i++) {
+//					if(SortMovieCopy[i].getMovieID() > SortMovieCopy[i+1].getMovieID()  ) {
+//						MovieAndShowtimes temp = SortMovieCopy[i];
+//						SortMovieCopy[i] = SortMovieCopy[i+1];
+//						SortMovieCopy[i+1] = temp;
+//					}
+//				}}
+
+
+		Arrays.sort(SortMovieCopy, new Comparator<MovieAndShowtimes>() {
+			@Override
+			public int compare(MovieAndShowtimes m1, MovieAndShowtimes m2) {
+				return m1.getMovieID() - m2.getMovieID();
+			}
+		});
 
 			return SortMovieCopy;
 		}
@@ -225,49 +236,50 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
     	System.out.println("Enter the movie ID you want to update/change details for: ");
     	int ID = scan.nextInt();
 
-    	for(MovieAndShowtimes x: listOfMovieAndShowtimes)
-    	{
-    		if(ID == x.getMovieID())
-    		{
-		    	System.out.println("What do you want to update/change?");
-		    	System.out.println("1. Change ID of movie");
-		    	System.out.println("2. Change Title of movie");
-		    	System.out.println("3. Change movie age rating");
-		    	System.out.println("4. Change duration of movie");
-		    	
-		    	int userChoice = scan.nextInt();
-		    		
-		    	switch (userChoice)
-		    	{ 
-		        	case 1: 
-		        		System.out.println("Enter the new movie ID:");
-		        		int movieID = scan.nextInt();
-		        		x.getMovie().setMovieID(movieID);
-		        		System.out.println("Movie ID updated!");
-		        		break;
-		        	case 2:
-		        		System.out.println("Enter the new title of movie:");
-		        		String movieTitle = scan.next();
-		        		x.getMovie().setMovieTitle(movieTitle);
-		        		System.out.println("Movie Title updated!");
-		        		break;
-		        	case 3: 
-		        		System.out.println("Enter the new minimum age to watch the movie:");
-		        		int minAge = scan.nextInt();
-		        		x.getMovie().setMovieAgeRating(minAge);
-		        		System.out.println("Movie age rating updated!");
-		        		break;
-		        	case 4:
-		        		System.out.println("Enter the new duration of movie:");
-		        		int duration = scan.nextInt();
-		        		x.getMovie().setMovieDuration(duration);
-		        		System.out.println("Movie duration updated!");
-		        		break;
-		    	}
-    		}
-    		else
-    			System.out.println("no such movie found!");
-    	}
+    	for(MovieAndShowtimes x: listOfMovieAndShowtimes) {
+			if (ID == x.getMovieID()) {
+				System.out.println("What do you want to update/change?");
+				System.out.println("1. Change ID of movie");
+				System.out.println("2. Change Title of movie");
+				System.out.println("3. Change movie age rating");
+				System.out.println("4. Change duration of movie");
+
+				int userChoice = scan.nextInt();
+
+				switch (userChoice) {
+					case 1:
+						System.out.println("Enter the new movie ID:");
+						int movieID = scan.nextInt();
+						x.getMovie().setMovieID(movieID);
+						System.out.println("Movie ID updated!");
+						return;
+					case 2:
+						System.out.println("Enter the new title of movie:");
+						String movieTitle = scan.next();
+						x.getMovie().setMovieTitle(movieTitle);
+						System.out.println("Movie Title updated!");
+						return;
+					case 3:
+						System.out.println("Enter the new minimum age to watch the movie:");
+						int minAge = scan.nextInt();
+						x.getMovie().setMovieAgeRating(minAge);
+						System.out.println("Movie age rating updated!");
+						return;
+					case 4:
+						System.out.println("Enter the new duration of movie:");
+						int duration = scan.nextInt();
+						x.getMovie().setMovieDuration(duration);
+						System.out.println("Movie duration updated!");
+						return;
+
+				}
+
+			}
+		}
+
+
+			System.out.println("no such movie found!");
+
         		
     }
     public void saveMovieAndShowtimes(){ // function to be called to save data

@@ -18,6 +18,7 @@ public class Movie implements Serialization, Comparable<Movie>, Serializable {
         this.movieAgeRating = ageRating;
         this.showingStatus = showingStatus;
         this.duration = duration;
+        this.averageRating = 0;
     }
     public Movie(String[] item) {
     	this.movieID = Integer.parseInt(item[0]);
@@ -46,7 +47,7 @@ public class Movie implements Serialization, Comparable<Movie>, Serializable {
     }
 
     public int getAverageRating(){
-        return this.movieAgeRating;
+        return this.averageRating;
     }
 
 

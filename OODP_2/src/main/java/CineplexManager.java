@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.*;
 
 public class CineplexManager implements Serializable
 {
@@ -22,9 +23,9 @@ public class CineplexManager implements Serializable
 		}
 //		if(this.cineplexList == null){
 //			this.cineplexList = new ArrayList<Cineplex>(); // temporarily creates a file first will now create Cineplex files		}
-//	}
-
 	}
+
+
 
 
 	
@@ -72,7 +73,21 @@ public class CineplexManager implements Serializable
 		}
 
 //------------------------Main methods-----------------------------------------------------------------------------------------------
-	
+
+	public void changeShowingStatusAndRemoveMovieInCineplex()
+	{
+		printCineplexlist();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the CINEPLEX you want to change showing status for");
+		int cineplexID = scan.nextInt();
+
+		Cineplex c = selectCineplex(cineplexID);
+
+		c.updateStatusAndRemoveMovieFromCineplex();
+
+	}
+
+
 	public void createMovie(MovieManager m)
 	{
 		m.createMovieCreator();
@@ -112,25 +127,26 @@ public class CineplexManager implements Serializable
 		System.out.println("You have assigned the movie to " + c.nameOfCineplex);
 		System.out.println("");
 	}
-	
-		
+
+
+
 	public Cineplex[] sortCineplexID(){
-		
-		Cineplex[] SortCopy= new Cineplex[cineplexList.size()];
-		
-		for(int i=0; i<cineplexList.size(); i++) {
-			SortCopy[i]= cineplexList.get(i);
-		}
-		
-		if(SortCopy.length > 1) {		
-			for(int i=0; i< SortCopy.length-1; i++) {
-				if(SortCopy[i].cineplexID > SortCopy[i+1].cineplexID  ) {
-					Cineplex temp = SortCopy[i+1];
-					SortCopy[i] = SortCopy[i+1];
-					SortCopy[i+1] = temp;
-				}
-			}}
-			
+
+		Cineplex[] SortCopy= new Cineplex[this.cineplexList.size()];
+
+		for(int i=0; i<this.cineplexList.size(); i++) { SortCopy[i]=
+				this.cineplexList.get(i); }
+		/*
+		 * if(SortCopy.length > 1) { for(int i=0; i< SortCopy.length-1; i++) {
+		 * if(SortCopy[i].cineplexID > SortCopy[i+1].cineplexID ) { Cineplex temp =
+		 * SortCopy[i+1]; SortCopy[i] = SortCopy[i+1]; SortCopy[i+1] = temp; } }}
+		 */
+		Arrays.sort(SortCopy, new Comparator<Cineplex>() {
+			@Override
+			public int compare(Cineplex c1, Cineplex c2) {
+				return c1.cineplexID - c2.cineplexID;
+			}
+		});
 		return SortCopy;
 	}
 	
