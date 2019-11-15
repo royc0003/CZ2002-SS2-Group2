@@ -10,18 +10,21 @@ public class CineplexManager implements Serializable
 	
 	public CineplexManager() {
 		this.movieManager = new MovieManager(); // initializes
-		this.cineplexList = new ArrayList<Cineplex>(); // temporarily creates a file first will now create Cineplex files
+
+
 		ArrayList<Cineplex> trialList = null;
-		try{
+		try {
 			System.out.println("Reading from Cineplex.dat -----------");
-			trialList = (ArrayList)MainCSVHelper.readSerializedObject("Cineplex.dat"); // reads from movie and showtime
+			trialList = (ArrayList) MainCSVHelper.readSerializedObject("Cineplex.dat"); // reads from movie and showtime
 			this.cineplexList = trialList; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
 		} catch (Exception e) {
-			System.out.println( "Exception >> " + e.getMessage());
+			System.out.println("Exception >> " + e.getMessage());
 		}
+//		if(this.cineplexList == null){
+//			this.cineplexList = new ArrayList<Cineplex>(); // temporarily creates a file first will now create Cineplex files		}
+//	}
+
 	}
-
-
 
 
 	

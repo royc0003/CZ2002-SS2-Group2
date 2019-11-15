@@ -12,7 +12,7 @@ public class MovieManager implements Serializable {
     public MovieManager() {
     	this.displayMovie = new MovieDisplay();
 		//this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
-		this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
+
 		ArrayList<MovieAndShowtimes> trialList = null;
 		try{
 			System.out.println("Reading from MovieAndShowtimes.dat -----------");
@@ -21,6 +21,10 @@ public class MovieManager implements Serializable {
 		} catch (Exception e) {
 			System.out.println( "Exception >> " + e.getMessage());
 		}
+
+//		if(this.listOfMovieAndShowtimes == null){
+//			this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
+//		}
 	}
     
    /* public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){

@@ -75,12 +75,15 @@ public class StaffController extends CineplexManager
 	
 	             case 5:
 	            	 //display available movies in cineplex
+
+
 	            	 printCineplexlist();
 	            	 System.out.println("Choose the cineplex ID");
 	            	 int cineplexID = sc.nextInt();
 	            	 
-	            	 Cineplex c = selectCineplex(cineplexID);	            	
-	    
+	            	 Cineplex c = selectCineplex(cineplexID);
+
+
 	            	 c.displayAvailableMovies();
 	            	 
 	                 break;

@@ -37,7 +37,7 @@ public class Cineplex implements Serializable
 	/**
 	 *the local list of Movie and Showtimes objects in the cineplex 
 	 */
-	private static ArrayList<MovieAndShowtimes> localListOfMovieAndShowTimes; // would store the movie objects for the cinema
+	private ArrayList<MovieAndShowtimes> localListOfMovieAndShowTimes; // would store the movie objects for the cinema
 
 	
 //---------------------Constructor---------------------------------------------------------------------------------------	
@@ -72,7 +72,7 @@ public class Cineplex implements Serializable
 			String type = sc3.next();
 
 			cinemaList.add(new Cinema(i+1, type));
-			saveCinemaCSV(this.cinemaList);
+			//saveCinemaCSV(this.cinemaList);
 		}	
 	}
 	
@@ -97,7 +97,14 @@ public class Cineplex implements Serializable
 	{   
 		return cineplexID;
 	}
-	
+
+	public void getLocalMovieList(){
+		for(MovieAndShowtimes n: localListOfMovieAndShowTimes){
+			System.out.println("MovieID " + n.getMovieID());
+		}
+
+	}
+
 	
 	public void createCinema(int no_of_cinema) {  //CREATE CINEMA OBJECTS for each "old" cineplex bc we didnt create this cineplex
 		
@@ -112,7 +119,7 @@ public class Cineplex implements Serializable
 			String type = sc3.next();
 
 			cinemaList.add(new Cinema(i+1, type));
-			saveCinemaCSV(this.cinemaList);
+			//saveCinemaCSV(this.cinemaList);
 		}	
 	}
 	
