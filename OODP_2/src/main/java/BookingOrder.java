@@ -16,7 +16,6 @@ public class BookingOrder implements Serialization, Serializable { // purpose of
     public BookingOrder(int customerID, int orderNo){
         this.customerID = customerID;
         this.orderNo = orderNo;
-        System.out.println("IN CONSTRUCTOR 1");
 
         this.listOfSeatID = new ArrayList<String>();
         

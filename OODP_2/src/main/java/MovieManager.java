@@ -23,10 +23,10 @@ public class MovieManager implements Serializable {
 			System.out.println( "Exception >> " + e.getMessage());
 		}
 
-//
-//		if (this.listOfMovieAndShowtimes == null) {
-//			this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
-//		}
+
+		if (this.listOfMovieAndShowtimes == null) {
+			this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
+		}
 	}
     
     public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
@@ -121,7 +121,7 @@ public void printGlobalListOfMovieIDs(){
 	System.out.println("MovieID            MovieTitle         ShowingStatus  ");
 	for(int i=0; i< SortMovieCopy2.length; i++)
 	{
-		System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                           " + SortMovieCopy2[i].getMovieTitle() + "   " + SortMovieCopy2[i].getMovieShowingStatus());
+		System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                  " + SortMovieCopy2[i].getMovieTitle() + "               " + SortMovieCopy2[i].getMovieShowingStatus());
 	}
 	System.out.println("________________________________________________");
 	

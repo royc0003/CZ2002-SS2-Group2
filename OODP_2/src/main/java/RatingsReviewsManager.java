@@ -83,7 +83,7 @@ public class RatingsReviewsManager
                 System.out.println("2. " + tempArray2[1].getMovieTitle() + " No Of Tickets Sold: " + tempArray2[1].getNoOfTicketSold());
                 System.out.println("3. " + tempArray2[2].getMovieTitle() + " No Of Tickets Sold: " + tempArray2[2].getNoOfTicketSold());
                 System.out.println("4. " + tempArray2[3].getMovieTitle() + " No Of Tickets Sold: " + tempArray2[3].getNoOfTicketSold());
-                System.out.println("5. " + tempArray2[4].getMovieTitle() + " No Of Tickets Sold:" + tempArray2[4].getNoOfTicketSold());
+                System.out.println("5. " + tempArray2[4].getMovieTitle() + " No Of Tickets Sold: " + tempArray2[4].getNoOfTicketSold());
             }
             else
             {
@@ -156,13 +156,16 @@ public class RatingsReviewsManager
 
         if(SortMovieCopy.length > 1)
         {
-            for(int i=0; i< SortMovieCopy.length-1; i++)
+            for (int i = 1; i < SortMovieCopy.length; i++)
             {
-                if(SortMovieCopy[i].getNoOfTicketSold() < SortMovieCopy[i+1].getNoOfTicketSold()  )
+                for (int j = i; j > 0; j--)
                 {
-                    MovieAndShowtimes temp = SortMovieCopy[i+1];
-                    SortMovieCopy[i] = SortMovieCopy[i+1];
-                    SortMovieCopy[i+1] = temp;
+                    if (SortMovieCopy[i].getNoOfTicketSold() < SortMovieCopy[j - 1].getNoOfTicketSold())
+                    {
+                        MovieAndShowtimes temp = SortMovieCopy[j];
+                        SortMovieCopy[j] = SortMovieCopy[j - 1];
+                        SortMovieCopy[j - 1] = temp;
+                    }
                 }
             }
         }

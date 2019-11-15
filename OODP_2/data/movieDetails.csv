@@ -1,7 +1,7 @@
 movieID|||movieTitle|||showingStatus|||movieAgeRating|||averageRating|||duration
-2|||b|||1|||1|||1
-3|||C|||1|||1|||1
-4|||D|||2|||1|||1
-5|||D|||1|||1|||1
-6|||F|||1|||1|||1
-1|||A|||1|||1|||1
+1|||Joker|||NowShowing|||21|||21
+2|||Frozen|||NowShowing|||0|||0
+3|||IT|||NowShowing|||21|||21
+4|||Avengers|||Preview|||10|||10
+5|||Batman|||NowShowing|||10|||10
+6|||Superman|||Preview|||12|||12

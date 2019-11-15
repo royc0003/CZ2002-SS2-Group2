@@ -75,7 +75,6 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 				for(int xy = 0; xy < count; xy++)
 				{
 					movieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
-					System.out.println("Ticket count increased by one");
 				}
 			}
 		}
@@ -122,7 +121,6 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 				for(int xy = 0; xy < count2; xy++)
 				{
 					movieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
-					System.out.println("Ticket count increased by one");
 				}
 			}
 		}
@@ -366,7 +364,7 @@ public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the
 			case 1:
 				Calendar c = Calendar.getInstance();
 				day = c.get(Calendar.DAY_OF_WEEK);
-				if(day != Calendar.SATURDAY || day != Calendar.SUNDAY){
+				if(day != Calendar.SATURDAY && day != Calendar.SUNDAY){
 
 					day = 1;
 				}
@@ -380,7 +378,7 @@ public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the
 				date = sc.nextInt();
 				System.out.println("Enter month (mm)");
 				month = sc.nextInt();
-				System.out.println("Enter year (yy)");
+				System.out.println("Enter year (yyyy)");
 				year = sc.nextInt();
 
 				Date bookdate = new Date(date,month,year);

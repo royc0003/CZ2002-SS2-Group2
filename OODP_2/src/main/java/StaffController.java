@@ -53,8 +53,8 @@ public class StaffController extends CineplexManager
 	     System.out.println("Option 13: Display showtimes in a Cinema");
 	     System.out.println("Option 14: Display reviews for a movie");
 	     System.out.println("Option 15: Get number of tickets sold for a movie");
-	     System.out.println("Option 16: Save Data");
-	     System.out.println("Option 17: Exit");
+	     System.out.println("Option 16: Exit");
+
 
 
 	     System.out.println("");
@@ -198,23 +198,21 @@ public class StaffController extends CineplexManager
 					 int ID3 = sc6.nextInt();
 					 System.out.println("No Of tickets sold for movie " + movieManager.getMovie(ID3).getMovieTitle() + ": " + movieManager.getMovie(ID3).getNoOfTicketSold());
 					 break;
-				 case 16: // might be useless for this one; most likely is // steps is to find
-					 // the class or possibly the constructor that initiates the use of moviemanager once
-					 // note to save the data as .dat instead of ser
-					 // initializes once
-				 	System.out.println("Saving MovieAndShowtimes before");
-					 MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
-				 	System.out.println("Saving MovieANdShowtimes After");
+				 case 16:
+				 	// before exit program, SAVE ALL DETAILS that the staff create and updated
+					 System.out.println("Saving MovieAndShowtimes.dat ");
 
-					 System.out.println("Saving Cineplex.dat Before");
+					 MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", getMovieManager().getListOfMovieAndShowtimes());
+
+					 System.out.println("Saving Cineplex.dat ");
 				 	MainCSVHelper.writeSerializedObject("Cineplex.dat", this.cineplexList);
-					 System.out.println("Saving Cineplex.dat After");
+
 
 
 
 			 }
-	         
-	         System.out.println("Get back to Option Page");
+			 System.out.println(" ");
+	         System.out.println("---------Get back to Option Page---------");
 	         System.out.println("(1) Yes");
 	         System.out.println("(2) No");
 	         

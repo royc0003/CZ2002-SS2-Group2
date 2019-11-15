@@ -293,9 +293,12 @@ public class Cineplex implements Serializable
 	public void createShowtimesAndAssignToCinema() 
 	//check if movie exists in local movie list first before proceeding
 	{
+		System.out.println(" ");
+		System.out.println("======== Create Showtime for A Movie ==========");
+		System.out.println(" ");
 		displayAvailableMovies();
 		System.out.println("");
-		System.out.println("Enter the movie id that you want to add showtimes to");
+		System.out.println("Enter the movie id that you want to add showtimes to: ");
 		Scanner sc = new Scanner(System.in);
 		int userInput = sc.nextInt(); 
 		
@@ -345,6 +348,9 @@ public class Cineplex implements Serializable
 	
 	public void deleteShowTimeToMovie()
 	{
+		System.out.println(" ");
+		System.out.println("======== Delete Showtime for A Movie ==========");
+		System.out.println(" ");
 		displayAvailableMovies();
 		System.out.println("");
 		

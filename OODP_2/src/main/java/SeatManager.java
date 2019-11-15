@@ -48,8 +48,8 @@ public class SeatManager implements Serializable {
 			for(j=0; j<10 ; j++) {
 				
 				if(!seats[i][j].isOccupied()) {
-					if(j==0){
-						System.out.println("");
+					if(j==5){
+						System.out.print("      ");
 					}
 					System.out.print("[ ]");
 				}
@@ -59,8 +59,10 @@ public class SeatManager implements Serializable {
 				
 			}
 
-			if(i==0){
-				System.out.print("    ");
+			if(i==5){
+				System.out.println("    ");
+				System.out.println("    ");
+
 			}
 			System.out.println("");
 		}
@@ -84,7 +86,7 @@ public class SeatManager implements Serializable {
 	
 	/**
 	* Assign the seat id to the customer id 
-	* @param seatID the seat id the customer id is booking
+	* @param seatId the seat id the customer id is booking
 	* @param cust_id the id of the customer that is booking
 	  */
 	
