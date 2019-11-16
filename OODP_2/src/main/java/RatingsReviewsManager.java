@@ -160,7 +160,7 @@ public class RatingsReviewsManager
             {
                 for (int j = i; j > 0; j--)
                 {
-                    if (SortMovieCopy[i].getNoOfTicketSold() < SortMovieCopy[j - 1].getNoOfTicketSold())
+                    if (SortMovieCopy[j].getNoOfTicketSold() > SortMovieCopy[j - 1].getNoOfTicketSold())
                     {
                         MovieAndShowtimes temp = SortMovieCopy[j];
                         SortMovieCopy[j] = SortMovieCopy[j - 1];

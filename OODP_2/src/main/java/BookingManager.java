@@ -68,13 +68,13 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		System.out.println("How many seats will you book?");
 		int count = sc.nextInt();
 		bookingOrder.setNoOfTickets(count);
-		for(int ict = 0; ict < movieManager.listOfMovieAndShowtimes.size(); ict++)
+		for(int ict = 0; ict < MovieManager.listOfMovieAndShowtimes.size(); ict++)
 		{
-			if(movieManager.listOfMovieAndShowtimes.get(ict).getMovieID() == movieID)
+			if(MovieManager.listOfMovieAndShowtimes.get(ict).getMovieID() == movieID)
 			{
 				for(int xy = 0; xy < count; xy++)
 				{
-					movieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
+					MovieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
 				}
 			}
 		}
@@ -114,13 +114,13 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 		int count2 = sc.nextInt();
 		bookingOrder.setNoOfTickets(count2);
 
-		for(int ict = 0; ict < movieManager.listOfMovieAndShowtimes.size(); ict++)
+		for(int ict = 0; ict < MovieManager.listOfMovieAndShowtimes.size(); ict++)
 		{
-			if(movieManager.listOfMovieAndShowtimes.get(ict).getMovieID() == movieID2)
+			if(MovieManager.listOfMovieAndShowtimes.get(ict).getMovieID() == movieID2)
 			{
 				for(int xy = 0; xy < count2; xy++)
 				{
-					movieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
+					MovieManager.listOfMovieAndShowtimes.get(ict).getMovie().addToNoOfTicketSold();
 				}
 			}
 		}
