@@ -1,4 +1,10 @@
-
+/**
+ * This is the class used by staff. It is a staff UI to create movies, 
+ * display/update movie details, creates cineplexes assign
+ * movies to cineplex, create/remove/add/update showtime to movies,
+ * list top 5 movies based on ratings and ticket sales
+ * There will only be one Staff controller object
+ */
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,6 +33,11 @@ public class StaffController extends CineplexManager
 	public PriceManager getPriceManager(){
 		return this.priceManager;
 	}
+	
+	/**
+	 * This method will be used when user says "yes" to staff in MAIN.
+	 * It allows staff to do everything stated above.
+	 */
 	 public void printWelcomePage(RatingsReviewsManager ratingReviewsManager)
 	 {
 	     int userChoice;

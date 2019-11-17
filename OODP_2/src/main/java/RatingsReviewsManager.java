@@ -1,3 +1,8 @@
+/**
+ * This class allows customers/staff to add ratings, add reviews, display top 5 movies by ratings,
+ * display reviews of a specified movie. There will only be one RatingsReviewsManager object.
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,7 +11,10 @@ import java.util.Scanner;
 public class RatingsReviewsManager
 {
     //private Movie movie;
-
+	/**
+	 * Adds rating to a movie
+	 * @param m MovieManager object
+	 */
     public void addRating(MovieManager m)
     {
         m.printGlobalListOfMovieIDs();
@@ -31,9 +39,11 @@ public class RatingsReviewsManager
             System.out.println("No such movie found!");
 
     }
-    public void test(){
-        System.out.println("insideeeeeee ");
-    }
+    
+    /**
+	 * Sorts movies based on average ratings and displays the top 5 movies
+	 * @param m MovieManager object
+	 */
     public void displayByRank(MovieManager m) //sorts movies based on ratings and display the top 5 movies
 
     {
@@ -99,7 +109,10 @@ public class RatingsReviewsManager
             System.out.println("Invalid choice");
         }
     }
-
+    /**
+	 * Adds a review to a movie
+	 * @param m MovieManager object
+	 */
     public void addReview(MovieManager m)
     {
         m.printGlobalListOfMovieIDs();
@@ -124,7 +137,10 @@ public class RatingsReviewsManager
             System.out.println("No such movie found!");
 
     }
-
+    /**
+	 * Display all reviews of a specified movie
+	 * @param movieManager MovieManager object
+	 */
     public void displayMovieAndReviews(MovieManager movieManager)//display movie and all its reviews for a specific movie
     {
         System.out.println("Type the movieID you want to see reviews for");
@@ -160,7 +176,7 @@ public class RatingsReviewsManager
             {
                 for (int j = i; j > 0; j--)
                 {
-                    if (SortMovieCopy[j].getNoOfTicketSold() > SortMovieCopy[j - 1].getNoOfTicketSold())
+                    if (SortMovieCopy[i].getNoOfTicketSold() > SortMovieCopy[j - 1].getNoOfTicketSold())
                     {
                         MovieAndShowtimes temp = SortMovieCopy[j];
                         SortMovieCopy[j] = SortMovieCopy[j - 1];

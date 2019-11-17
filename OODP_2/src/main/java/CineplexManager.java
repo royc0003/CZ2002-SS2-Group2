@@ -3,12 +3,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.*;
-
+/**
+ * This class allows us to create movies, create a cineplex,
+ * assign movies to cineplex from global list of movies,
+ * display list of movies. There will only be one cineplex 
+ * manager object 
+ * 
+ */
 public class CineplexManager implements Serializable
 {
+	/**
+	 * Array list of cineplexes
+	 */
 	protected ArrayList<Cineplex> cineplexList;
+	/**
+	 * MovieManager object
+	 */
 	protected MovieManager movieManager;
-	
+	/**
+	 * Creates a new cineplex manager object (there will only be one)
+	 */
 	public CineplexManager() {
 		this.movieManager = new MovieManager(); // initializes
 
@@ -21,17 +35,21 @@ public class CineplexManager implements Serializable
 		} catch (Exception e) {
 			System.out.println("Exception >> " + e.getMessage());
 		}
-//		if(this.cineplexList == null){
-//			this.cineplexList = new ArrayList<Cineplex>();} // temporarily creates a file first will now create Cineplex files		}
+		if(this.cineplexList == null){
+			this.cineplexList = new ArrayList<Cineplex>();} // temporarily creates a file first will now create Cineplex files		}
 	}
 
+
+//-------------------------Get methods--------------------------------------------------------------------------------------------	
 	public ArrayList<Cineplex> getCineplexList(){
 		return this.cineplexList;
 	}
 
-	
-
-//-------------------------Get methods--------------------------------------------------------------------------------------------	
+	/**
+	 * Returns a cineplex object
+	 * @param Cineplex ID of Cineplex
+	 * @return a cineplex object based on specified cineplex id
+	 */
 	public Cineplex selectCineplex(int cineplexID)
 	{
 		for(int i = 0; i< cineplexList.size(); i++)
@@ -46,19 +64,28 @@ public class CineplexManager implements Serializable
 	}
 
 //------------------------Display methods----------------------------------------------------------------------------------------------------------	
-	
+	/**
+	 * Display available movies assigned to a cineplex
+	 * @param Cinplex object
+	 */
 	public void displayMovieListOfCineplex(Cineplex c)
 	{
 		
 		c.displayAvailableMovies();
 	}
-		
+	/**
+	 * Display all movies in global list
+	 * @param MovieManager object
+	 */	
 	public void displayAllMovies(MovieManager m)
 	{
 		m.printGlobalListOfMovieIDs();
 	}
 	
-	
+	/**
+	 * Sorts cineplexes based on cineplex ID and prints 
+	 * the list of all cineplexes
+	 */
 	public void printCineplexlist() {
 		
 		Cineplex[] SortCopy2= new Cineplex[cineplexList.size()];
@@ -88,12 +115,18 @@ public class CineplexManager implements Serializable
 
 	}
 
-
+	/**
+	 * Uses MovieManager to create a movie
+	 * @param MovieManager object
+	 */
 	public void createMovie(MovieManager m)
 	{
 		m.createMovieCreator();
 	}
-	
+	/**
+	 * Creates a cineplex object and adds it to the array list
+	 * of cineplexes
+	 */
 	public void createCineplex()
 	{
 		System.out.println("Enter ID of Cineplex");
@@ -119,7 +152,11 @@ public class CineplexManager implements Serializable
 		
 		System.out.println("Created cineplex " + name + " at location " + location + " with " + number + " cinemas..");	
 	}
-	
+	/**
+	 * Assigns movies to a cineplex
+	 * @param Cineplex object
+	 * @param Movie ID of movie to be assigned
+	 */
 	public void assignMoviesToCineplex(Cineplex c, int movieid)
 	{	
 		//MovieAndShowtimes m = movieManager.getMovieAndShowtimes(movieid);
@@ -130,7 +167,10 @@ public class CineplexManager implements Serializable
 	}
 
 
-
+	/**
+	 * Sorts array list of cineplex list in ascending order based on cineplex ID
+	 * @return sorted array list of cineplexes 
+	 */
 	public Cineplex[] sortCineplexID(){
 
 		Cineplex[] SortCopy= new Cineplex[this.cineplexList.size()];
@@ -150,7 +190,10 @@ public class CineplexManager implements Serializable
 		});
 		return SortCopy;
 	}
-	
+	/**
+	 * Returns array list of cineplexes showing a particular movie
+	 * @return array list of cineplexes
+	 */
 	public ArrayList<Cineplex> listOfCineplexWithMovieID(int movieID)
 	{
 		ArrayList<Cineplex> cineplexListWithMovieID = new ArrayList<Cineplex>();
@@ -165,7 +208,10 @@ public class CineplexManager implements Serializable
 		
 		return cineplexListWithMovieID;
 	}
-	
+	/**
+	 * Prints all cinemas ID in a specified cineplex
+	 * @param cineplex ID of cineplex
+	 */
 	public void printCinemaIdForCineplex(int cineplexID )
 	{
 		for(Cineplex c: cineplexList)
@@ -179,7 +225,9 @@ public class CineplexManager implements Serializable
 	
 	//-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
 
-
+		/**
+		 * Helps retrieve previously stored data if program crashes or exits
+		 */
 		public void initializeCineplex(){
 			MainCSVHelper csvHelper = new MainCSVHelper();
 			try {
@@ -192,6 +240,10 @@ public class CineplexManager implements Serializable
 				System.out.println("Could not find the file");
 			}
 		}
+		/**
+		 * Saves data to a csv file
+		 * @param Array list of cineplex objects
+		 */
 		public void saveCineplexCSV(ArrayList<Cineplex> cineplexList){
 			MainCSVHelper csvHelper = new MainCSVHelper();
 			try{

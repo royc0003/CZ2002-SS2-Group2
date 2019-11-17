@@ -1,15 +1,38 @@
 import java.util.ArrayList;
 import java.io.IOException;
-// purpose of the customer controller
-// to allow for control over login to store data into the customerStorage page
-
+/** purpose of the customer controller
+* to allow for control over login to store data into the customerStorage page
+ */
 public class CustomerController {
+	/**
+	 * BookingManager object
+	 */
     private BookingManager bookingManager;
+    /**
+     * RatingsReviewsManager object
+     */
     private RatingsReviewsManager ratingsReviewsManager;
+    /**
+     * Array list of customers
+     */
     private ArrayList<Customer> customerStorage; //customerStorage for login
+    /**
+     * PriceManager object
+     */
     private PriceManager priceManager;
+    /**
+     * CustomerUI object
+     */
     private CustomerUI customerUI;
 
+
+    /**
+     * Creates a customer controller object
+     * @param bookingManager BookingManager object
+     * @param customerUI CustomerUI object
+     * @param ratingReviewsManager RatingsReviewsManager object
+     * @param priceManager PriceManager object
+     */
     public CustomerController(BookingManager bookingManager, CustomerUI customerUI, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager){
         this.bookingManager = bookingManager;
         this.ratingsReviewsManager = ratingsReviewsManager;
@@ -18,11 +41,21 @@ public class CustomerController {
     	this.customerStorage = new ArrayList<Customer>();
 
     }
-
+    /**
+     * Returns an array list of customer objects
+     * @return array list of customers
+     */
     public ArrayList<Customer> getCustomerStorage(){
+
         return this.customerStorage;
+
     }
-    public void startCustomer(){
+    
+    /**
+     * If staff == 'No' in main, this method would be called
+     * @throws IOException 
+     */
+    public void startCustomer() throws IOException{
         // begin storage program to ask user
     	
     
@@ -52,6 +85,9 @@ public class CustomerController {
     }
 
     //-------------------CSV RELATED FUNCTIONS------------------------------------------------------------------------------------------------------------
+    /**
+	 * Helps retrieve previously stored data if program crashes or exits
+	 */
     public void initializeCustomer(){
         MainCSVHelper csvHelper = new MainCSVHelper();
         try {
@@ -65,6 +101,10 @@ public class CustomerController {
             System.out.println("Could not find the file");
         }
     }
+    /**
+	 * Saves data to a csv file
+	 * @param Array list of customer objects
+	 */
     public void saveCustomerCSV(ArrayList<Customer> customerStorage){
         MainCSVHelper csvHelper = new MainCSVHelper();
         try{

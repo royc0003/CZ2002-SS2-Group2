@@ -4,29 +4,58 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+/** Note the main purpose of this class is to act as a controller
 
+*- Understand that since CSV rewrite will occur; update can still occur but ensure that CSV is being rewritten first
 
-/*Note the main purpose of this class is to act as a controller
-- Understand that since CSV rewrite will occur; update can still occur but ensure that CSV is being rewritten first
-The following implementation will be made for these:
--movieDetails
-movieID|||movieTitle|||movieRating|||movieAgeRating|||showingStatus
-showtimeDetails
-movieTitle|||movieDate|||movieShowTimes|||screenNo
-ticketDetails
+*The following implementation will be made for these:
+
+*-movieDetails
+
+*movieID|||movieTitle|||movieRating|||movieAgeRating|||showingStatus
+
+*showtimeDetails
+
+*movieTitle|||movieDate|||movieShowTimes|||screenNo
+
+*ticketDetails
+
 - have an option to select between the various classes
+
 */
+
 
 // also note that FileIOHelper is already there to help with implementation
 // of read/writeBuffer
 
 public class MainCSVHelper extends csvHelper{ //contains read and write CSV
-    private String movieDetails = "movieDetails.csv";
+	/**
+	 * CSV file of movieDetails (string)
+	 */
+	private String movieDetails = "movieDetails.csv";
+	/**
+	 * CSV file of showtime details (string)
+	 */
     private String showTimeDetails = "showTimeDetails.csv";
+    /**
+	 * CSV file of cineplex details (string)
+	 */
     private String cineplexDetails = "cineplexDetails.csv";
+    /**
+	 * CSV file of customer details (string)
+	 */
     private String customerDetails = "customerDetails.csv";
+    /**
+	 * CSV file of booking order details (string)
+	 */
     private String bookingOrderDetails = "bookingOrderDetails.csv";
+    /**
+	 * CSV file of cinema details (string)
+	 */
     private String cinemaDetails = "cinemaDetails.csv";
+    /**
+	 * file of movie manager details
+	 */
     private String movieManagerDetails = "movieManagerDetails.ser";
 
     /*private String showTimeDetails = "showTimeDetails.csv";
@@ -54,7 +83,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
                 return this.ticketDetails;
         }
         return "NIL";
-    }*/
+    }*/ 
+    /**
+     * reads data from movies CSV file and returns data
+     * @return previously stored array list of MovieAndShowtimes objects
+     * @throws IOException
+     */
     public ArrayList<MovieAndShowtimes> readFromMoviesCSV() throws IOException{
         if(!FileIOHelper.exists(this.movieDetails)) {
             System.out.println("File does not exist!");
@@ -91,6 +125,11 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
 	 * Movie mov = new Movie(item); //instantiates new objects that'll be kept in
 	 * array results.add(mov); } return results; }
 	 */
+    /**
+     * reads data from showtimes CSV file and returns data
+     * @return previously stored array list of ShowTime objects
+     * @throws IOException
+     */
     public ArrayList<ShowTime> readFromShowTimeCSV() throws IOException{
         if(!FileIOHelper.exists(this.showTimeDetails)) {
             System.out.println("File does not exist!");
@@ -106,6 +145,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }
+    
+    /**
+     * reads data from cineplex CSV file and returns data
+     * @return previously stored array list of Cineplex objects
+     * @throws IOException
+     */
     public ArrayList<Cineplex> readFromCineplexDetailsCSV() throws IOException{
         if(!FileIOHelper.exists(this.cineplexDetails)) {
             System.out.println("File does not exist!");
@@ -121,6 +166,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }
+    
+    /**
+     * reads data from customer CSV file and returns data
+     * @return previously stored array list of MovieAndShowtimes objects
+     * @throws IOException
+     */
     public ArrayList<Customer> readFromCustomerCSV() throws IOException{
         if(!FileIOHelper.exists(this.customerDetails)) {
             System.out.println("File does not exist!");
@@ -136,6 +187,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }
+    
+    /**
+     * reads data from booking orders CSV file and returns data
+     * @return previously stored array list of BookingOrder objects
+     * @throws IOException
+     */
     public ArrayList<BookingOrder> readFromBookingOrderCSV() throws IOException{
         if(!FileIOHelper.exists(this.bookingOrderDetails)) {
             System.out.println("File does not exist!");
@@ -151,6 +208,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }
+    
+    /**
+     * reads data from Cinema CSV file and returns data
+     * @return previously stored array list of Cinema objects
+     * @throws IOException
+     */
     public ArrayList<Cinema> readFromCinemaCSV() throws IOException{
         if(!FileIOHelper.exists(this.cinemaDetails)) {
             System.out.println("File does not exist!");
@@ -190,7 +253,11 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         return results;
     }*/
-
+    /**
+   * Allows us to write to CSV file for MovieAndShowtime
+   * @param movies Array list of MovieAndShowtimes objects
+   * @throws IOException
+   */
     public void writeToMovieAndShowtimeCSV(ArrayList<MovieAndShowtimes> movies) throws IOException{
         String[] header = {"movieID", "movieTitle", "showingStatus", "movieAgeRating", "averageRating","duration"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.movieDetails);
@@ -205,7 +272,11 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         writeToCSVFile(movieList, movieCSV);
     }
-  
+     /**
+     * Allows us to write to CSV file for ShowTime
+     * @param movies Array list of ShowTime objects
+     * @throws IOException
+     */
     public void writeToShowTimeCSV(ArrayList<ShowTime> movies) throws IOException{
         String[] header = {"showBegins", "showEnds", "cinemaID"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.showTimeDetails);
@@ -216,6 +287,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         writeToCSVFile(movieList, movieCSV);
     }
+    
+     /**
+     * Allows us to write to CSV file for Cineplex
+     * @param movies Array list of Cineplex objects
+     * @throws IOException
+     */
     public void writeToCineplexCSV(ArrayList<Cineplex> movies) throws IOException{
         String[] header = {"cineplexID", "nameOfCineplex", "location", "no_of_cinema"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.cineplexDetails);
@@ -226,6 +303,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         writeToCSVFile(movieList, movieCSV);
     }
+    
+    /**
+     * Allows us to write to CSV file for Customer
+     * @param movies Array list of Customer objects
+     * @throws IOException
+     */
     public void writeToCustomerCSV(ArrayList<Customer> movies) throws IOException{
         String[] header = {"age", "userName", "name", "mobile", "email", "customerID"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.customerDetails);
@@ -236,6 +319,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         writeToCSVFile(movieList, movieCSV);
     }
+    
+    /**
+     * Allows us to write to CSV file for BookingOrder
+     * @param movies Array list of BookingOrder objects
+     * @throws IOException
+     */
     public void writeToBookingOrderCSV(ArrayList<BookingOrder> movies) throws IOException{
         String[] header = {"noOfTickets", "orderNo", "showTime", "movieID", "customerID", "totalPrice", "cineplexID"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.bookingOrderDetails);
@@ -246,6 +335,12 @@ public class MainCSVHelper extends csvHelper{ //contains read and write CSV
         }
         writeToCSVFile(movieList, movieCSV);
     }
+    
+     /**
+     * Allows us to write to CSV file for Cinema
+     * @param movies Array list of Cinema objects
+     * @throws IOException
+     */
     public void writeToCinemaCSV(ArrayList<Cinema> movies) throws IOException{
         String[] header = {"Type", "seatingCapacity", "cinema_no"};
         BufferedWriter movieCSV = FileIOHelper.getBufferedWriter(this.cinemaDetails);

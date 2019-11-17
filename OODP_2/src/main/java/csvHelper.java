@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
-* @author Royce Ang;
-**/
-
+ * reads and writes information to and from csv file 
+ *
+ */
 public class csvHelper {
     private static final String PIPE_DELIMITER = "\\|\\|\\|";
 
@@ -23,6 +23,13 @@ public class csvHelper {
         }
         return results;
     }*/
+    
+   /**
+    *  
+    * @param reader
+    * @param skip
+    * @return
+    */
    protected List<String[]> readAll(BufferedReader reader, int skip) {
        List<String> tmp = reader.lines().collect(Collectors.toList());
        if (tmp.size() == 0) return new ArrayList<>(); // Empty CSV file

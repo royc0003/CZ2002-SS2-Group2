@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +7,6 @@ import java.io.IOException;
 /**
  * Represents a Cineplex that has many cinemas in it
  * The cineplex has a local list of movies that it is currently showing
-
  */
 
 public class Cineplex implements Serializable
@@ -77,7 +75,10 @@ public class Cineplex implements Serializable
 			//saveCinemaCSV(this.cinemaList);
 		}	
 	}
-	
+	/** 
+	 * initialise Cineplex
+	 * @param item
+	 */
 	public Cineplex(String[] item){
 		this.cineplexID = Integer.parseInt(item[0]);
 		this.nameOfCineplex = item[1];
@@ -224,7 +225,10 @@ public class Cineplex implements Serializable
 	
 
 //----------------------------Main methods--------------------------------------------------------------
-	
+	/**
+	 * Adds movie and showtime to cineplex
+	 * @param object object of MovieAndShowtime class
+	 */
 	public void addMovieToCineplex(MovieAndShowtimes object) //ADD MOVIE AND SHOWTIMES 
 	{   
 		
@@ -233,7 +237,12 @@ public class Cineplex implements Serializable
 	}
 	
 
-	
+	/**
+	 * books the seats according to the seat ID in the specific Cinema screen
+	 * @param cinema_no Cinema Screen ID
+	 * @param seat_id Seat ID
+	 * @param cust_id Unique customer ID
+	 */
 	public void bookSeatAtCinema(int cinema_no, String seat_id, int cust_id) 
 	{
 		for(Cinema n: cinemaList) {
@@ -289,7 +298,9 @@ public class Cineplex implements Serializable
 			}
 		}
 	}
-
+	/**
+	 * Assigns showtime to cinema screens
+	 */
 	public void createShowtimesAndAssignToCinema() 
 	//check if movie exists in local movie list first before proceeding
 	{
@@ -338,14 +349,18 @@ public class Cineplex implements Serializable
 			}
 		}
 	}
-	
+	/**
+	 * Updates show time by first deletion and then addition
+	 */
 	public void updateShowtimeToMovie() //delete show time and adds a new showtime
 	{
 		
 		deleteShowTimeToMovie();
 		createShowtimesAndAssignToCinema();	
 	}
-	
+	/**
+	 * deletes show time
+	 */
 	public void deleteShowTimeToMovie()
 	{
 		System.out.println(" ");
@@ -392,7 +407,10 @@ public class Cineplex implements Serializable
 			}
 		}
 	}
-	
+	/**
+	 * gets all the showtimes for the cinema screen
+	 * @param cinemaID unique Cinema screen ID
+	 */
 	public ArrayList<ShowTime> getListOfShowTimesForCinema(int cinemaID) 
 	{
 		for(Cinema n: cinemaList) {
@@ -403,7 +421,10 @@ public class Cineplex implements Serializable
 		return null;
 	}
 	
-
+	/**
+	 * Displays all the show times for the Cinema Screen
+	 * @param cinemaID unique Cinema screen ID
+	 */
 	public void displayShowTimesForCinema(int cinemaID)
 	{
 		for(Cinema n: cinemaList) 
@@ -415,7 +436,13 @@ public class Cineplex implements Serializable
 		}
 	}
 	
-	public int selectShowtime(String showtime, int movieID)  //RETURNS CINEMA ID of the showtime
+	/**
+	 * for selection of the show time of a cinema
+	 * @param showtime show times available in the cinema
+	 * @param movieID unique ID of a movie
+	 * @throws IOException 
+	 */
+	public int selectShowtime(String showtime, int movieID) throws IOException  //RETURNS CINEMA ID of the showtime
 	{	
 		MovieAndShowtimes m = null;
 		int cinemaID = -1;
@@ -434,7 +461,10 @@ public class Cineplex implements Serializable
 		
 		return -1;
 	}	
-	
+	/**
+	 * sorts all the movies according their ID
+	 * @return sorted movie ID list
+	 */
 	public MovieAndShowtimes[] sortMovieID(){
 			
 		MovieAndShowtimes[] SortMovieCopy= new MovieAndShowtimes[localListOfMovieAndShowTimes.size()];
@@ -462,7 +492,11 @@ public class Cineplex implements Serializable
 
 		return SortMovieCopy;
 		}
-	
+	/**
+	 * Checks if a specific movie exists in a cineplex
+	 * @param movieID unique ID of the movie
+	 * @return 1 if movie exists, and 0 is it doesnt
+	 */
 	public int checkIfMovieExistInCineplex(int movieID)
 	{
 		//InitializeList();   //initializelocallist bc now we didnt create cineplex so have to initialize locallist here
@@ -477,6 +511,9 @@ public class Cineplex implements Serializable
 		return 0;
 	}
 	
+	/** 
+	 * Prints out the available Cinema IDs in the Cineplex
+	 */
 	public void printCinemaIdOfCineplex()
 	{ System.out.println("");
 		System.out.println("==== List of available IDS in Cineplex " + nameOfCineplex + "====");
@@ -486,13 +523,18 @@ public class Cineplex implements Serializable
 			System.out.println(n.getCinemaID() + "                         " + n.getType());
 		}
 	}
-	
+	/**
+	 * Converts String to csv
+	 * @return csv
+	 */
 	public String[] toCsv(){
 		String[] csv = {Integer.toString(this.cineplexID), this.nameOfCineplex, this.location, Integer.toString(this.no_of_cinema)};
 		return csv;
 
 	}
-	
+	/**
+	 * initializes cinema screen and catches any exception errors
+	 */
 	public void initializeCinema(){
 		MainCSVHelper csvHelper = new MainCSVHelper();
 		try {
@@ -505,6 +547,10 @@ public class Cineplex implements Serializable
 			System.out.println("Could not find the file");
 		}
 	}
+	/**
+	 * save cinema CSV using the arraylist of cinema objects
+	 * @param cinemaList the list of cinema objects in the cineplex
+	 */
 	public void saveCinemaCSV(ArrayList<Cinema> cinemaList){
 		MainCSVHelper csvHelper = new MainCSVHelper();
 		try{

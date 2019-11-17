@@ -1,11 +1,14 @@
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class MAIN {
-
-	public static void main(String[] args) {
+/**
+ * main function
+ * @param args
+ * @throws IOException 
+ */
+	public static void main(String[] args) throws IOException {
 
 		Scanner scan = new Scanner(System.in);
 		boolean isStaff = false;
@@ -31,7 +34,6 @@ public class MAIN {
 			i.printStackTrace();
 			return;
 		} catch (ClassNotFoundException c) {
-
 			System.out.println("Employee class not found");
 			c.printStackTrace();
 			return;

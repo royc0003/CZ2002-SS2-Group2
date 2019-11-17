@@ -1,9 +1,18 @@
+/**
+ * UI for customer to login, create an account, choose from options to make bookings, view movie details,
+ *  add ratings/reviews, list top 5 movies, check booking history
+ */
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerUI {
 	private int custID;
-
+	/**
+	 * First page customer sees after he/she says "No" to "Are you a staff?"
+	 * @param customerStorage array list of customer objects
+	 */
     public ArrayList<Customer> loginPage(ArrayList<Customer> customerStorage) {
         Scanner sc = new Scanner(System.in);
         System.out.println("************************************************************");
@@ -52,7 +61,12 @@ public class CustomerUI {
     public int custID() {
     	return this.custID;
     }
-
+    /**
+     * Checks if customer exists in database
+     * @param customerStorage array list of customer objects
+     * @param userName username entered
+     * @return returns true if username already exists, false otherwise
+     */
     private boolean checkExist(ArrayList<Customer> customerStorage, String userName){
 
     	System.out.println("CUSTOMER STORAGE SIZE " + customerStorage.size());
@@ -123,8 +137,16 @@ public class CustomerUI {
 
     }
 
-
-    public void printWelcomePage(int customer_ID, BookingManager bookingManager, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager) {
+    /**
+     * After customer login/creation is successful, this method will be called to allow customers to choose
+     * from the available options
+     * @param customer_ID ID of customer 
+     * @param bookingManager BookingManager object
+     * @param ratingsReviewsManager RatingsReviewsManager object
+     * @param priceManager PriceManager object
+     * @throws IOException 
+     */
+    public void printWelcomePage(int customer_ID, BookingManager bookingManager, RatingsReviewsManager ratingsReviewsManager, PriceManager priceManager) throws IOException {
         Scanner scan = new Scanner(System.in);
         int userChoice;
         int option;
@@ -139,8 +161,8 @@ public class CustomerUI {
 	        System.out.println("Option 5: Add Reviews");
 	        System.out.println("Option 6: Check Booking History");
 	        System.out.println("Option 7: Display Top 5 Movies by Rating/ Ticket Sales");
-            System.out.println("Option 8: Save All");
-	        System.out.println("Option 9: Exit");
+            System.out.println("Option 8: Exit");
+
 	        
 	        System.out.println("Please choose an option: ");
 	        userChoice = scan.nextInt();
@@ -185,11 +207,6 @@ public class CustomerUI {
                     System.out.println("Saving BookingOrder.dat before-----");
                     MainCSVHelper.writeSerializedObject("BookingOrder.dat", bookingManager.getOrderList());
                     System.out.println("Saving BookingOrder.dat after------");
-                case 9:
-                    System.out.println("**************************************************************************");
-                    System.out.println("Saving BookingOrder before");
-                    MainCSVHelper.writeSerializedObject("BookingOrder.dat", bookingManager.getOrderList());
-                    System.out.println("Saving BookingOrder after");
 
                     System.out.println("Saving Cineplex before");
                     MainCSVHelper.writeSerializedObject("Cineplex.dat", bookingManager.getCineplexList());
@@ -216,5 +233,4 @@ public class CustomerUI {
     }
     
     }
-
 

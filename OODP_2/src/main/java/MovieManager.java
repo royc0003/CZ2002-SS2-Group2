@@ -7,12 +7,20 @@ import java.util.*;
 import java. util. Iterator;
 
 public class MovieManager implements Serializable {
+	/**
+	 * MovieDisplay object
+	 */
     private MovieDisplay displayMovie;
+    /**
+     * Array list of movie and showtimes objects
+     */
     protected static ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes;
-
+    /**
+     * Creates a new movie manager object
+     */
     public MovieManager() {
 		this.displayMovie = new MovieDisplay();
-//		this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
+		this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>(); // calls the write function in constructor
 
 		ArrayList<MovieAndShowtimes> trialList = null;
 		try{
@@ -24,17 +32,24 @@ public class MovieManager implements Serializable {
 		}
 
 
-		if (this.listOfMovieAndShowtimes == null) {
-			this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
-		}
+//		if (this.listOfMovieAndShowtimes == null) {
+//			this.listOfMovieAndShowtimes = new ArrayList<MovieAndShowtimes>();
+//		}
 	}
-    
+    /**
+     * Creates a new movie manager object
+     * @param displayMovie This MovieManager's MovieDisplay object
+     * @param listOfMoviesAndShowtimes This MovieManager's array list of MovieAndShowtimes objects
+     */
     public MovieManager(MovieDisplay displayMovie, ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
         this.displayMovie = displayMovie;
         MovieManager.listOfMovieAndShowtimes = listOfMovieAndShowtimes;
     }
 
-
+    /**
+     * Prints details of all movies
+     * @param listOfMovieAndShowtimes Array list of MovieAndShowtimes objects
+     */
 	public void printDetails(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
 
 		for(MovieAndShowtimes x : listOfMovieAndShowtimes){
@@ -44,7 +59,9 @@ public class MovieManager implements Serializable {
 	}
 
     //--------------MANAGES WITH CREATION OF MOVIES-------------------------------------------------------------------------------------------------------
-
+	/**
+     * Creates a new movieAndShowtime object
+     */
     public void createMovieCreator(){ //createMovieShowTimes objects to be added in a list
         Scanner sc = new Scanner(System.in);
         System.out.println("Insert number of MovieAndShowtimes to create:");
@@ -68,9 +85,12 @@ public class MovieManager implements Serializable {
         for(MovieAndShowtimes n : listOfMovieAndShowtimes){
             n.createMovie();
         }
-
     }*/
     //--------------MANAGES WITH REMOVAL OF MOVIES-------------------------------------------------------------------------------------------------------
+   /**
+     * Removes a movie from listOfMovieAndShowtimes array list
+     * @param the Movie ID of the movie to be removed
+     */
     public void removeMovie(int MovieID) { // removes an object from a list of created Movies
     	/*ArrayList<MovieAndShowtimes> toRemove = new ArrayList<MovieAndShowtimes>();
     	for (MovieAndShowtimes m :listOfMovieAndShowtimes ) {
@@ -93,13 +113,9 @@ public class MovieManager implements Serializable {
     	
         
        /* Iterator<MovieAndShowtimes> iter = listOfMovieAndShowtimes.iterator();
-
         while (iter.hasNext()) {
-
             MovieAndShowtimes movShowtime = iter.next();
-
             if (movShowtime.getMovieID() == MovieID)
-
                 iter.remove();
         }*/
         
@@ -111,67 +127,90 @@ public class MovieManager implements Serializable {
     // prints list of movieIDs done
     // returns list of movieObjects
     // gets a single movie from the list of movieObjects --
-public void printGlobalListOfMovieIDs(){
+    /**
+     *  prints all movie IDs in the array list 
+     */
+    public void printGlobalListOfMovieIDs(){
+		
+		MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[listOfMovieAndShowtimes.size()];
+		SortMovieCopy2 = sortGlobalListMovieID(); 
+		System.out.println("");
+		System.out.println("==========Global List of Movies==============");
 	
-	MovieAndShowtimes[] SortMovieCopy2= new MovieAndShowtimes[listOfMovieAndShowtimes.size()];
-	SortMovieCopy2 = sortGlobalListMovieID(); 
-	System.out.println("");
-	System.out.println("==========Global List of Movies==============");
-
-	System.out.println("MovieID            MovieTitle         ShowingStatus  ");
-	for(int i=0; i< SortMovieCopy2.length; i++)
-	{
-		System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                  " + SortMovieCopy2[i].getMovieTitle() + "               " + SortMovieCopy2[i].getMovieShowingStatus());
+		System.out.println("MovieID            MovieTitle         ShowingStatus  ");
+		for(int i=0; i< SortMovieCopy2.length; i++)
+		{
+			System.out.println("(" + SortMovieCopy2[i].getMovieID() + ")                  " + SortMovieCopy2[i].getMovieTitle() + "               " + SortMovieCopy2[i].getMovieShowingStatus());
+		}
+		System.out.println("________________________________________________");
+		
 	}
-	System.out.println("________________________________________________");
+	/**
+	 * Returns an array list of integers of movie IDS
+	 * @return an array list of Movie IDS (int)
+	 */
+	public ArrayList<Integer> getGlobalListOfMovieIDs(){
+	        ArrayList<Integer> listOfMovieIDs = new ArrayList<Integer>();
+	        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
+	            listOfMovieIDs.add(n.getMovieID());
+	        }
+	        return listOfMovieIDs;
+	}
+	/**
+	 *  Returns an array list of movie objects
+	 *  @return an array list of movie objects
+	 */
+	public ArrayList<Movie> getGlobalListOfMovieObjects(){
+	        ArrayList<Movie> arrayListOfMovieOBjects = new ArrayList<Movie>();
+	        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
+	            arrayListOfMovieOBjects.add(n.getMovie());
+	        }
+	        return arrayListOfMovieOBjects;
+	}
 	
-}
-
-public ArrayList<Integer> getGlobalListOfMovieIDs(){
-        ArrayList<Integer> listOfMovieIDs = new ArrayList<Integer>();
-        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
-            listOfMovieIDs.add(n.getMovieID());
-        }
-        return listOfMovieIDs;
-}
-public ArrayList<Movie> getGlobalListOfMovieObjects(){
-        ArrayList<Movie> arrayListOfMovieOBjects = new ArrayList<Movie>();
-        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
-            arrayListOfMovieOBjects.add(n.getMovie());
-        }
-        return arrayListOfMovieOBjects;
-}
-
-
-
-public Movie getMovie(int MovieID){
 	
-    Movie x = null;
-        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
-            if(n.getMovieID() == MovieID){
-                return n.getMovie();
-        	}
-        }
-    return x;
-}
-
-public MovieAndShowtimes getMovieAndShowtimes(int MovieID){
-        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
-            if(n.getMovieID() == MovieID){
-                return n; // returns the MovieAndShowtimes object
-            }
-        }
-    return null; // if cannot find return null
-}
-
-public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of the static change mad ehere
-	return this.listOfMovieAndShowtimes;
-}
-
+	/**
+	 * Returns a single movie object
+	 * @param Movie ID of Movie object to be retrieved
+	 * @return returns a single movie object with the specified ID
+	 */
+	public Movie getMovie(int MovieID){
+		
+	    Movie x = null;
+	        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
+	            if(n.getMovieID() == MovieID){
+	                return n.getMovie();
+	        	}
+	        }
+	    return x;
+	}
+	/**
+	 * Returns a single MovieAndShowtimes object
+	 * @param movie ID of MovieAndShowtimes object to be retreived
+	 * @return returns a single MovieAndShowtimes object with specified movie ID
+	 */
+	public MovieAndShowtimes getMovieAndShowtimes(int MovieID){
+	        for(MovieAndShowtimes n: listOfMovieAndShowtimes){
+	            if(n.getMovieID() == MovieID){
+	                return n; // returns the MovieAndShowtimes object
+	            }
+	        }
+	    return null; // if cannot find return null
+	}
+	/**
+	 * Returns an array list of MovieAndShowtimes Object
+	 * @return returns an array list MovieAndShowtimes objects
+	 */
+	public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of the static change mad ehere
+		return this.listOfMovieAndShowtimes;
+	}
+	
 
     //--------------MANAGES WITH SHOWTIMES------------------------------------------------------------------------------------------------------
 
-
+/**
+	 * Creates a MovieAndShowtimes object
+	 */
     public void createMovieShowtimes(){ // This is to be made dynamic
         for(MovieAndShowtimes n: listOfMovieAndShowtimes){ // we need to check for every title
             System.out.println("You are referring to this movie: "+ n.getMovieTitle());
@@ -190,7 +229,10 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
         }
     }
 
-
+/**
+	 * Prints showtimes of specified Movies
+	 * @param Movie ID of movie
+	 */
     public void getShowList(int MovieID){ // remenber to input size
         for(MovieAndShowtimes n: listOfMovieAndShowtimes){
             if(n.getMovieID() == MovieID){
@@ -199,7 +241,9 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
         }
     }
     
-    
+     /**
+	 * Sorts the Movie IDs based on ascending order and returns the array list 
+	 */
     public MovieAndShowtimes[] sortGlobalListMovieID(){
 		
 		MovieAndShowtimes[] SortMovieCopy= new MovieAndShowtimes[listOfMovieAndShowtimes.size()];
@@ -228,7 +272,9 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
 
 			return SortMovieCopy;
 		}
-    
+     /**
+	 * Allows the staff to update details of a movie
+	 */
     public void updateDetailsToMovie()
     {
     	Scanner scan = new Scanner(System.in);
@@ -284,6 +330,11 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
     }
     public void saveMovieAndShowtimes(){ // function to be called to save data
 		MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", listOfMovieAndShowtimes);	}
+   /**
+	 * Allows staff to update showing status of a movie
+	 * If showing status is changed to "End Of Showing",
+	 * movie is automatically removed from array list of MovieAndShowtimes
+	 */
     public void changeShowingStatusAndRemoveMovie()
     {	
     	Scanner scan = new Scanner(System.in);
@@ -317,7 +368,10 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
 		MainCSVHelper.writeSerializedObject("MovieAndShowtimes.dat", listOfMovieAndShowtimes); // saves after altering the showtime
     	
     	}
-
+ /**
+	 * Saves data to a csv file
+	 * @param Array list of MovieAndShowtimes objects
+	 */
     public void saveMovieAndShowtimesCSV(ArrayList<MovieAndShowtimes> listOfMovieAndShowtimes){
 		MainCSVHelper csvHelper = new MainCSVHelper();
 		try{
@@ -327,7 +381,9 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
 			e.printStackTrace();
 		}
 	}
-    
+    /**
+	 * Helps retrieve previously stored data if program crashes or exits
+	 */
     public void initializeMovie(){
 		MainCSVHelper csvHelper = new MainCSVHelper();
 		try {
@@ -343,7 +399,3 @@ public ArrayList<MovieAndShowtimes> getListOfMovieAndShowtimes(){ //take note of
 		
     
     
-
-
-
-

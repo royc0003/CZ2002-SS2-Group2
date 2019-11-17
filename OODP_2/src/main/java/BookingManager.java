@@ -4,19 +4,25 @@ import java.util.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+Creates a new order, depending on the user's choice either by selecting which Cineplex the user would like to watch at, or the movie he/she would like to would to watch. 
+*/
+
 public class BookingManager extends CineplexManager implements Serializable {
 	ArrayList<BookingOrder> orderList;
-
+/**
+	Creates a new booking order and increments the number of total orders in the user's booking history by 1
+	*/
 	public BookingManager() {
-		this.orderList = new ArrayList<BookingOrder>();
-//		ArrayList<BookingOrder> trialList = null;
-//		try {
-//			System.out.println("Reading from BookingOrder.dat -----------");
-//			trialList = (ArrayList) MainCSVHelper.readSerializedObject("BookingOrder.dat"); // reads from movie and showtime
-//			this.orderList = trialList; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
-//		} catch (Exception e) {
-//			System.out.println("Exception >> " + e.getMessage());
-//		}
+//		this.orderList = new ArrayList<BookingOrder>();
+		ArrayList<BookingOrder> trialList = null;
+		try {
+			System.out.println("Reading from BookingOrder.dat -----------");
+			trialList = (ArrayList) MainCSVHelper.readSerializedObject("BookingOrder.dat"); // reads from movie and showtime
+			this.orderList = trialList; // tries to assign the arraylist of objects to current listofmovie and hsowtimes
+		} catch (Exception e) {
+			System.out.println("Exception >> " + e.getMessage());
+		}
 
 	}
 
@@ -26,7 +32,12 @@ public class BookingManager extends CineplexManager implements Serializable {
 public ArrayList<BookingOrder> getOrderList(){
 		return this.orderList;
 }
-public void makeNewOrder(int customerID, PriceManager priceManager) {
+/** Saves the user's new order, according to whether he/she chose the cineplex or the movie first in the user interface, and prints out the tickets with all the details
+*@param customerID the unique ID assigned to the user 
+*@param priceManager ticket price calculator 
+* @throws IOException 
+*/
+public void makeNewOrder(int customerID, PriceManager priceManager) throws IOException {
 	
 	//initializeBookingOrder();
 	int day = getDate();
@@ -156,7 +167,10 @@ public void makeNewOrder(int customerID, PriceManager priceManager) {
 	
 }
 
-
+/**
+	Gets the user's choice of cineplex
+	@return the Cineplex name 
+	*/
 public Cineplex getCineplexChoice() {
 	System.out.println("Which cineplex would you prefer to watch at?");
 	
@@ -172,7 +186,11 @@ public Cineplex getCineplexChoice() {
 	return c;
 }
 
-
+/**
+	 * Gets the user's choice of movie
+	 * @param c the chosen cineplex
+	 * @return the movie ID
+	 */
 public int getMovieIDChoice(Cineplex c) {
 	Scanner sc = new Scanner(System.in);
 
@@ -184,7 +202,12 @@ public int getMovieIDChoice(Cineplex c) {
 	return movieID2;
 }
 
-
+/**
+	 * Gets the user's choice of showtime
+	 * @param movieID the ID of the movie selected
+	 * @param c the chosen cineplex
+	 * @return showtime
+	 */
 public String getShowtimeChoice(int movieID, Cineplex c) {
 	Scanner sc = new Scanner(System.in);
 
@@ -194,19 +217,36 @@ public String getShowtimeChoice(int movieID, Cineplex c) {
 	
 	return showtime;
 }
-
+/**
+	 * Gets the seatmap of the cinema screen
+	 * @param cinemaID the ID of the cinema screen showing the movie
+	 * @param c the chosen cineplex
+	 */
 public void getSeatMap(int cinemaID, Cineplex c) {
 	 c.getSeatMapOfCinema(cinemaID);
 
 }
-
-public int getCinemaID(String showTime, int movieID, Cineplex c) {
+/**
+	 * Gets the ID of the cineplex screen showing the movie
+	 * @param showtime showtime of the movie 
+	 * @param movieID the ID of the movie selected
+	 * @param c the chosen cineplex
+	 * @return ID of the screen showing the movie
+	 * @throws IOException 
+	 */
+public int getCinemaID(String showTime, int movieID, Cineplex c) throws IOException {
 	int cinemaID= c.selectShowtime(showTime, movieID);
 	
 	System.out.println("CINEMA ID : " + cinemaID);
 	return cinemaID;
 }
-
+/**
+	 * Books the user's preferred seats
+	 * @param cinemaID ID of the cineplex screen showing the movie
+	 * @param customerID ID of the customer making the booking
+	 * @param c the chosen cineplex
+	 * @return ID of the seat booked, as row.column
+	 */
 public String bookSeats(int cinemaID, int customerID, Cineplex c) {
 
 		Scanner sc = new Scanner(System.in);
@@ -223,7 +263,10 @@ public String bookSeats(int cinemaID, int customerID, Cineplex c) {
 
 		}
 	
-	
+/**
+	 * Displays all the movies available
+	 * @return ID of the movie
+	 */	
 public int getMovieIDfromGlobalMovieList() {
 
 	System.out.println("Which movies do you want to watch at?");
@@ -233,7 +276,11 @@ public int getMovieIDfromGlobalMovieList() {
 	
 	return movieID;
 }
-
+/**
+	 * Displays the cineplexes showing the selected movie
+	 * @param movieID ID of the selected movie
+	 * @return Cineplex ID of the selected cineplex
+	 */
 public Cineplex showListofCineplex(int movieID) {
 	Scanner sc = new Scanner(System.in);
 
@@ -265,7 +312,10 @@ public Cineplex showListofCineplex(int movieID) {
 
 
 
-
+/**
+	 * Displays the booking history of the user
+	 * @param customerID the unique ID of the customer
+	 */
 public void viewBookingHistory(int customerID) {
 	System.out.println("Size of ORderList: "+this.orderList.size());
 	System.out.println("===========================================Booking History===================================================");
@@ -279,6 +329,12 @@ public void viewBookingHistory(int customerID) {
 		
 		
 	}}
+	/**
+	 * Calculates the price of the movie
+	 * @param m PriceManager to calculate the total price
+	 * @param orderNo the order number
+	 * @return the total price of the bookings
+	 */
 	public double calculateTotalPrice(PriceManager m, int orderNo, int day) {
 		int i=0;
 		for(BookingOrder n: orderList) {
@@ -329,7 +385,10 @@ public void viewBookingHistory(int customerID) {
 		System.out.println("Payment successful!");
 		System.out.println("Transaction ID: " + CinemaID + dates);
 	}
-
+/**
+	 * Prints the ticket of the current booking
+	 * @param orderNo the order number
+	 */
 public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the order... will have different seatID 
 	int count = n.getNoOfTickets();
 	int i=0;
@@ -417,5 +476,3 @@ public void printTickets(BookingOrder n) {  //PRINT THE NUMBER OF TICKETS in the
 	}
 
 }
-
-

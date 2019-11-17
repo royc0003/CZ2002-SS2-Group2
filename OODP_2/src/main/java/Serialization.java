@@ -1,6 +1,4 @@
-
-
-	public interface Serialization{ // mainly used to convert to CSV
+public interface Serialization{ // mainly used to convert to CSV
 
 	    public String[] toCsv(); //
 	    /*

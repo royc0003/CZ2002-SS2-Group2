@@ -2,17 +2,46 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Scanner;
 
-
+/**
+ * Calculates the total price of all the tickets booked, taking booking day and discounts in consideration
+ *
+ */
 public class PriceManager implements Serializable {
+	/**
+	 * rate of watching a movie on a weekday 
+	 */
 	private double WEEKDAY_RATE = 1.0;
+	
+	/**
+	 * rate of watching a movie on a weekend
+	 */
 	private double WEEKEND_RATE = 1.5;
+	
+	/**
+	 * normalised price rate
+	 */
 	private double priceRate = 1.0;
+	/**
+	 * price per seat
+	 */
 	private double pricePerSeat;
+	
+	/**
+	 * discounts applied
+	 */
 	private Boolean discountApplied = false;
+	/**
+	 * discount rate
+	 */
 	private double discountRate=1.0;
+	/**
+	 * standard price
+	 */
 	private int standardPrice = 10;
 
-
+	/**
+	 * sets the Price rate for the user, including discounts and day of ticket booking 
+	 */
 	public void setPriceRate(int day){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Do you qualify for any discount? \n");
@@ -55,15 +84,23 @@ public class PriceManager implements Serializable {
 
 		this.pricePerSeat = standardPrice*priceRate;
 	}
-
+	/**
+	 * gets price per seat rate
+	 * @return price per seat rate
+	 */
 	public double getPricePerSeat() {
 		return this.pricePerSeat;
 	}
-
+	/**
+	 * gets discount rate
+	 * @return discount rate
+	 */
 	public double getDiscountRate() {
 		return this.discountRate;
 	}
-
+	/**
+	 * Changes the weekend and weekday rate 
+	 */
 	public void changeRates() {
 		System.out.println("(1) Weekend Rate: Current price rate is "+ WEEKEND_RATE);
 		System.out.println("(2) Weekday Rate: Current price rate is "+ WEEKDAY_RATE);
